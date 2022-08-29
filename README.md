@@ -13,6 +13,8 @@ These are my configuration files for Linux, including:
 
 # Installation
 
+> **Warning**: This script is experimental and is not working properly yet
+
 Run the script `install.sh`:
 
 ```
