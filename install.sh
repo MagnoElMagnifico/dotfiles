@@ -31,9 +31,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     
         git config --global user.email "$git_email"
         git config --global user.name "$git_username"
+	# TODO: Add github password?
     
         printf "Done.\n\n"
     else
-        echo "Git is not installed or it is not on the path"
+        printf "Git is not installed or it is not on the path.\n\n"
     fi
 fi
