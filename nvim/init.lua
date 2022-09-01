@@ -1,12 +1,4 @@
 -- TODO: Run terminal command faster
--- TODO: Delete word in insert mode with <C-Del> and <C-Backspace> (BS) <C-w>
---
--- TODO: Change Window, Resize Window, Move Window
--- TODO: Change tab (gt gT)
---
--- Empty keys: -_ \ | +
--- Useful?: ; & S
-
 -- Key bindings shortcut --
 -- Modes
 --   normal_mode = 'n',
@@ -41,11 +33,11 @@ map('nvx', '<C-j>', '<C-e>')
 map('nvx', ';', ',') -- Repeat f, F, t, T backwards
 map('nvx', ',', ';') -- Repeat f, F, t, T
 
--- <C-n> : <A-j> // <C-m> : <A-k>
---map('nv',  '<A-j>', '<cmd>move .+1<Enter>') -- Move text
---map('nv',  '<A-k>', '<cmd>move .-2<Enter>')
---map('x', '<A-j>', "<cmd>move '>+1<Enter>gv")
---map('x', '<A-k>', "<cmd>move '<-2<Enter>gv")
+-- TODO: Not working
+--map('nv', '<A-j>', '<cmd>move .+1<Enter>') -- Move text
+--map('nv', '<A-k>', '<cmd>move .-2<Enter>')
+--map('x',  '<A-j>', "<cmd>move '>+1<Enter>gv")
+--map('x',  '<A-k>', "<cmd>move '<-2<Enter>gv")
 
 -- Windows & Buffers --
 map('nvx', 'ñ', '<C-w>')
@@ -54,27 +46,27 @@ map('nvx', 'Ñ', '<C-w>')
 -- Maybe move between recent windows with <C-l> <C-h> 
 
 map('nvx', '<Right>', '<C-w>l') -- Move between windows
-map('nvx', '<Left>', '<C-w>h')
-map('nvx', '<Up>', '<C-w>k')
-map('nvx', '<Down>', '<C-w>j')
+map('nvx', '<Left>',  '<C-w>h')
+map('nvx', '<Up>',    '<C-w>k')
+map('nvx', '<Down>',  '<C-w>j')
 
 map('nvx', '<S-Right>', '<C-w>>') -- Resize windows
-map('nvx', '<S-Left>', '<C-w><')
-map('nvx', '<S-Up>', '<C-w>+')
-map('nvx', '<S-Down>', '<C-w>-')
+map('nvx', '<S-Left>',  '<C-w><')
+map('nvx', '<S-Up>',    '<C-w>+')
+map('nvx', '<S-Down>',  '<C-w>-')
 
 map('n', '<C-Right>', '<cmd>tabn<Enter>') -- Move between tabs
-map('n', '<C-Left>', '<cmd>tabp<Enter>')
+map('n', '<C-Left>',  '<cmd>tabp<Enter>')
 
 map('n', '<C-Down>', '<cmd>bnext<Enter>') -- Move between buffers -- TODO: Problems in Netrw
-map('n', '<C-Up>', '<cmd>bprevious<Enter>')
+map('n', '<C-Up>',   '<cmd>bprevious<Enter>')
 
 -- Exiting --
 map('t', '<Esc>', '<C-\\><C-N>') -- Exit terminal
-map('t', 'jk', '<C-\\><C-N>')
-map('t', 'kj', '<C-\\><C-N>')
-map('i', 'jk', '<Esc>') -- Exit insert mode
-map('i', 'kj', '<Esc>')
+map('t', 'jk',    '<C-\\><C-N>')
+map('t', 'kj',    '<C-\\><C-N>')
+map('i', 'jk',    '<Esc>') -- Exit insert mode
+map('i', 'kj',    '<Esc>')
 
 -- Others --
 map('n', '<Leader>ee', '<cmd>Ex<Enter>') -- Show files -- TODO: Bind others: Tex Lex Sex Bex etc
@@ -95,8 +87,8 @@ map('nvx', 'N', 'Nzz')
 map('nvx', "'", '`')
 
 map('i', '<C-H>', '<C-w>')
-map('n', 'U', '<C-R>')  -- Redo with U
-map('n', 'vv', '<C-v>') -- In my terminal CTRL-V pastes
+map('n', 'U',     '<C-R>')  -- Redo with U
+map('n', 'vv',    '<C-v>') -- In my terminal CTRL-V pastes
 
 map('v', '<', '<gv') -- Stay in visual mode
 map('v', '>', '>gv')
@@ -148,15 +140,16 @@ vim.o.splitright = true
 --------------------
 -- Plugins ---------
 --------------------
--- vim.cmd [[ packadd packer.nvim ]]
--- require('packer').startup(function()
---   use 'wbthomason/packer.nvim'
---   use 'drewtempelmeyer/palenight.vim'
--- --  use 'tpope/vim-surround'
---   -- use 'nvim-telescope/telescope.nvim'
--- end)
--- 
--- vim.cmd [[ colorscheme palenight ]]
+vim.cmd [[ packadd packer.nvim ]]
+require('packer').startup(function()
+    use 'wbthomason/packer.nvim'
+    use 'tpope/vim-surround'
+    use {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.0',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
+end)
 
 -- Netrw
---vim.cmd [[ let g:netrw_liststyle = 1 ]] -- LONG: Extra details
+vim.cmd [[ let g:netrw_liststyle = 1 ]] -- LONG: Extra details
