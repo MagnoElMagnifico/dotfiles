@@ -17,38 +17,50 @@ EOF
 
 SCRIPT=$(realpath "$0")
 DOTFILES_DIR=$(dirname "$SCRIPT")
-CONFIG_DIR="$HOME/.config"
-
-if [[ -z $XDG_CONFIG_HOME ]]; then
-    printf "XDG_CONFIG_HOME variable not found.\n\n"
-else
-    CONFIG_DIR=$XDG_CONFIG_HOME
-fi
-
-read -p "Default is $CONFIG_DIR. Want to change it? [y/N]: " -n 1 -r; echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    while
-        read -p "Input new config directory: " -r;
-        [[ -z $REPLY || ! -d $REPLY ]]
-    do printf "Please, input a valid path\n\n"; done
-    CONFIG_DIR=$REPLY
-fi
 
 printf "Installing config...\n"
 
-# Neovim
-printf "[+] Neovim dotfiles/nvim -> $CONFIG_DIR/nvim... "
-    ln -s $DOTFILES_DIR/nvim $CONFIG_DIR/nvim
-printf "Done.\n"
+# Bashrc
+printf "[+] Bashrc: dotfiles/bashrc -> ~/.bashrc\n"
+ln -si $DOTFILES_DIR/bashrc $HOME/.bashrc
+printf "Done.\n\n"
 
 # Tmux
-printf "[+] Neovim dotfiles/tmux.conf -> ~/.tmux.conf... "
-    ln -s $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
-printf "Done.\n"
+printf "[+] tmux: dotfiles/tmux.conf -> ~/.tmux.conf\n"
+ln -si $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
+printf "Done.\n\n"
 
-#### git config ####
+# Neovim
+printf "[+] Neovim: dotfiles/nvim -> ~/.config/nvim\n"
+
+if [[ ! -d $HOME/.config ]]
+    then mkdir $HOME/.config
+fi
+
+ln -si $DOTFILES_DIR/nvim $HOME/.config
+
+printf "Done.\nPacker.nvim...\n"
+
 if [[ -x $(command -v git) ]]; then
-    read -p "Want to configure git? [y/N]: " -n 1 -r; echo
+    # From its README file
+    packer_path="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
+    if [[ -d $packer_path ]] && [[ ! -z "$(ls -A $packer_path)" ]]; then
+        printf "Directory not empty. Atempting to pull changes... \n"
+        printf "==== GIT PULLING ==================================\n"
+        cd $packer_path && git pull || printf "ERROR\n"
+        cd -
+        printf "===================================================\n"
+    else
+        printf "==== GIT CLONING ==================================\n"
+        git clone --depth 1 https://github.com/wbthomason/packer.nvim $packer_path
+        printf "===================================================\n"
+    fi
+
+    printf "\nFinished installation\n\n"
+
+    #### git config ####
+    read -p "Want to configure git now? [y/N]: " -n 1 -r; echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         # TODO: Check if already set
         read -p "Input git username: " git_username
@@ -61,7 +73,7 @@ if [[ -x $(command -v git) ]]; then
 
         # TODO: Add github password?
         printf "Done.\n\n"
-    else
-        printf "Git is not installed or it is not on the path.\n\n"
     fi
+else
+    printf "Git is not installed or it is not on the path.\n\n"
 fi
