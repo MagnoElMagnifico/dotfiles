@@ -19,10 +19,8 @@ shopt -s checkwinsize   # checks term size when bash regains control
 bind "set completion-ignore-case on"
 
 ### PROMPT ###
-prompt_color=32 # Red: 31, blue: 34, cyan: 36 
-
 # Using Fira Code or Cascadia Code with ligadures on
-export PS1='\e[$prompt_color\$ \w |> \e[m'
+export PS1="\e[32m\w |>\e[m "
 
 ### ALIAS ###
 alias   ..='cd ..'
