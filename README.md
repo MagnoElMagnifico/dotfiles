@@ -24,8 +24,7 @@ cd dotfiles
 ```
 
 This script will create several symbolic links where each program expects its
-configuration file. Don't worry, any previous files will be renamed with the
-extension `.old` to avoid overwriting them.
+configuration file with the `ln -i` flag, so you will get a prompt.
 
 Also, the following packages may be downloaded:
 
