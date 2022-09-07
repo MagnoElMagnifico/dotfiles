@@ -29,12 +29,13 @@ require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.0',
-        requires = {{ 'nvim-lua/plenary.nvim' }}
+        requires = { {'nvim-lua/plenary.nvim'} }
     }
 end)
 
 -- Telescope
-map('n', '<Leader>tf', '<CMD>Telescope find_files<Enter>')
+map('n', '<Leader>f', '<CMD>Telescope find_files<Enter>')
+map('n', '<Leader>g', '<CMD>Telescope live_grep<Enter>')
 
 map('n', '<Leader>tr', '<CMD>Telescope registers<Enter>')
 map('n', '<Leader>tb', '<CMD>Telescope buffers<Enter>')
