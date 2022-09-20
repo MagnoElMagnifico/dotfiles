@@ -8,6 +8,10 @@ export HISTSIZE=1000
 export HISTFILESIZE=2000
 export EDITOR=nvim
 
+### OTHER SCRIPTS ###
+# Rust & cargo
+. "$HOME/.cargo/env"
+
 ### SHOPT ###
 shopt -s autocd         # change to named directory
 shopt -s cdspell        # autocorrects cd misspellings
