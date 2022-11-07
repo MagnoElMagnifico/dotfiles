@@ -1,4 +1,6 @@
 -- TODO: Run terminal command faster
+-- TODO: Debugger
+-- TODO: LSP: Rust, C/C++, Python
 
 ------------------------------
 ---- Util functions ----------
@@ -34,6 +36,12 @@ require('packer').startup(function(use)
 end)
 
 -- Telescope
+require('telescope').setup {
+    defaults = {
+        file_ignore_patterns = {"build", "target", "nbproject"}
+    }
+}
+
 map('n', '<Leader>f', '<CMD>Telescope find_files<Enter>')
 map('n', '<Leader>g', '<CMD>Telescope live_grep<Enter>')
 
@@ -45,7 +53,7 @@ map('n', '<Leader>th', '<CMD>Telescope manpages<Enter>')
 map('n', '<Leader>gs', '<CMD>Telescope git_status<Enter>')
 
 -- Netrw
-vim.cmd [[ let g:netrw_liststyle = 1 ]] -- LONG: Extra details
+--vim.cmd [[ let g:netrw_liststyle = 1 ]] -- LONG: Extra details
 
 ------------------------------
 ---- Key Maps ----------------
