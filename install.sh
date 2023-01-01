@@ -4,9 +4,9 @@
 set -e
 
 cat << EOF
-      _       _    __ _ _           
-     | |     | |  / _(_) |          
-   __| | ___ | |_| |_ _| | ___  ___ 
+      _       _    __ _ _
+     | |     | |  / _(_) |
+   __| | ___ | |_| |_ _| | ___  ___
   / _  |/ _ \| __|  _| | |/ _ \/ __|
  | (_| | (_) | |_| | | | |  __/\__ \\
 (_)__,_|\___/ \__|_| |_|_|\___||___/
@@ -65,13 +65,13 @@ if [[ -x $(command -v git) ]]; then
         # TODO: Check if already set
         read -p "Input git username: " git_username
         read -p "Input git email: " git_email
-    
+
         printf "[+] Setting up git profile... "
-    
+
         git config --global user.email "$git_email"
         git config --global user.name "$git_username"
+        git config --global credential.helper store
 
-        # TODO: Add github password?
         printf "Done.\n\n"
     fi
 else

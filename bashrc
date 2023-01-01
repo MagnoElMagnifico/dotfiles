@@ -10,7 +10,7 @@ export EDITOR=nvim
 
 ### OTHER SCRIPTS ###
 # Rust & cargo
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 ### SHOPT ###
 shopt -s autocd         # change to named directory
