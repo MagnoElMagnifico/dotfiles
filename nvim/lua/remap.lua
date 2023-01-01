@@ -68,5 +68,5 @@ map('n', '<C-Left>',  vim.cmd.tabp)
 map('t', '<Esc>', '<C-\\><C-N>')    -- Exit terminal
 map('t', 'jk',    '<C-\\><C-N>')
 map('t', 'kj',    '<C-\\><C-N>')
-map({'i', 'v'}, 'jk',    '<Esc>')          -- Exit insert mode
-map({'i', 'v'}, 'kj',    '<Esc>')
+map('i', 'jk',    '<Esc>')          -- Exit insert mode
+map('i', 'kj',    '<Esc>')
