@@ -61,7 +61,6 @@ map({'n', 'v'}, '<C-u>', '<C-u>zz')
 ---- Windows & Buffers & Tabs ----
 map({'n', 'v'}, 'ñ', '<C-w>')
 map({'n', 'v'}, 'Ñ', '<C-w>')
-
 map('n', '<C-Right>', vim.cmd.tabn) -- Move between tabs
 map('n', '<C-Left>',  vim.cmd.tabp)
 
@@ -69,5 +68,5 @@ map('n', '<C-Left>',  vim.cmd.tabp)
 map('t', '<Esc>', '<C-\\><C-N>')    -- Exit terminal
 map('t', 'jk',    '<C-\\><C-N>')
 map('t', 'kj',    '<C-\\><C-N>')
-map('i', 'jk',    '<Esc>')          -- Exit insert mode
-map('i', 'kj',    '<Esc>')
+map({'i', 'v'}, 'jk',    '<Esc>')          -- Exit insert mode
+map({'i', 'v'}, 'kj',    '<Esc>')
