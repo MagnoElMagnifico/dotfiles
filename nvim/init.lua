@@ -62,6 +62,6 @@ require('options')
 -- Preferred colorscheme
 local onedark = require('onedark')
 -- Options: dark, darker, cool, deep, warm, warmer, light
-onedark.setup { style = 'warmer' } 
+onedark.setup { style = 'warmer' }
 onedark.load()
 

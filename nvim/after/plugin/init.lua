@@ -79,9 +79,12 @@ require('nvim-treesitter.configs').setup {
 
 
 ---- LSP ----
+-- TODO: https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 lsp.setup()
+
+-- Improve completing: https://github.com/SpaceVim/SpaceVim/pull/4692/commits/cddd363b04624f991b5b465e2b499930515b78c3
 
 -- ThePrimeagen config
 --lsp.ensure_installed {

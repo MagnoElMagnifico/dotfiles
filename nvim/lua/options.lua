@@ -10,10 +10,10 @@ o.spelllang    = 'es,en'
 o.list      = true
 o.listchars = 'tab:>>,trail:·'
 
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-    pattern = "*",
-    command = "%s/\\s\\+$//e",
-})
+-- vim.api.nvim_create_autocmd({"BufWritePre"}, {
+--     pattern = "*",
+--     command = "%s/\\s\\+$//e",
+-- })
 
 vim.opt.path:append('**')
 o.mouse = 'a'
@@ -50,3 +50,13 @@ o.incsearch = true
 -- Window opening
 o.splitbelow = true
 o.splitright = true
+
+-- Terminal
+-- Remove line numbers
+vim.api.nvim_create_autocmd({'TermOpen'}, {
+    pattern = '*',
+    callback = function()
+        vim.o.number = false
+        vim.o.relativenumber = false
+    end
+})

@@ -33,8 +33,8 @@ map({'n', 'v'}, '<Leader>y', '"+y')   -- Yank to system clipboard
 map({'n', 'v'}, '<Leader>d', '"_d')
 
 ---- Commands ----
--- Refactor symbol (Change)
-map('n', '<Leader>c', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>')
+-- Refactor symbol (reName)
+map('n', '<Leader>n', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>')
 map('n', '<Leader>x', vim.cmd.bdel)
 map('n', '<Leader>w', vim.cmd.write)
 
@@ -70,3 +70,31 @@ map('t', 'jk',    '<C-\\><C-N>')
 map('t', 'kj',    '<C-\\><C-N>')
 map('i', 'jk',    '<Esc>')          -- Exit insert mode
 map('i', 'kj',    '<Esc>')
+
+---- My custom mappings ----
+-- Asks for a command a runs it in a vertical split window
+magno_cmd = ''
+map('n', '<Leader>c', function()
+    vim.ui.input({
+        prompt = 'Command > ',
+        default = nil,
+        completion = 'file'
+    },
+    function(input)
+        if (not (input == nil or input == '')) then
+            magno_cmd = input
+            vim.fn.execute(':vs term://' .. magno_cmd)
+        end
+    end)
+end)
+
+-- Repeats last command
+map('n', '<Leader>C', function()
+    if (not (input == nil or input == '')) then
+        vim.fn.execute(':vs term://' .. magno_cmd)
+    end
+end)
+
+vim.api.nvim_create_autocmd({'TermOpen'}, {
+    callback = function() map('n', '<Enter>', 'i<Enter>', { buffer=true }) end
+})
