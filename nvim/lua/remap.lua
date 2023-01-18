@@ -73,7 +73,7 @@ map('i', 'kj',    '<Esc>')
 
 ---- My custom mappings ----
 -- Asks for a command a runs it in a vertical split window
-magno_cmd = ''
+vim.api.nvim_set_var('magno_cmd', '')
 map('n', '<Leader>c', function()
     vim.ui.input({
         prompt = 'Command > ',
@@ -82,16 +82,16 @@ map('n', '<Leader>c', function()
     },
     function(input)
         if (not (input == nil or input == '')) then
-            magno_cmd = input
-            vim.fn.execute(':vs term://' .. magno_cmd)
+            vim.g.magno_cmd = input
+            vim.fn.execute(':vs term://' .. vim.g.magno_cmd)
         end
     end)
 end)
 
 -- Repeats last command
 map('n', '<Leader>C', function()
-    if (not (input == nil or input == '')) then
-        vim.fn.execute(':vs term://' .. magno_cmd)
+    if (not (vim.g.magno_cmd == nil or vim.g.magno_cmd == '')) then
+        vim.fn.execute(':vs term://' .. vim.g.magno_cmd)
     end
 end)
 
