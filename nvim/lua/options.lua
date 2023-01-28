@@ -40,7 +40,6 @@ o.sidescrolloff = 4
 -- Line numbers
 o.relativenumber = true
 o.number         = true
-o.colorcolumn    = '80'
 
 -- Search
 o.smartcase = true  -- Search case insensitive, unless the search term contains an upper case
