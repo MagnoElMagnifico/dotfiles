@@ -77,6 +77,9 @@ Comment.nvim:
 | `gbc`            | **B**lock **C**omment/uncomment current line |
 | `gc<TextObject>` | **C**omment/uncomment region linewise        |
 | `gb<TextObject>` | **C**omment/uncomment region blockwise       |
+| `gco`            | Insert comment to the next line              |
+| `gcO`            | Insert comment to the previous line          |
+| `gcA`            | Insert comment to end of the current line    |
 
 Vim-Surround:
 
