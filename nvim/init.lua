@@ -175,17 +175,17 @@ vim.g.mapleader = ' '
 map({'n', 'v'}, '<Space>', '<Nop>')
 
 -- Moving faster in the line
-map({'n', 'v'}, '+', '$', { desc = 'MAGNO: Goto end of line' })
-map({'n', 'v'}, '-', '^', { desc = 'MAGNO: Goto start of line' })
+map({'n', 'v'}, '+', '$')
+map({'n', 'v'}, '-', '^')
 
-map('i', '<C-H>', '<C-w>', { desc = 'MAGNO: Delete word in Insert Mode' })
-map('n', 'U',     '<C-R>', { desc = 'MAGNO: Redo'})
+map('i', '<C-H>', '<C-w>')
+map('n', 'U',     '<C-R>')
 
 -- Stay in visual mode after identing
-map('v', '<', '<gv', { desc = 'MAGNO: Stay in visual mode after identing' })
-map('v', '>', '>gv', { desc = 'MAGNO: Stay in visual mode after identing' })
+map('v', '<', '<gv')
+map('v', '>', '>gv')
 
-map({'n', 'v'}, "'", '`', { desc = 'MAGNO: Jump to '})
+map({'n', 'v'}, "'", '`')
 
 -- NOTE: I use a EU keyboard, not US.
 map({'n', 'v'}, ';', ',')     -- Repeat f, F, t, T backwards

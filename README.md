@@ -108,6 +108,7 @@ Telescope:
 | `<Leader>a`   | Telescope **A**ll files                    |
 | `<Leader>ss`  | Telescope **S**earch **S**tring            |
 | `<Leader>sw`  | Telescope **S**earch **W**ord under cursor |
+| `<Leader>/`   | Telescope search in current buffer         |
 | `<Leader>r`   | Telescope show **R**egisters               |
 | `<Leader>b`   | Telescope show **B**uffers                 |
 | `<Leader>m`   | Telescope show **M**arks                   |
@@ -122,14 +123,36 @@ Telescope:
 
 LSP:
 
-> **TODO**
+| Mapping      | Function                                                    |
+|:-------------|:------------------------------------------------------------|
+| `[d` / `]d`  | Go to previous / next **D**iagnostic                        |
+| `gl`         | Open diagnostic in floating window (**G**o **L**SP)         |
+| `gd`         | **G**o to **D**efinition                                    |
+| `gD`         | **G**o to **D**eclaration                                   |
+| `gI`         | **G**oto **I**mplementation                                 |
+| `gr`         | **G**oto **R**eferences                                     |
+| `gq`         | Open diagnostics in a quickfix window (**G**o **Q**uickfix) |
+| `K`          | Hover documentation for symbol under cursor                 |
+| `<C-k>` TODO | Open full documentation for symbol under cursor             |
+| `<Leader>rn` | **R**re**n**ame                                             |
+| `<Leader>ca` | **C**ode **A**ction                                         |
+| `<Leader>D`  | Type **D**efinition                                         |
+| `<Leader>ds` | Telescope **D**ocument **S**ymbols                          |
+| `<Leader>ws` | Telescope **W**orkspace **S**ymbols                         |
+
+> **TODO**: Telescope LSP
 
 Tree Sitter:
+
+| Mapping   | Type        | Function |
+|:----------|:------------|:---------|
+| `af` `if` | Text object | Function |
 
 > **TODO**
 
 ## Commands
 
+- `:Format`: use LSP formatter
 - `:Mason`: Manage LSP servers
 - `:PackerSync`: update plugins
 - `:Git` or `:G`: run git command
