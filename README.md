@@ -69,7 +69,7 @@ Commands:
 | `<Leader>et`  | Open **E**xplorer in a new **T**ab                 |
 | `<Leader>ev`  | Open **E**xplorer in a **V**ertical split (Left)   |
 
-Plugins:
+Comment.nvim:
 
 | Mapping          | Function                                     |
 |:-----------------|:---------------------------------------------|
@@ -77,28 +77,16 @@ Plugins:
 | `gbc`            | **B**lock **C**omment/uncomment current line |
 | `gc<TextObject>` | **C**omment/uncomment region linewise        |
 | `gb<TextObject>` | **C**omment/uncomment region blockwise       |
-|------------------|----------------------------------------------|
-| `cs<Old><New>`   | **C**hange **S**urrounding                   |
-| `ds<Surround>`   | **D**elete **S**urrounding                   |
-| `ys<TextObject><Surround>`| Add **S**urrounding                 |
-| `yss<Surround>`  | Add **S**urrounding to whole **S**entence    |
-| `S<Surround>`    | Add **S**urrounding in Visual Mode           |
-|------------------|----------------------------------------------|
-| `<Leader>g`   | Telescope **G**it files                         |
-| `<Leader>a`   | Telescope **A**ll files                         |
-| `<Leader>ss`  | Telescope **S**earch **S**tring                 |
-| `<Leader>sw`  | Telescope **S**earch **W**ord under cursor      |
-| `<Leader>r`   | Telescope show **R**egisters                    |
-| `<Leader>b`   | Telescope show **B**uffers                      |
-| `<Leader>m`   | Telescope show **M**arks                        |
-| `<Leader>to`  | **T**elescope **O**ld files                     |
-| `<Leader>ts`  | **T**elescope **S**ell suggest                  |
-| `<Leader>tm`  | **T**elescope **M**anpages                      |
-| `<Leader>th`  | **T**elescope **H**elp tags                     |
-| `<Leader>tgs` | **T**elescope **G**it **S**tatus                |
-| `<Leader>tgc` | **T**elescope **G**it **C**ommits               |
-| `<Leader>tgb` | **T**elescope **G**it **B**ranches              |
-| `<Leader>tt`  | **T**elescope all pickers                       |
+
+Vim-Surround:
+
+| Mapping          | Function                                   |
+|:-----------------|:-------------------------------------------|
+| `cs<Old><New>`   | **C**hange **S**urrounding                 |
+| `ds<Surround>`   | **D**elete **S**urrounding                 |
+| `ys<TextObject><Surround>`| Add **S**urrounding               |
+| `yss<Surround>`  | Add **S**urrounding to whole **S**entence  |
+| `S<Surround>`    | Add **S**urrounding in Visual Mode         |
 
 Surroundings:
 
@@ -108,6 +96,26 @@ Surroundings:
 - `}`, `)`, and `]`: `Hello` -> `{Hello}`
 - `>`: `Hello` -> `<Hello>`
 - `<p>`: `Hello` -> `<p>Hello</p>`
+
+Telescope: 
+
+| Mapping       | Function                                   |
+|:--------------|:-------------------------------------------|
+| `<Leader>g`   | Telescope **G**it files                    |
+| `<Leader>a`   | Telescope **A**ll files                    |
+| `<Leader>ss`  | Telescope **S**earch **S**tring            |
+| `<Leader>sw`  | Telescope **S**earch **W**ord under cursor |
+| `<Leader>r`   | Telescope show **R**egisters               |
+| `<Leader>b`   | Telescope show **B**uffers                 |
+| `<Leader>m`   | Telescope show **M**arks                   |
+| `<Leader>to`  | **T**elescope **O**ld files                |
+| `<Leader>ts`  | **T**elescope **S**ell suggest             |
+| `<Leader>tm`  | **T**elescope **M**anpages                 |
+| `<Leader>th`  | **T**elescope **H**elp tags                |
+| `<Leader>tgs` | **T**elescope **G**it **S**tatus           |
+| `<Leader>tgc` | **T**elescope **G**it **C**ommits          |
+| `<Leader>tgb` | **T**elescope **G**it **B**ranches         |
+| `<Leader>tt`  | **T**elescope all pickers                  |
 
 LSP:
 
