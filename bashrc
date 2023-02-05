@@ -47,4 +47,3 @@ alias mv='mv -i'
 alias cp='cp -i'
 
 # TODO: alias cat='bat'
-# TODO: set manpager?
