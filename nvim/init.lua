@@ -55,7 +55,6 @@ require('packer').startup(function(use)
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
   use 'nvim-lualine/lualine.nvim'            -- Fancier statusline

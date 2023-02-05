@@ -128,3 +128,8 @@ Tree Sitter:
 
 > **TODO**
 
+## Commands
+
+- `:Mason`: Manage LSP servers
+- `:PackerSync`: update plugins
+- `:Git` or `:G`: run git command
