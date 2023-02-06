@@ -41,19 +41,19 @@ Features:
 
 ## Mappings
 
-| Mapping                  | Function                                                      |
-|:-------------------------|:--------------------------------------------------------------|
-| `<Leader>`               | `<Space>`                                                     |
-| `jk` / `kj`              | Exit insert mode                                              |
-| `+`                      | Cursor to end of line (`$`)                                   |
-| `-`                      | Cursor to first non-whitespace character of the line (`^`)    |
-| `U`                      | Redo (`<C-r>`)                                                |
-| `<C-j>` / `<C-k>`        | Scroll                                                        |
-| `<C-Left>` / `<C-Right>` | Move between tabs                                             |
-| `ñ` / `Ñ`                | Window comand (`<C-w>`)                                       |
-| `<Leader>d`              | Delete to void register                                       |
-| `<Leader>p`              | Paste from visual mode without changing the registers         |
-| `<Leader>y`              | Yank to system clipboard                                      |
+| Mapping                   | Function                                                      |
+|:--------------------------|:--------------------------------------------------------------|
+| `<Leader>`                | `<Space>`                                                     |
+| `jk` / `kj`               | Exit insert mode                                              |
+| `+`                       | Cursor to end of line (`$`)                                   |
+| `-`                       | Cursor to first non-whitespace character of the line (`^`)    |
+| `U`                       | Redo (`<C-r>`)                                                |
+| `<C-j>` / `<C-k>`         | Scroll                                                        |
+| `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
+| `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       |
+| `<Leader>d`               | Delete to void register                                       |
+| `<Leader>p`               | Paste from visual mode without changing the registers         |
+| `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
 
 
 Commands:
@@ -62,7 +62,7 @@ Commands:
 |:--------------|:---------------------------------------------------|
 | `<Leader>x`   | Delete current buffer                              |
 | `<Leader>w`   | **W**rite current buffer to disk                   |
-| `<Leader>n`   | Re**N**ame symbol (under test)                     |
+| `<Leader>TODO`   | Re**N**ame symbol (under test)                     |
 | `<Leader>c`   | Run shell **C**ommand in a vertical split          |
 | `<Leader>C`   | Repeat last **C**ommand                            |
 | `<Leader>ee`  | Open **E**xplorer in the current window            |
@@ -100,7 +100,7 @@ Surroundings:
 - `>`: `Hello` -> `<Hello>`
 - `<p>`: `Hello` -> `<p>Hello</p>`
 
-Telescope: 
+Telescope (`<Leader>t`):
 
 | Mapping       | Function                                   |
 |:--------------|:-------------------------------------------|
@@ -121,32 +121,46 @@ Telescope:
 | `<Leader>tgb` | **T**elescope **G**it **B**ranches         |
 | `<Leader>tt`  | **T**elescope all pickers                  |
 
-LSP:
+LSP (`<Leader>l`):
 
 | Mapping      | Function                                                    |
 |:-------------|:------------------------------------------------------------|
 | `[d` / `]d`  | Go to previous / next **D**iagnostic                        |
 | `gl`         | Open diagnostic in floating window (**G**o **L**SP)         |
+| `gq`         | Open diagnostics in a quickfix window (**G**o **Q**uickfix) |
+| `<Leader>q`  | Open diagnostics in a Telescope window                      |
 | `gd`         | **G**o to **D**efinition                                    |
 | `gD`         | **G**o to **D**eclaration                                   |
 | `gI`         | **G**oto **I**mplementation                                 |
-| `gr`         | **G**oto **R**eferences                                     |
-| `gq`         | Open diagnostics in a quickfix window (**G**o **Q**uickfix) |
+| `gr`         | Telescope **G**oto **R**eferences under cursor              |
 | `K`          | Hover documentation for symbol under cursor                 |
-| `<C-k>` TODO | Open full documentation for symbol under cursor             |
-| `<Leader>rn` | **R**re**n**ame                                             |
-| `<Leader>ca` | **C**ode **A**ction                                         |
-| `<Leader>D`  | Type **D**efinition                                         |
-| `<Leader>ds` | Telescope **D**ocument **S**ymbols                          |
-| `<Leader>ws` | Telescope **W**orkspace **S**ymbols                         |
+| `<Leader>ld` | Open full **D**ocumentation for symbol under cursor         |
+| `<Leader>lr` | **R**rename                                                 |
+| `<Leader>lc` | **C**ode Action                                             |
+| `<Leader>lt` | **T**ype Definition                                         |
+| `<Leader>ls` | Telescope Document **S**ymbols                              |
+| `<Leader>lw` | Telescope **W**orkspace Symbols                             |
 
-> **TODO**: Telescope LSP
+LSP complete (nvim-cmp):
+
+| Mapping               | Function                                       |
+|:----------------------|:-----------------------------------------------|
+| `i_<C-a>`             | St**a**rt complete menu                        |
+| `i_<C-u>` / `i_<C-d>` | Scroll completion docs                         |
+| `i_<Enter>`           | Confirm completion                             |
+| `i_<Tab>`             | Select next item / go to next field in snippet |
 
 Tree Sitter:
 
-| Mapping   | Type        | Function |
-|:----------|:------------|:---------|
-| `af` `if` | Text object | Function |
+| Mapping   | Type        | Function                       |
+|:----------|:------------|:-------------------------------|
+| `aa` `ia` | Text object | Parameter                      |
+| `af` `if` | Text object | Function                       |
+| `ac` `ic` | Text object | Class                          |
+| `[m` `]m` | Move        | Previous / Next function start |
+| `[M` `]M` | Move        | Previous / Next function end   |
+| `[[` `]]` | Move        | Previous / Next class start    |
+| `[]` `][` | Move        | Previous / Next class end      |
 
 > **TODO**
 
