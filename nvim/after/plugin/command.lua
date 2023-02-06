@@ -14,16 +14,16 @@ map('n', '<Leader>c', function()
         vim.fn.execute(':vs term://' .. vim.g.magno_cmd)
       end
     end)
-end)
+end, { desc = 'Run command' })
 
 -- Repeat last command
 map('n', '<Leader>C', function()
   if (not (vim.g.magno_cmd == nil or vim.g.magno_cmd == '')) then
     vim.fn.execute(':vs term://' .. vim.g.magno_cmd)
   end
-end)
+end, { desc = 'Repeat last command' })
 
 -- Exit terminal
-vim.api.nvim_create_autocmd({'TermOpen'}, {
-  callback = function() map('n', 'q', 'i<C-D>', { buffer=true }) end
+vim.api.nvim_create_autocmd({ 'TermOpen' }, {
+  callback = function() map('n', 'q', 'i<C-D>', { buffer = true }) end
 })

@@ -1,25 +1,11 @@
 ---- Tree Sitter ----
 -- More info at https://github.com/nvim-treesitter/nvim-treesitter
--- :so to apply changes
--- require('nvim-treesitter.configs').setup {
---   ensure_installed = { "help", "c", "lua", "rust" }, -- TODO: Markdown
---
---   sync_install = false,
---   auto_install = true,
---
---   highlight = {
---     enable = true,
---     additional_vim_regex_highlighting = false,
---   },
--- }
-
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
+-- Also see `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = {
     'c',
-    'lua',
+    'lua',            -- Browse this configuration
     'python',
     'rust',
     'help',           -- Vim help
@@ -29,6 +15,7 @@ require('nvim-treesitter.configs').setup {
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
+  auto_install = true,
 
   -- TODO: ???
   incremental_selection = {
@@ -78,6 +65,7 @@ require('nvim-treesitter.configs').setup {
     },
     swap = {
       enable = true,
+      -- TODO: ???
       swap_next = {
         ['<leader>-'] = '@parameter.inner',
       },

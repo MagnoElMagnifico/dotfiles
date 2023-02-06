@@ -7,9 +7,9 @@ vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 20
 
 -- More mappings :h netrw-quickhelp
-map('n', '<Leader>ee', vim.cmd.Ex)       -- Explorer
-map('n', '<Leader>et', vim.cmd.Tex)      -- Explorer in new Tab
-map('n', '<Leader>ev', vim.cmd.Lex)      -- Explorer left (vertical)
+map('n', '<Leader>ee', vim.cmd.Ex,  { desc = 'Launch [E]xplorer' })
+map('n', '<Leader>et', vim.cmd.Tex, { desc = 'Launch [E]xplorer in new [T]ab' })
+map('n', '<Leader>ev', vim.cmd.Lex, { desc = 'Launch [E]xplorer in new [V]ertical split' })
 
 
 ---- LuaLine ----

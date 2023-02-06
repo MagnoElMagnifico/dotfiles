@@ -169,44 +169,44 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --   x    Visual
 --   s    Select
 --   t    Terminal (insert mode inside of a terminal)
-local map = vim.keymap.set
+local map = function(mode, mapping, mapped, desc) vim.keymap.set(mode, mapping, mapped, { desc = desc }) end
 vim.g.mapleader = ' '
 
 map({'n', 'v'}, '<Space>', '<Nop>')
 
 -- Moving faster in the line
-map({'n', 'v'}, '+', '$')
-map({'n', 'v'}, '-', '^')
+map({'n', 'v', 'o'}, '+', '$', 'Go to end of line')
+map({'n', 'v', 'o'}, '-', '^', 'Go to start of line')
 
-map('i', '<C-H>', '<C-w>')
-map('n', 'U',     '<C-R>')
+-- NOTE: I use a EU keyboard, not US.
+map({'n', 'v', 'o'}, ';', ',')     -- Repeat f, F, t, T backwards
+map({'n', 'v', 'o'}, ',', ';')     -- Repeat f, F, t, T
+
+map({'n', 'v'}, "'", '`')
+
+map('i', '<C-H>', '<C-w>', 'Delete word in insert mode')
+map('n', 'U',     '<C-R>', 'Redo')
 
 -- Stay in visual mode after identing
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 
-map({'n', 'v'}, "'", '`')
-
--- NOTE: I use a EU keyboard, not US.
-map({'n', 'v'}, ';', ',')     -- Repeat f, F, t, T backwards
-map({'n', 'v'}, ',', ';')     -- Repeat f, F, t, T
-
 -- Yank and Paste
 -- TODO: Copy to tmux
-map('v', '<Leader>p', '"_dP')
-map('n', '<Leader>Y', '"+Y')
-map({'n', 'v'}, '<Leader>y', '"+y')   -- Yank to system clipboard
-map({'n', 'v'}, '<Leader>d', '"_d')   -- Delete to no register
+map('v',        '<Leader>p', '"_dP', '[P]aste without modifying the registers')
+map({'n', 'v'}, '<Leader>d', '"_d',  '[D]elete to void register')
+map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
+map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 
 ---- Commands ----
 -- Refactor symbol (reName)
-map('n', '<Leader>n', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>') -- Under test
-map('n', '<Leader>x', vim.cmd.bdel)
-map('n', '<Leader>w', vim.cmd.write)
+map('n', '<Leader>TODO', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', 'Rename [ThePrimeagen]') -- Under test
+map('n', '<Leader>x', vim.cmd.bdel,  'Delete current buffer')
+map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
 
 -- Scroll
-map({'n', 'v'}, '<C-k>', '<C-y>') -- Scroll
-map({'n', 'v'}, '<C-j>', '<C-e>')
+map({'n', 'v'}, '<C-k>', '<C-y>', 'Scroll up')
+map({'n', 'v'}, '<C-j>', '<C-e>', 'Scroll down')
 
 ---- Centering cursor ----
 map({'n', 'v'}, 'n', 'nzz')
@@ -218,17 +218,15 @@ map({'n', 'v'}, '<C-d>', '<C-d>zz')
 map({'n', 'v'}, '<C-u>', '<C-u>zz')
 
 ---- Windows & Buffers & Tabs ----
-map({'n', 'v'}, 'ñ', '<C-w>')
-map({'n', 'v'}, 'Ñ', '<C-w>')
-map('n', '<C-Right>', vim.cmd.tabn) -- Move between tabs
-map('n', '<C-Left>',  vim.cmd.tabp)
+map({'n', 'v'}, 'ñ', '<C-w>', 'Window command')
+map({'n', 'v'}, 'Ñ', '<C-w>', 'Window command')
 
 ---- Exiting ----
-map('t', '<Esc>', '<C-\\><C-N>')    -- Exit terminal
-map('t', 'jk',    '<C-\\><C-N>')
-map('t', 'kj',    '<C-\\><C-N>')
-map('i', 'jk',    '<Esc>')          -- Exit insert mode
-map('i', 'kj',    '<Esc>')
+map('t', '<Esc>', '<C-\\><C-N>', 'Exit terminal')    -- Exit terminal
+map('t', 'jk',    '<C-\\><C-N>', 'Exit terminal')
+map('t', 'kj',    '<C-\\><C-N>', 'Exit terminal')
+map('i', 'jk',    '<Esc>', 'Exit insert mode')       -- Exit insert mode
+map('i', 'kj',    '<Esc>', 'Exit insert mode')
 
 -- TODO: Not working
 -- Move text

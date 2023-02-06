@@ -1,4 +1,4 @@
-local map = vim.keymap.set
+local nmap = function (mapping, mapped, desc) vim.keymap.set('n', mapping, mapped, { desc = desc }) end
 local tl = require('telescope.builtin')
 
 -- More info:
@@ -6,26 +6,26 @@ local tl = require('telescope.builtin')
 -- https://github.com/nvim-telescope/telescope.nvim#pickers
 
 -- Files
-map('n', '<Leader>g', tl.git_files)                  -- Git files
-map('n', '<Leader>a', tl.find_files)                 -- All files
-map('n', '<Leader>ss', tl.live_grep)                 -- Search files
-map('n', '<Leader>sw', tl.grep_string)               -- Search current word
-map('n', '<Leader>/', tl.current_buffer_fuzzy_find)  -- Search in buffer
+nmap('<Leader>g',  tl.git_files,   'Telescope [G]it files')
+nmap('<Leader>a',  tl.find_files,  'Telescope Find [F]iles')
+nmap('<Leader>ss', tl.live_grep,   'Telescope [S]earch files')
+nmap('<Leader>sw', tl.grep_string, 'Telescope [S]earch [W]ord under cursor')
+nmap('<Leader>/',  tl.current_buffer_fuzzy_find, 'Telescope search buffer (/)')
 
 -- Vim
-map('n', '<Leader>r', vim.cmd.reg)      -- Registers TODO: Telescope not working
-map('n', '<Leader>b', tl.buffers)       -- Buffers
-map('n', '<Leader>m', tl.marks)         -- Marks
+nmap('<Leader>r', vim.cmd.reg, '[R]egisters')  -- TODO: Telescope not working
+nmap('<Leader>b', tl.buffers,  'Telescope [B]uffers')
+nmap('<Leader>m', tl.marks,    'Telescope [M]arks')
 
-map('n', '<Leader>tt', tl.builtin)       -- Telescope Pickers
-map('n', '<Leader>to', tl.oldfiles)      -- Telescope Old files
-map('n', '<Leader>ts', tl.spell_suggest) -- Telescope Spell check under cursor
-map('n', '<Leader>tm', tl.man_pages)     -- Telescope Man pages
-map('n', '<Leader>th', tl.help_tags)     -- Telescope Help
+nmap('<Leader>tt', tl.builtin,       '[T]elescope pickers')
+nmap('<Leader>to', tl.oldfiles,      'Telescope [O]ld files')
+nmap('<Leader>ts', tl.spell_suggest, '[T]elescope [S]pell suggest under cursor')
+nmap('<Leader>tm', tl.man_pages,     '[T]elescope [M]anpages')
+nmap('<Leader>th', tl.help_tags,     '[T]elescope [H]elp tags')
 
 -- Git
-map('n', '<Leader>tgs', tl.git_status)   -- Telescope Git Status
-map('n', '<Leader>tgc', tl.git_bcommits) -- Telescope Git Commits
-map('n', '<Leader>tgb', tl.git_branches) -- Telescope Git Branches
+nmap('<Leader>tgs', tl.git_status,   '[T]elescope [G]it [S]tatus')
+nmap('<Leader>tgc', tl.git_bcommits, '[T]elescope [G]it [C]ommits')
+nmap('<Leader>tgb', tl.git_branches, '[T]elescope [G]it [B]ranches')
 
 -- NOTE: Telescope's LSP config is in lsp.lua

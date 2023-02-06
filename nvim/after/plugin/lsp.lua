@@ -2,58 +2,37 @@
 ---- LSP Settings -----------------------------------------
 -----------------------------------------------------------
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic' })
-vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Open diagnostic in a floating window' })
-vim.keymap.set('n', 'gq', vim.diagnostic.setloclist, { desc = 'Open all the diagnostics in a quickfix window' }) -- TODO: find better mapping
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,  { desc = 'LSP: Go to previous [D]iagnostic' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next,  { desc = 'LSP: Go to next [D]iagnostic' })
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = '[L]SP: Open diagnostic in a floating window' })
+vim.keymap.set('n', 'gq', vim.diagnostic.setloclist, { desc = 'LSP: Open all the diagnostics in a [Q]uickFix window' })
 vim.diagnostic.config { virtual_text = true } -- Show errors (under test)
-
--- TODO: Telescope LSP
---
--- [x] lsp_references                  Lists LSP references for word under the cursor
---
--- [ ] lsp_incoming_calls              Lists LSP incoming calls for word under the cursor
--- [ ] lsp_outgoing_calls              Lists LSP outgoing calls for word under the cursor
---
--- [x] lsp_document_symbols            Lists LSP document symbols in the current buffer
--- [ ] lsp_workspace_symbols           Lists LSP document symbols in the current workspace
--- [x] lsp_dynamic_workspace_symbols   Dynamically Lists LSP for all workspace symbols
---
--- [ ] diagnostics                     Lists Diagnostics for all open buffers or a specific buffer. Use option bufnr=0 for current buffer.
---
--- [ ] lsp_implementations             Goto the implementation of the word under the cursor if there's only one, otherwise show all options in Telescope
--- [ ] lsp_definitions                 Goto the definition of the word under the cursor, if there's only one, otherwise show all options in Telescope
--- [ ] lsp_type_definitions            Goto the definition of the type of the word under the cursor, if there's only one, otherwise show all options in Telescope
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- We create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
   local tl = require 'telescope.builtin'
   local vlb = vim.lsp.buf
 
-  nmap('K',     vlb.hover,      'Hover Documentation')
-  nmap('<C-k>', vlb.signature_help, 'Signature Documentation') -- TODO: better mapping
+  nmap('gd', vlb.definition,     'LSP: [G]oto [D]efinition')     -- TODO?: Telescope
+  nmap('gD', vlb.declaration,    'LSP: [G]oto [D]eclaration')
+  nmap('gI', vlb.implementation, 'LSP: [G]oto [I]mplementation') -- TODO?: Telescope
+  nmap('gr', tl.lsp_references,  'LSP: Telescope [G]oto [R]eferences')
 
-  nmap('<Leader>rn', vlb.rename,          '[R]e[n]ame')
-  nmap('<Leader>ca', vlb.code_action,     '[C]ode [A]ction')
-  nmap('<Leader>D',  vlb.type_definition, 'Type [D]efinition')
+  nmap('K',          vlb.hover,           'LSP: Hover Documentation')
+  nmap('<Leader>ld', vlb.signature_help,  '[L]SP: Signature [D]ocumentation')
+  nmap('<Leader>lr', vlb.rename,          '[L]SP: [R]ename')
+  nmap('<Leader>lc', vlb.code_action,     '[L]SP: [C]ode Action')
+  nmap('<Leader>lt', vlb.type_definition, '[L]SP: [T]ype Definition')  -- TODO?: Telescope
 
-  nmap('<Leader>ds', tl.lsp_document_symbols,          '[D]ocument [S]ymbols')
-  nmap('<Leader>ws', tl.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  nmap('gd', vlb.definition,     '[G]oto [D]efinition')
-  nmap('gD', vlb.declaration,    '[G]oto [D]eclaration')
-  nmap('gI', vlb.implementation, '[G]oto [I]mplementation')
-  nmap('gr', tl.lsp_references,  '[G]oto [R]eferences')
+  nmap('<Leader>q',  tl.diagnostics,                   'LSP: Telescope [Q]uickfix diagnostics')
+  nmap('<Leader>ls', tl.lsp_document_symbols,          '[L]SP: Telescope Document [S]ymbols')
+  nmap('<Leader>lw', tl.lsp_dynamic_workspace_symbols, '[L]SP: Telescope [W]orkspace Symbols')
 
   -- Lesser used LSP functionality
   -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
