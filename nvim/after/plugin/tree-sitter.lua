@@ -17,7 +17,15 @@
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'help' }, -- markdown
+  ensure_installed = {
+    'c',
+    'lua',
+    'python',
+    'rust',
+    'help',           -- Vim help
+    'markdown',
+    'markdown_inline' -- Telescope preview
+  },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -68,15 +76,15 @@ require('nvim-treesitter.configs').setup {
         ['[]'] = '@class.outer',
       },
     },
-    -- swap = {
-    --   enable = true,
-    --   swap_next = {
-    --     ['<leader>a'] = '@parameter.inner',
-    --   },
-    --   swap_previous = {
-    --     ['<leader>A'] = '@parameter.inner',
-    --   },
-    --},
+    swap = {
+      enable = true,
+      swap_next = {
+        ['<leader>-'] = '@parameter.inner',
+      },
+      swap_previous = {
+        ['<leader>_'] = '@parameter.inner',
+      },
+    },
   },
 }
 
