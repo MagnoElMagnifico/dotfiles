@@ -12,7 +12,21 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  -- LSP Configuration & Plugins
+  -- Tree Sitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+  }
+
+  use {
+    -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
+
+  -- Languaje Server Protocol: Configuration & Plugins
   use {
     'neovim/nvim-lspconfig',
     requires = {
@@ -34,36 +48,25 @@ require('packer').startup(function(use)
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
-  -- Tree Sitter
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
-  }
+  -- TODO: Debug Adapter Protocol
+  -- use 'mfussenegger/nvim-dap'
+  -- use 'rcarriga/nvim-dap-ui'
 
-  use {
-    -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
-
-  -- Telescope
+  -- Utilities
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
-
-  use 'tpope/vim-surround'
+  use 'tpope/vim-surround'    -- Surround stuff
+  use 'numToStr/Comment.nvim' -- Toggle comments
+  use 'tpope/vim-sleuth'      -- Detect tabstop and shiftwidth automatically
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'nvim-lualine/lualine.nvim'            -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim'  -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim'                -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth'                     -- Detect tabstop and shiftwidth automatically
 
   -- Colorshemes: https://vimcolorschemes.com/
   use 'navarasu/onedark.nvim'                -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim'            -- Fancier statusline
+  use 'lukas-reineke/indent-blankline.nvim'  -- Add indentation guides even on blank lines
 
   if is_bootstrap then
     require('packer').sync()
@@ -200,7 +203,6 @@ map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 
 ---- Commands ----
 -- Refactor symbol (reName)
-map('n', '<Leader>TODO', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', 'Rename [ThePrimeagen]') -- Under test
 map('n', '<Leader>x', vim.cmd.bdel,  'Delete current buffer')
 map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
 
