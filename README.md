@@ -202,8 +202,11 @@ Mappings (`<Leader>d`, **D**ebug)
 |:--------------|:---------------------------------------|
 | `<Leader>db`  | Set **B**reakpoint on current line     |
 | `<Leader>dB`  | Remove **B**reakpoint on current line  |
-| `<Leader>ds`  | **S**tep                               |
-| `<Leader>do`  | Step **O**ver                          |
+| `<Leader>n`   | **N**ext                               |
+| `<Leader>o`   | Step **O**ver                          |
+| `<Leader>du`  | Run **U**ntil cursor                   |
+| `<Leader>dc`  | **C**ontinue until next breakpoint     |
+| `<Leader>df`  | **F**inish current function            |
 
 
 ## Other commands

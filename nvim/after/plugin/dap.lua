@@ -9,9 +9,8 @@ local map = vim.keymap.set
 
 map('n', '<Leader>db', vim.cmd.Break)  -- Add breakpoint
 map('n', '<Leader>dB', vim.cmd.Clear)  -- Remove breakpoint
-map('n', '<Leader>ds', vim.cmd.Step)
-map('n', '<Leader>do', vim.cmd.Over)
--- map('n', '<Leader>du', vim.cmd.Until)
--- map('n', '<Leader>df', vim.cmd.Finish)
--- map('n', '<Leader>dc', vim.cmd.Continue)
--- map('n', '<Leader>dp', vim.cmd.Stop)
+map('n', '<Leader>n',  vim.cmd.Step)   -- Advance to next line
+map('n', '<Leader>o',  vim.cmd.Over)   -- Advance to the next line without entering functions
+map('n', '<Leader>du', vim.cmd.Until)  -- Run until cursor
+map('n', '<Leader>dc', vim.cmd.Continue)  -- Continue until next breakpoint
+map('n', '<Leader>df', vim.cmd.Finish)    -- Continue until the end of the function
