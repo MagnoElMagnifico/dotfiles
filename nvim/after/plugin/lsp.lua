@@ -65,12 +65,7 @@ require('fidget').setup()
 local servers = {
   clangd = {},
   rust_analyzer = {},
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+  lua_ls = {},
 }
 
 require('mason').setup()
