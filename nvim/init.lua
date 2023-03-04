@@ -44,7 +44,7 @@ require('packer').startup(function(use)
 
   -- Autocompletion
   use {
-    'hrsh7th/nvim-cmp',
+    'hrsh7th/nvim-cmp', -- XXX
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
@@ -56,12 +56,11 @@ require('packer').startup(function(use)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
   use 'tpope/vim-surround'    -- Surround stuff
   use 'numToStr/Comment.nvim' -- Toggle comments
-  use 'tpope/vim-sleuth'      -- Detect tabstop and shiftwidth automatically
+  use 'tpope/vim-sleuth'      -- Detect tabstop and shiftwidth automatically -- XXX
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
-
 
   -- Colorshemes: https://vimcolorschemes.com/
   use 'navarasu/onedark.nvim'                -- Theme inspired by Atom
@@ -114,6 +113,12 @@ vim.o.shiftwidth  = 4      -- For << and >>
 vim.o.breakindent = true   -- Under test
 vim.o.wrap        = false
 vim.o.showbreak   = '\\'   -- Wrapped text
+
+-- Folds
+vim.o.foldmethod     = 'indent'
+vim.o.foldenable     = true
+vim.o.foldlevelstart = 10
+vim.o.foldnestmax    = 10
 
 -- Scroll
 vim.o.scrolloff     = 4
@@ -197,7 +202,7 @@ map('v', '>', '>gv')
 -- Yank and Paste
 -- TODO: Copy to tmux
 map('v',        '<Leader>p', '"_dP', '[P]aste without modifying the registers')
-map({'n', 'v'}, '<Leader>d', '"_d',  '[D]elete to void register')
+-- map({'n', 'v'}, '<Leader>d', '"_d',  '[D]elete to void register') -- TODO: conflict with debugging
 map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
 map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 
@@ -224,11 +229,17 @@ map({'n', 'v'}, 'ñ', '<C-w>', 'Window command')
 map({'n', 'v'}, 'Ñ', '<C-w>', 'Window command')
 
 ---- Exiting ----
-map('t', '<Esc>', '<C-\\><C-N>', 'Exit terminal')    -- Exit terminal
-map('t', 'jk',    '<C-\\><C-N>', 'Exit terminal')
-map('t', 'kj',    '<C-\\><C-N>', 'Exit terminal')
+map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal')    -- Exit terminal
+map('t', 'jk',    '<C-\\><C-n>', 'Exit terminal')
+map('t', 'kj',    '<C-\\><C-n>', 'Exit terminal')
 map('i', 'jk',    '<Esc>', 'Exit insert mode')       -- Exit insert mode
 map('i', 'kj',    '<Esc>', 'Exit insert mode')
+
+---- Terminal moving ----
+map('t', '<C-w>j', '<C-\\><C-n><C-w>j')
+map('t', '<C-w>k', '<C-\\><C-n><C-w>k')
+map('t', '<C-w>h', '<C-\\><C-n><C-w>h')
+map('t', '<C-w>l', '<C-\\><C-n><C-w>l')
 
 -- TODO: Not working
 -- Move text
