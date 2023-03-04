@@ -51,7 +51,7 @@ Features:
 | `<C-j>` / `<C-k>`         | Scroll                                                        |
 | `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
 | `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       |
-| `<Leader>d`               | Delete to void register                                       |
+<!-- | `<Leader>d`               | Delete to void register                                       | -->
 | `<Leader>p`               | Paste from visual mode without changing the registers         |
 | `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
 
@@ -62,9 +62,10 @@ Commands:
 |:--------------|:---------------------------------------------------|
 | `<Leader>x`   | Delete current buffer                              |
 | `<Leader>w`   | **W**rite current buffer to disk                   |
-| `<Leader>TODO`   | Re**N**ame symbol (under test)                     |
-| `<Leader>c`   | Run shell **C**ommand in a vertical split          |
-| `<Leader>C`   | Repeat last **C**ommand                            |
+| `<Leader>cv`  | Run shell **C**ommand in a **V**ertical split      |
+| `<Leader>ch`  | Run shell **C**ommand in a **H**orizontal split    |
+| `<Leader>CV`  | Repeat last **C**ommand in a **V**ertical split    |
+| `<Leader>CH`  | Repeat last **C**ommand in a **H**orizontal split  |
 | `<Leader>ee`  | Open **E**xplorer in the current window            |
 | `<Leader>et`  | Open **E**xplorer in a new **T**ab                 |
 | `<Leader>ev`  | Open **E**xplorer in a **V**ertical split (Left)   |
@@ -164,7 +165,48 @@ Tree Sitter:
 
 > **TODO**
 
-## Commands
+
+## Debugging (with `:Termdebug`)
+
+- `:Termdebug <executable> [<process>]`: start debugging with GDB
+- `:Run [<arguments>]`: run program with arguments
+- `:Arguments <arguments>`: set arguments for the next `:Run`
+- `:Ev[aluate] <expression>`: evaluate expression (`gdb print`)
+
+Breakpoints
+
+- `:Break`: set a breakpoint at the current line; a sign will be displayed
+- `:Clear`: delete the breakpoint at the current line
+
+Stepping through code
+
+- `:Step`: execute the gdb "step" command
+- `:Over`: execute the gdb "next" command (Next is a Vim command)
+- `:Until`: execute the gdb "until" command
+- `:Finish`: execute the gdb "finish" command
+- `:Continue`: execute the gdb "continue" command
+- `:Stop`: interrupt the program
+
+Jump
+
+- `:Gdb`: jump to the gdb window
+- `:Program`: jump to the window with the running program
+- `:Source `: jump to the window with the source code, create it if there isn't one
+- `:Asm`: jump to the window with the disassembly, create it if there isn't one
+
+> Note: from `:help terminal-debug`
+
+Mappings (`<Leader>d`, **D**ebug)
+
+| Mapping       | Function                               |
+|:--------------|:---------------------------------------|
+| `<Leader>db`  | Set **B**reakpoint on current line     |
+| `<Leader>dB`  | Remove **B**reakpoint on current line  |
+| `<Leader>ds`  | **S**tep                               |
+| `<Leader>do`  | Step **O**ver                          |
+
+
+## Other commands
 
 - `:Format`: use LSP formatter
 - `:Mason`: Manage LSP servers
