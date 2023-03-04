@@ -11,8 +11,6 @@ export EDITOR=nvim
 ### OTHER SCRIPTS ###
 # Rust & cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-# CLion (temporal)
-[ -d "/opt/clion-2022.3.1/bin" ] && export PATH=$PATH:/opt/clion-2022.3.1/bin
 
 ### SHOPT ###
 shopt -s autocd         # change to named directory
