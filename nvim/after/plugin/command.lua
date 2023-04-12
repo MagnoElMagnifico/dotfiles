@@ -1,46 +1,18 @@
 -- Asks for a command a runs it in a vertical split window
-local map = vim.keymap.set
-
 vim.api.nvim_set_var('magno_cmd', '')
 
-map('n', '<Leader>cv', function()
-  vim.ui.input({
-    prompt = 'Command > ',
-    default = nil,
-    completion = 'file' -- TODO: complete as bash
-  },
-    function(input)
-      if (not (input == nil or input == '')) then
-        vim.g.magno_cmd = input
-        vim.fn.execute(':vs term://' .. vim.g.magno_cmd)
-      end
-    end)
-end, { desc = 'Run command' })
+local function term_cmd(cmd, opts)
+    if (#opts.fargs ~= 0) then
+      vim.g.magno_cmd = table.concat(opts.fargs, ' ')
+    end
 
-map('n', '<Leader>ch', function()
-  vim.ui.input({
-    prompt = 'Command > ',
-    default = nil,
-    completion = 'file' -- TODO: complete as bash
-  },
-    function(input)
-      if (not (input == nil or input == '')) then
-        vim.g.magno_cmd = input
-        vim.fn.execute(':split term://' .. vim.g.magno_cmd)
-      end
-    end)
-end, { desc = 'Run command' })
+    if (opts.bang) then
+      vim.fn.execute(':' .. cmd .. ' | term ')
+    else
+      vim.fn.execute(':' .. cmd .. ' | term ' .. vim.g.magno_cmd)
+    end
+end
 
--- Repeat last command
-map('n', '<Leader>CV', function()
-  if (not (vim.g.magno_cmd == nil or vim.g.magno_cmd == '')) then
-    vim.fn.execute(':vs term://' .. vim.g.magno_cmd)
-  end
-end, { desc = 'Repeat last command' })
-
-map('n', '<Leader>CH', function()
-  if (not (vim.g.magno_cmd == nil or vim.g.magno_cmd == '')) then
-    vim.fn.execute(':split term://' .. vim.g.magno_cmd)
-  end
-end, { desc = 'Repeat last command' })
-
+local attributes = { nargs = '*', complete = 'shellcmd', bang = true }
+vim.api.nvim_create_user_command('Vter', function(opts) term_cmd('vs', opts) end, attributes)
+vim.api.nvim_create_user_command('Hter', function(opts) term_cmd('sp', opts) end, attributes)
