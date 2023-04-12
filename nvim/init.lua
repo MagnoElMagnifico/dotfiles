@@ -83,6 +83,9 @@ onedark.load()
 -----------------------------------------------------------
 ---- Options ----------------------------------------------
 -----------------------------------------------------------
+-- Use Python inside Neovim
+vim.g.python3_host_prog = '/usr/bin/python3'
+
 -- File
 vim.o.fileencoding = 'utf-8'
 vim.o.spelllang    = 'es,en'
@@ -142,13 +145,13 @@ vim.o.splitright = true
 ---- Auto Commands ----------------------------------------
 -----------------------------------------------------------
 -- Terminal: Remove line numbers
-vim.api.nvim_create_autocmd({'TermOpen'}, {
-  pattern = '*',
-  callback = function()
-    vim.o.number = false
-    vim.o.relativenumber = false
-  end
-})
+-- vim.api.nvim_create_autocmd({'TermOpen'}, {
+--   pattern = '*',
+--   callback = function()
+--     vim.o.number = false
+--     vim.o.relativenumber = false
+--   end
+-- })
 
 -- Highlight on yank. See :h vim.highlight.on_yank()
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -209,7 +212,7 @@ map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 ---- Commands ----
 -- Refactor symbol (reName)
 map('n', '<Leader>x', vim.cmd.bdel,  'Delete current buffer')
-map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
+-- map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
 
 -- Scroll
 map({'n', 'v'}, '<C-k>', '<C-y>', 'Scroll up')
