@@ -44,33 +44,35 @@ Features:
 | Mapping                   | Function                                                      |
 |:--------------------------|:--------------------------------------------------------------|
 | `<Leader>`                | `<Space>`                                                     |
-| `jk` / `kj`               | Exit insert mode                                              |
 | `+`                       | Cursor to end of line (`$`)                                   |
 | `-`                       | Cursor to first non-whitespace character of the line (`^`)    |
 | `U`                       | Redo (`<C-r>`)                                                |
 | `<C-j>` / `<C-k>`         | Scroll                                                        |
 | `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
 | `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       |
+| `jk` / `kj`               | Exit insert mode                                              |
+<!-- | `<Leader>p`               | Paste from visual mode without changing the registers         | -->
+<!-- | `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      | -->
 <!-- | `<Leader>d`               | Delete to void register                                       | -->
-| `<Leader>p`               | Paste from visual mode without changing the registers         |
-| `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
 
+Note that I don't use a US keyboard.
 
 Commands:
 
 | Mapping       | Function                                           |
 |:--------------|:---------------------------------------------------|
 | `<Leader>x`   | Delete current buffer                              |
-| `<Leader>w`   | **W**rite current buffer to disk                   |
-| `<Leader>cv`  | Run shell **C**ommand in a **V**ertical split      |
-| `<Leader>ch`  | Run shell **C**ommand in a **H**orizontal split    |
-| `<Leader>CV`  | Repeat last **C**ommand in a **V**ertical split    |
-| `<Leader>CH`  | Repeat last **C**ommand in a **H**orizontal split  |
+<!-- | `<Leader>w`   | **W**rite current buffer to disk                   | -->
+
+Netrw (`<Leader>e`):
+
+| Mapping       | Function                                           |
+|:--------------|:---------------------------------------------------|
 | `<Leader>ee`  | Open **E**xplorer in the current window            |
 | `<Leader>et`  | Open **E**xplorer in a new **T**ab                 |
 | `<Leader>ev`  | Open **E**xplorer in a **V**ertical split (Left)   |
 
-Comment.nvim:
+Comment.nvim (`gc` and `gb`):
 
 | Mapping          | Function                                     |
 |:-----------------|:---------------------------------------------|
@@ -94,12 +96,12 @@ Vim-Surround:
 
 Surroundings:
 
-- `"`: `Hello` -> `"Hello"`
-- `'`: `Hello` -> `'Hello'`, and other characters.
-- `{`, `(`, and `[`: `Hello` -> `{ Hello }`
-- `}`, `)`, and `]`: `Hello` -> `{Hello}`
-- `>`: `Hello` -> `<Hello>`
-- `<p>`: `Hello` -> `<p>Hello</p>`
+- `"`: `Hello` to `"Hello"`
+- `'`: `Hello` to `'Hello'`, and other characters.
+- `{`, `(`, and `[`: `Hello` to `{ Hello }`
+- `}`, `)`, and `]`: `Hello` to `{Hello}`
+- `>`: `Hello` to `<Hello>`
+- `<p>`: `Hello` to `<p>Hello</p>`
 
 Telescope (`<Leader>t`):
 
@@ -215,3 +217,4 @@ Mappings (`<Leader>d`, **D**ebug)
 - `:Mason`: Manage LSP servers
 - `:PackerSync`: update plugins
 - `:Git` or `:G`: run git command
+- `:Vter [<cmd>]` and `:Hter [<cmd>]` create a terminal and runs a command.
