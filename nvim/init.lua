@@ -180,10 +180,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --   x    Visual
 --   s    Select
 --   t    Terminal (insert mode inside of a terminal)
-local map = function(mode, mapping, mapped, desc) vim.keymap.set(mode, mapping, mapped, { desc = desc }) end
+local map = function(mode, mapping, mapped, desc)
+  vim.keymap.set(mode, mapping, mapped, { desc = desc })
+end
 vim.g.mapleader = ' '
 
+---- Convenience changes ----
 map({'n', 'v'}, '<Space>', '<Nop>')
+map('n', 'U', '<C-R>', 'Redo')
+map({'n', 'v'}, "'", '`')
+map('i', '<C-H>', '<C-w>', 'Delete word in insert mode')
 
 -- Moving faster in the line
 map({'n', 'v', 'o'}, '+', '$', 'Go to end of line')
@@ -193,30 +199,20 @@ map({'n', 'v', 'o'}, '-', '^', 'Go to start of line')
 map({'n', 'v', 'o'}, ';', ',')     -- Repeat f, F, t, T backwards
 map({'n', 'v', 'o'}, ',', ';')     -- Repeat f, F, t, T
 
-map({'n', 'v'}, "'", '`')
-
-map('i', '<C-H>', '<C-w>', 'Delete word in insert mode')
-map('n', 'U',     '<C-R>', 'Redo')
-
 -- Stay in visual mode after identing
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 
--- Yank and Paste
 -- TODO: Copy to tmux
-map('v',        '<Leader>p', '"_dP', '[P]aste without modifying the registers')
+-- Yank and Paste
+-- map('v',        '<Leader>p', '"_dP', '[P]aste without modifying the registers')
+-- map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
+-- map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 -- map({'n', 'v'}, '<Leader>d', '"_d',  '[D]elete to void register') -- TODO: conflict with debugging
-map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
-map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 
 ---- Commands ----
--- Refactor symbol (reName)
 map('n', '<Leader>x', vim.cmd.bdel,  'Delete current buffer')
 -- map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
-
--- Scroll
-map({'n', 'v'}, '<C-k>', '<C-y>', 'Scroll up')
-map({'n', 'v'}, '<C-j>', '<C-e>', 'Scroll down')
 
 ---- Centering cursor ----
 map({'n', 'v'}, 'n', 'nzz')
@@ -230,6 +226,10 @@ map({'n', 'v'}, '<C-u>', '<C-u>zz')
 ---- Windows & Buffers & Tabs ----
 map({'n', 'v'}, 'ñ', '<C-w>', 'Window command')
 map({'n', 'v'}, 'Ñ', '<C-w>', 'Window command')
+
+-- Scroll
+map({'n', 'v'}, '<C-k>', '<C-y>', 'Scroll up')
+map({'n', 'v'}, '<C-j>', '<C-e>', 'Scroll down')
 
 ---- Exiting ----
 map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal')    -- Exit terminal
