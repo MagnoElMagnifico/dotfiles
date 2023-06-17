@@ -13,9 +13,9 @@ nmap('<Leader>sw', tl.grep_string, 'Telescope [S]earch [W]ord under cursor')
 nmap('<Leader>/',  tl.current_buffer_fuzzy_find, 'Telescope search buffer (/)')
 
 -- Vim
-nmap('<Leader>r', vim.cmd.reg, '[R]egisters')  -- TODO: Telescope not working
-nmap('<Leader>b', tl.buffers,  'Telescope [B]uffers')
-nmap('<Leader>m', tl.marks,    'Telescope [M]arks')
+nmap('<Leader>r', tl.registers, 'Telescope [R]egisters')
+nmap('<Leader>b', tl.buffers,   'Telescope [B]uffers')
+nmap('<Leader>m', tl.marks,     'Telescope [M]arks')
 
 nmap('<Leader>tt', tl.builtin,       '[T]elescope pickers')
 nmap('<Leader>to', tl.oldfiles,      'Telescope [O]ld files')

@@ -105,6 +105,26 @@ vim.o.termguicolors = true
 
 vim.o.timeoutlen = 500
 
+-- Format
+vim.o.autoindent = true
+vim.o.textwidth = 80
+-- :h fo-table
+--  t   auto wraps text
+--  c   auto wraps text in comments
+--  r   auto insert comment when <Enter>
+--  o   auto insert comment when o or O (i_<C-u> to undo)
+--  /   only insert comment when it is at the start of the line
+--  q   formmating comments
+--  a   automatic formatting paragraphs. Only comments if 'c' is set
+--  n   recognize lists
+--  2   use the second line's indent to format the rest of the paragraph
+--  l   do not auto format a long line when entering insert mode
+--  1   prefer breaking lines before one-letter words
+--  ]   respect textwidth rigorously
+--  j   remove comment leaders when joining
+--  p   do not break lines at spaces that follow periods
+vim.o.formatoptions = 'tcro/qnl1j'
+
 -- Indent
 vim.o.autoindent  = true
 vim.o.expandtab   = true
