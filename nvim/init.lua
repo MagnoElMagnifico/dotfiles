@@ -54,9 +54,10 @@ require('packer').startup(function(use)
 
   -- Utilities
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
-  use 'tpope/vim-surround'    -- Surround stuff
-  use 'numToStr/Comment.nvim' -- Toggle comments
-  use 'tpope/vim-sleuth'      -- Detect tabstop and shiftwidth automatically -- XXX
+  use 'junegunn/vim-easy-align' -- Align text
+  use 'tpope/vim-surround'      -- Surround stuff
+  use 'numToStr/Comment.nvim'   -- Toggle comments
+  use 'tpope/vim-sleuth'        -- Detect tabstop and shiftwidth automatically
 
   -- Git related plugins
   use 'tpope/vim-fugitive'

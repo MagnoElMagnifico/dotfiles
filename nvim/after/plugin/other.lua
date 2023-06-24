@@ -51,13 +51,17 @@ require('gitsigns').setup {
   },
 }
 
--- Enable Comment.nvim
+---- Comment.nvim ----
 require('Comment').setup()
 
--- Enable `lukas-reineke/indent-blankline.nvim`
+---- Indent Blankline ----
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
   char = '┊',
   show_trailing_blankline_indent = false,
 }
+
+---- Vim Easy Align ----
+map({'n', 'v'}, 'gA', 'ga')
+map({'n', 'v'}, 'ga', '<Plug>(LiveEasyAlign)') -- Go Align
 
