@@ -12,33 +12,6 @@ map('n', '<Leader>et', vim.cmd.Tex, { desc = 'Launch [E]xplorer in new [T]ab' })
 map('n', '<Leader>ev', vim.cmd.Lex, { desc = 'Launch [E]xplorer in new [V]ertical split' })
 
 
----- LuaLine ----
--- See `:help lualine.txt`
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    theme = 'onedark',
-    component_separators = '|',
-    section_separators = '',
-  },
-  sections = { -- TODO?: buffers
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics', 'sfas'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-}
-
 ---- Gitsigns ----
 -- See `:help gitsigns.txt`
 require('gitsigns').setup {
@@ -63,5 +36,4 @@ require('indent_blankline').setup {
 
 ---- Vim Easy Align ----
 map({'n', 'v'}, 'gA', 'ga')
-map({'n', 'v'}, 'ga', '<Plug>(LiveEasyAlign)') -- Go Align
-
+map({'n', 'v'}, 'ga', '<Plug>(EasyAlign)') -- Go Align

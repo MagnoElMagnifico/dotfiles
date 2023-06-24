@@ -12,21 +12,20 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  -- Tree Sitter
+  ---- Tree Sitter ----
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
-
   use {
     -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
 
-  -- Languaje Server Protocol: Configuration & Plugins
+  ---- LSP ----
   use {
     'neovim/nvim-lspconfig',
     requires = {
@@ -35,7 +34,7 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
+      {'j-hui/fidget.nvim', branch = 'legacy'},
 
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim', -- TODO?: remove
@@ -52,34 +51,28 @@ require('packer').startup(function(use)
   -- use 'mfussenegger/nvim-dap'
   -- use 'rcarriga/nvim-dap-ui'
 
-  -- Utilities
+  ---- Utilities ----
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
   use 'junegunn/vim-easy-align' -- Align text
   use 'tpope/vim-surround'      -- Surround stuff
   use 'numToStr/Comment.nvim'   -- Toggle comments
   use 'tpope/vim-sleuth'        -- Detect tabstop and shiftwidth automatically
 
-  -- Git related plugins
+  ---- Git related plugins ----
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
 
-  -- Colorshemes: https://vimcolorschemes.com/
-  use 'navarasu/onedark.nvim'                -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim'            -- Fancier statusline
+  ---- Colorshemes: https://vimcolorschemes.com/ ----
+  use 'navarasu/onedark.nvim'                -- OneDark (inspired by Atom)
+  use 'Mofiqul/dracula.nvim'                 -- Dracula
+  use 'sainnhe/sonokai'                      -- High constrast colorschemes
+  use 'nvim-lualine/lualinenvim'             -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim'  -- Add indentation guides even on blank lines
 
   if is_bootstrap then
     require('packer').sync()
   end
 end)
-
------------------------------------------------------------
----- Colorscheme ------------------------------------------
------------------------------------------------------------
-
-local onedark = require('onedark')
-onedark.setup { style = 'warmer' }  -- dark, darker, cool, deep, warm, warmer, light
-onedark.load()
 
 -----------------------------------------------------------
 ---- Options ----------------------------------------------
@@ -99,7 +92,8 @@ vim.o.undofile = true
 vim.o.list      = true
 vim.o.listchars = 'tab:>>,trail:·'
 
-vim.o.completeopt = 'menuone,noselect' -- Under test
+vim.o.completeopt = 'menuone,noselect'
+vim.o.shortmess = 'a'
 
 vim.o.mouse = 'a'
 vim.o.termguicolors = true
@@ -165,15 +159,6 @@ vim.o.splitright = true
 -----------------------------------------------------------
 ---- Auto Commands ----------------------------------------
 -----------------------------------------------------------
--- Terminal: Remove line numbers
--- vim.api.nvim_create_autocmd({'TermOpen'}, {
---   pattern = '*',
---   callback = function()
---     vim.o.number = false
---     vim.o.relativenumber = false
---   end
--- })
-
 -- Highlight on yank. See :h vim.highlight.on_yank()
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -183,12 +168,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
-
--- Remove trailing whitespace
--- vim.api.nvim_create_autocmd({"BufWritePre"}, {
---     pattern = "*",
---     command = "%s/\\s\\+$//e",
--- })
 
 -----------------------------------------------------------
 ---- Remaps -----------------------------------------------
@@ -247,6 +226,8 @@ map({'n', 'v'}, '<C-u>', '<C-u>zz')
 ---- Windows & Buffers & Tabs ----
 map({'n', 'v'}, 'ñ', '<C-w>', 'Window command')
 map({'n', 'v'}, 'Ñ', '<C-w>', 'Window command')
+map({'n', 'v'}, '<C-Right>', vim.cmd.bnext,     'Next buffer')
+map({'n', 'v'}, '<C-Left>',  vim.cmd.bprevious, 'Previous buffer')
 
 -- Scroll
 map({'n', 'v'}, '<C-k>', '<C-y>', 'Scroll up')
@@ -256,8 +237,8 @@ map({'n', 'v'}, '<C-j>', '<C-e>', 'Scroll down')
 map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal')    -- Exit terminal
 map('t', 'jk',    '<C-\\><C-n>', 'Exit terminal')
 map('t', 'kj',    '<C-\\><C-n>', 'Exit terminal')
-map('i', 'jk',    '<Esc>', 'Exit insert mode')       -- Exit insert mode
-map('i', 'kj',    '<Esc>', 'Exit insert mode')
+map('i', 'jk',    '<Esc>',       'Exit insert mode') -- Exit insert mode
+map('i', 'kj',    '<Esc>',       'Exit insert mode')
 
 ---- Terminal moving ----
 map('t', '<C-w>j', '<C-\\><C-n><C-w>j')
