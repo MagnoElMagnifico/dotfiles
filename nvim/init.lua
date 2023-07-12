@@ -77,70 +77,54 @@ end)
 -----------------------------------------------------------
 ---- Options ----------------------------------------------
 -----------------------------------------------------------
+-- Misc
+vim.opt.path:append('**')
+vim.o.completeopt   = 'menuone,noselect'
+vim.o.mouse         = 'a'
+vim.o.termguicolors = true
+vim.o.undofile      = true
+vim.o.timeoutlen    = 750
+
 -- Use Python inside Neovim
+--     IMPORTANT: Remember to:
+--     `python3 -m pip install pynvim`
+--     `sudo apt install python3-pynvim`
 vim.g.python3_host_prog = '/usr/bin/python3'
 
 -- File
 vim.o.fileencoding = 'utf-8'
 vim.o.spelllang    = 'es,en'
 
-vim.opt.path:append('**')
-
-vim.o.undofile = true
-
--- More info at :h 'list' and :h 'listchars'
+-- Tabs and trailing spaces (:h 'list' and :h 'listchars')
 vim.o.list      = true
 vim.o.listchars = 'tab:>>,trail:·'
 
-vim.o.completeopt = 'menuone,noselect'
-vim.o.shortmess = 'a'
-
-vim.o.mouse = 'a'
-vim.o.termguicolors = true
-
-vim.o.timeoutlen = 500
-
 -- Format
-vim.o.autoindent = true
-vim.o.textwidth = 80
--- :h fo-table
---  t   auto wraps text
---  c   auto wraps text in comments
---  r   auto insert comment when <Enter>
---  o   auto insert comment when o or O (i_<C-u> to undo)
---  /   only insert comment when it is at the start of the line
---  q   formmating comments
---  a   automatic formatting paragraphs. Only comments if 'c' is set
---  n   recognize lists
---  2   use the second line's indent to format the rest of the paragraph
---  l   do not auto format a long line when entering insert mode
---  1   prefer breaking lines before one-letter words
---  ]   respect textwidth rigorously
---  j   remove comment leaders when joining
---  p   do not break lines at spaces that follow periods
-vim.o.formatoptions = 'tcro/qnl1j'
+vim.o.autoindent    = true
+vim.o.textwidth     = 80
+vim.o.formatoptions = 'tcro/qjnl1' -- :h fo-table
 
 -- Indent
 vim.o.autoindent  = true
 vim.o.expandtab   = true
 vim.o.smartindent = true
 vim.o.tabstop     = 4
-vim.o.shiftwidth  = 4      -- For << and >>
+vim.o.shiftwidth  = 4
 
 -- Wrap
-vim.o.breakindent = true   -- Under test
 vim.o.wrap        = false
-vim.o.showbreak   = '\\'   -- Wrapped text
+vim.o.breakindent = true
+vim.o.showbreak   = '\\'
 
 -- Folds
 vim.o.foldmethod     = 'indent'
 vim.o.foldenable     = true
-vim.o.foldlevelstart = 10
-vim.o.foldnestmax    = 10
+vim.o.foldlevelstart = 5
+vim.o.foldnestmax    = 5
 
 -- Scroll
 vim.o.scrolloff     = 4
-vim.o.sidescrolloff = 4
+vim.o.sidescrolloff = 10
 
 -- Line numbers
 vim.o.relativenumber = true
@@ -203,16 +187,17 @@ map({'n', 'v', 'o'}, ',', ';')     -- Repeat f, F, t, T
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 
--- TODO: Copy to tmux
 -- Yank and Paste
+map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
+map({'n', 'v'}, '<Leader>p', '"+p',  '[P]aste from system clipboard')
+map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
+map('n',        '<Leader>P', '"+P',  '[P]aste from system clipboard')
 -- map('v',        '<Leader>p', '"_dP', '[P]aste without modifying the registers')
--- map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
--- map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
 -- map({'n', 'v'}, '<Leader>d', '"_d',  '[D]elete to void register') -- TODO: conflict with debugging
 
 ---- Commands ----
 map('n', '<Leader>x', vim.cmd.bdel,  'Delete current buffer')
--- map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
+map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
 
 ---- Centering cursor ----
 map({'n', 'v'}, 'n', 'nzz')
@@ -248,7 +233,8 @@ map('t', '<C-w>l', '<C-\\><C-n><C-w>l')
 
 -- TODO: Not working
 -- Move text
---map('n', '<A-j>', function() vim.cmd.move('+1') end)
---map('n', '<A-k>', function() vim.cmd.move('-2') end)
---map('v', 'J', "<CMD>move '>+1<Enter>gv=gv")
---map('v', 'K', "<CMD>move '<-2<Enter>gv=gv")
+-- map('n', '<A-j>', function() vim.cmd.move('+1') end)
+-- map('n', '<A-k>', function() vim.cmd.move('-2') end)
+-- map('v', 'J', "<CMD>move '>+1<Enter>gv=gv")
+-- map('v', 'K', "<CMD>move '<-2<Enter>gv=gv")
+

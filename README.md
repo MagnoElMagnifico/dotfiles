@@ -36,8 +36,25 @@ Features:
 - Git with _vim-fugitive_ and _gitsigns.nvim_
 - DAP (work in progress)
 - Colorscheme _onedark_ and _lualine.nvim_
+- Integrated python3
 
 [kickstart.nvim]: https://github.com/nvim-lua/kickstart.nvim
+
+## Remember to
+
+Run these commands to get Python3 working (`:py` commands):
+
+```sh
+python3 -m pip install pynvim
+# or
+sudo apt install python3-pynvim
+```
+
+And the clipboard support:
+
+```sh
+sudo apt install xclip
+```
 
 ## Mappings
 
@@ -51,8 +68,9 @@ Features:
 | `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
 | `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       |
 | `jk` / `kj`               | Exit insert mode                                              |
+| `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
+| `<Leader>p` / `<Leader>P` | Paste from system clipboard                                   |
 <!-- | `<Leader>p`               | Paste from visual mode without changing the registers         | -->
-<!-- | `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      | -->
 <!-- | `<Leader>d`               | Delete to void register                                       | -->
 
 Note that I don't use a US keyboard.
@@ -62,7 +80,7 @@ Commands:
 | Mapping       | Function                                           |
 |:--------------|:---------------------------------------------------|
 | `<Leader>x`   | Delete current buffer                              |
-<!-- | `<Leader>w`   | **W**rite current buffer to disk                   | -->
+| `<Leader>w`   | **W**rite current buffer to disk                   |
 
 Netrw (`<Leader>e`):
 
@@ -218,3 +236,5 @@ Mappings (`<Leader>d`, **D**ebug)
 - `:PackerSync`: update plugins
 - `:Git` or `:G`: run git command
 - `:Vter [<cmd>]` and `:Hter [<cmd>]` create a terminal and runs a command.
+- `:Vpy` and `:Hpy` opens a Python console.
+
