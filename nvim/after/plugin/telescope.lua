@@ -29,3 +29,4 @@ nmap('<Leader>tgc', tl.git_bcommits, '[T]elescope [G]it [C]ommits')
 nmap('<Leader>tgb', tl.git_branches, '[T]elescope [G]it [B]ranches')
 
 -- NOTE: Telescope's LSP config is in lsp.lua
+

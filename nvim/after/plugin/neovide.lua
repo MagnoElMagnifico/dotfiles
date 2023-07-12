@@ -6,3 +6,4 @@ vim.g.neovide_cursor_trail_size = 0.8
 -- railgun, torpedo, pixiedust, sonicboom, ripple, wireframe
 vim.g.neovide_cursor_vfx_mode = "pixiedust"
 vim.g.neovide_cursor_vfx_particle_density = 7.0
+

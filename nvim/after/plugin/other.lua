@@ -37,3 +37,4 @@ require('indent_blankline').setup {
 ---- Vim Easy Align ----
 map({'n', 'v'}, 'gA', 'ga')
 map({'n', 'v'}, 'ga', '<Plug>(EasyAlign)') -- Go Align
+

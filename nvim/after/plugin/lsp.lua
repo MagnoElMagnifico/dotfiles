@@ -129,3 +129,4 @@ cmp.setup {
     { name = 'luasnip' }, -- TODO?: https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
   },
 }
+
