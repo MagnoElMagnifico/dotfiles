@@ -19,11 +19,11 @@ require('packer').startup(function(use)
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
-  use {
-    -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
+  -- use {
+  --   -- Additional text objects via treesitter
+  --   'nvim-treesitter/nvim-treesitter-textobjects',
+  --   after = 'nvim-treesitter',
+  -- }
 
   ---- LSP ----
   use {
@@ -34,16 +34,16 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      {'j-hui/fidget.nvim', branch = 'legacy'},
+      -- {'j-hui/fidget.nvim', branch = 'legacy'},
 
-      -- Additional lua configuration, makes nvim stuff amazing
-      'folke/neodev.nvim', -- TODO?: remove
+      -- Additional lua configuration
+      -- 'folke/neodev.nvim',
     },
   }
 
   -- Autocompletion
   use {
-    'hrsh7th/nvim-cmp', -- XXX
+    'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
@@ -66,7 +66,7 @@ require('packer').startup(function(use)
   use 'navarasu/onedark.nvim'                -- OneDark (inspired by Atom)
   use 'Mofiqul/dracula.nvim'                 -- Dracula
   use 'sainnhe/sonokai'                      -- High constrast colorschemes
-  use 'nvim-lualine/lualinenvim'             -- Fancier statusline
+  use 'nvim-lualine/lualine.nvim'            -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim'  -- Add indentation guides even on blank lines
 
   if is_bootstrap then

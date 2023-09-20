@@ -6,7 +6,7 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,  { desc = 'LSP: Go to previo
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next,  { desc = 'LSP: Go to next [D]iagnostic' })
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = '[L]SP: Open diagnostic in a floating window' })
 vim.keymap.set('n', 'gq', vim.diagnostic.setloclist, { desc = 'LSP: Open all the diagnostics in a [Q]uickFix window' })
-vim.diagnostic.config { virtual_text = true } -- Show errors (under test)
+vim.diagnostic.config { virtual_text = true }
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -19,16 +19,16 @@ local on_attach = function(_, bufnr)
   local tl = require 'telescope.builtin'
   local vlb = vim.lsp.buf
 
-  nmap('gd', vlb.definition,     'LSP: [G]oto [D]efinition')     -- TODO?: Telescope
+  nmap('gd', vlb.definition,     'LSP: [G]oto [D]efinition')
   nmap('gD', vlb.declaration,    'LSP: [G]oto [D]eclaration')
-  nmap('gI', vlb.implementation, 'LSP: [G]oto [I]mplementation') -- TODO?: Telescope
+  nmap('gI', vlb.implementation, 'LSP: [G]oto [I]mplementation')
   nmap('gr', tl.lsp_references,  'LSP: Telescope [G]oto [R]eferences')
 
   nmap('K',          vlb.hover,           'LSP: Hover Documentation')
   nmap('<Leader>ld', vlb.signature_help,  '[L]SP: Signature [D]ocumentation')
   nmap('<Leader>lr', vlb.rename,          '[L]SP: [R]ename')
   nmap('<Leader>lc', vlb.code_action,     '[L]SP: [C]ode Action')
-  nmap('<Leader>lt', vlb.type_definition, '[L]SP: [T]ype Definition')  -- TODO?: Telescope
+  nmap('<Leader>lt', vlb.type_definition, '[L]SP: [T]ype Definition')
 
   nmap('<Leader>q',  tl.diagnostics,                   'LSP: Telescope [Q]uickfix diagnostics')
   nmap('<Leader>ls', tl.lsp_document_symbols,          '[L]SP: Telescope Document [S]ymbols')
@@ -54,9 +54,9 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Setup neovim lua configuration
-require('neodev').setup()
--- Turn on lsp status information
-require('fidget').setup()
+-- require('neodev').setup()
+-- -- Turn on lsp status information
+-- require('fidget').setup()
 
 -----------------------------------------------------------
 ---- MASON ------------------------------------------------
@@ -65,6 +65,7 @@ require('fidget').setup()
 local servers = {
   clangd = {},
   rust_analyzer = {},
+  jdtls = {},
   lua_ls = {},
 }
 
@@ -89,10 +90,10 @@ mason_lspconfig.setup_handlers {
 -----------------------------------------------------------
 ---- NVIM-CMP ---------------------------------------------
 -----------------------------------------------------------
+-- TODO
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 cmp.setup {
-  snippet = { expand = function(args) luasnip.lsp_expand(args.body) end, },
   mapping = cmp.mapping.preset.insert {
     ['<C-a>'] = cmp.mapping.complete(), -- Open complete menu
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -123,10 +124,17 @@ cmp.setup {
     end, { 'i', 's' }),
   },
 
+  snippet = { expand = function(args) luasnip.lsp_expand(args.body) end, },
+  -- TODO: https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/
+  -- window = { documentation = cmp.config.window.bordered() },
+
   -- Sources (completion options)
+  -- https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- TODO?: https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
+    {name = 'path'},
+    {name = 'nvim_lsp', keyword_length = 1},
+    {name = 'buffer', keyword_length = 3},
+    {name = 'luasnip', keyword_length = 2},
   },
 }
 
