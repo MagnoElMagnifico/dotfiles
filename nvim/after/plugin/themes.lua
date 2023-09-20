@@ -15,7 +15,7 @@ require('lualine').setup {
     component_separators = '|',
     section_separators = '',
   },
-  sections = { -- TODO?: buffers
+  sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {'filename'},
