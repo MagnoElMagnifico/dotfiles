@@ -52,8 +52,8 @@ printf "[+] helix: dotfiles/helix -> ~/.config/helix\n"
 create_link $DOTFILES_DIR/helix $HOME/.config
 
 # VSCodium
-printf "[+] VSCodium: dotfiles/VSCodium -> ~/.config/VSCodium\n"
-create_link $DOTFILES_DIR/VSCodium $HOME/.config
+printf "[+] VSCodium: dotfiles/VSCodium/settings.json -> ~/.config/VSCodium/User/settings.json\n"
+create_link $DOTFILES_DIR/VSCodium/settings.json $HOME/.config/VSCodium/User/settings.json
 
 # Neovim
 printf "[+] Neovim: dotfiles/nvim -> ~/.config/nvim\n"
