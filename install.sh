@@ -15,31 +15,51 @@ By Magno El Magnífico
 
 EOF
 
+# $1 source file/directory
+# $2 destination file (if source is a file)
+#                parent directory (if the source is a directory)
+function create_link {
+    # Check if already exists
+    if [ -e $2 ]; then
+        printf "    $2 already exists, want to overwrite? "
+        read -e -p '[y/N] '
+
+        if [[ "$REPLY" == [Yy]* ]]; then
+            # ln cannot overwrite directories
+            if [ -d $2 ]; then
+                rm --dir $1
+            fi
+            ln -sf $1 -T $2
+        fi
+    else
+        ln -s $1 -T $2
+    fi
+}
+
 SCRIPT=$(realpath "$0")
 DOTFILES_DIR=$(dirname "$SCRIPT")
 
-printf "Installing config...\n"
-
 # Bashrc
-printf "[+] Bashrc: dotfiles/bashrc -> ~/.bashrc\n"
-ln -si $DOTFILES_DIR/bashrc $HOME/.bashrc
-printf "Done.\n\n"
+printf "[+] bashrc: dotfiles/bashrc -> ~/.bashrc\n"
+create_link $DOTFILES_DIR/bashrc $HOME/.bashrc
 
 # Tmux
 printf "[+] tmux: dotfiles/tmux.conf -> ~/.tmux.conf\n"
-ln -si $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
-printf "Done.\n\n"
+create_link $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
+
+# Helix
+printf "[+] helix: dotfiles/helix -> ~/.config/helix\n"
+create_link $DOTFILES_DIR/helix $HOME/.config
+
+# VSCodium
+printf "[+] VSCodium: dotfiles/VSCodium -> ~/.config/VSCodium\n"
+create_link $DOTFILES_DIR/VSCodium $HOME/.config
 
 # Neovim
 printf "[+] Neovim: dotfiles/nvim -> ~/.config/nvim\n"
+create_link $DOTFILES_DIR/nvim $HOME/.config
 
-if [[ ! -d $HOME/.config ]]
-    then mkdir $HOME/.config
-fi
-
-ln -si $DOTFILES_DIR/nvim $HOME/.config
-
-printf "Done.\nPacker.nvim...\n"
+printf "    Packer.nvim...\n"
 
 if [[ -x $(command -v git) ]]; then
     # From its README file
