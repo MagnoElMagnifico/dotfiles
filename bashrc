@@ -26,6 +26,9 @@ bind "set completion-ignore-case on"
 # Using Fira Code or Cascadia Code with ligadures on
 export PS1="\e[32m\w |>\e[m "
 
+### PATH ###
+export PATH=$PATH:/opt/bin
+
 ### ALIAS ###
 alias   ..='cd ..'
 alias  ...='cd ../..'
