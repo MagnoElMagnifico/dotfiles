@@ -41,8 +41,6 @@ require('packer').startup(function(use)
     },
   }
 
-  use 'mfussenegger/nvim-jdtls'
-
   -- Autocompletion
   use {
     'hrsh7th/nvim-cmp',

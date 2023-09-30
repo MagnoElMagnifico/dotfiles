@@ -8,6 +8,7 @@ require('nvim-treesitter.configs').setup {
     'lua',            -- Browse this configuration
     'python',
     'rust',
+    'java',
     'help',           -- Vim help
     'markdown',
     'markdown_inline' -- Telescope preview
@@ -15,7 +16,7 @@ require('nvim-treesitter.configs').setup {
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
-  auto_install = true,
+  auto_install = false,
 
   -- TODO: ???
   incremental_selection = {
