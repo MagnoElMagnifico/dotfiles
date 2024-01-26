@@ -4,7 +4,10 @@
     "terminal.integrated.fontFamily": "Fira Code",
     "editor.fontWeight": "500",
     "editor.fontLigatures": true,
-    "redhat.telemetry.enabled": false
+    "redhat.telemetry.enabled": false,
+    "files.autoSave": "afterDelay",
+    "editor.minimap.enabled": false,
+    "editor.lineNumbers": "relative"
 
     // Extensions:
     //  - clangd (llvm-vs-code-extensions)
