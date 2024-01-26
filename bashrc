@@ -19,6 +19,7 @@ shopt -s cmdhist        # save multi-line commands in history as single line
 shopt -s histappend     # do not overwrite history
 shopt -s expand_aliases # expand aliases
 shopt -s checkwinsize   # checks term size when bash regains control
+shopt -s globstar       # use ** for recursive wildcard
 
 bind "set completion-ignore-case on"
 
@@ -41,6 +42,8 @@ alias ls='ls --color=always --group-directories-first -h'
 alias ll='ls -l'
 alias la='ls -lA'
 alias df='df -h'
+alias diff='diff --color -u'
+alias ip='ip --color=auto'
 
 # Confirm before overwriting
 alias rm='rm -i'
