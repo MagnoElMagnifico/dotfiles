@@ -9,7 +9,6 @@ require('nvim-treesitter.configs').setup {
     'python',
     'rust',
     'java',
-    'help',           -- Vim help
     'markdown',
     'markdown_inline' -- Telescope preview
   },
