@@ -46,8 +46,7 @@ alias diff='diff --color -u'
 alias ip='ip --color=auto'
 
 # Confirm before overwriting
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
+alias rm='rm -iv'
+alias mv='mv -iv'
+alias cp='cp -iv'
 
-# TODO: alias cat='bat'
