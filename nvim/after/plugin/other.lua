@@ -28,11 +28,7 @@ require('gitsigns').setup {
 require('Comment').setup()
 
 ---- Indent Blankline ----
--- See `:help indent_blankline.txt`
-require('indent_blankline').setup {
-  char = '┊',
-  show_trailing_blankline_indent = false,
-}
+require("ibl").setup()
 
 ---- Vim Easy Align ----
 map({'n', 'v'}, 'gA', 'ga')
