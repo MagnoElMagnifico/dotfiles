@@ -25,7 +25,7 @@ bind "set completion-ignore-case on"
 
 ### PROMPT ###
 # Using Fira Code or Cascadia Code with ligadures on
-export PS1="\e[32m\w |>\e[m "
+export PS1='\[\033[1;32m\]\W |> \[\033[0m\]'
 
 ### PATH ###
 export PATH=$PATH:/opt/bin
@@ -42,7 +42,7 @@ alias ls='ls --color=always --group-directories-first -h'
 alias ll='ls -l'
 alias la='ls -lA'
 alias df='df -h'
-alias diff='diff --color -u'
+alias diff='diff --color=always -u'
 alias ip='ip --color=auto'
 
 # Confirm before overwriting
@@ -50,3 +50,5 @@ alias rm='rm -iv'
 alias mv='mv -iv'
 alias cp='cp -iv'
 
+# Startup program
+[[ -x $(command -v fastfetch) ]] && fastfetch
