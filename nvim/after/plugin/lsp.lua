@@ -6,7 +6,7 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,  { desc = 'LSP: Go to previo
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next,  { desc = 'LSP: Go to next [D]iagnostic' })
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = '[L]SP: Open diagnostic in a floating window' })
 vim.keymap.set('n', 'gq', vim.diagnostic.setloclist, { desc = 'LSP: Open all the diagnostics in a [Q]uickFix window' })
-vim.diagnostic.config { virtual_text = true }
+vim.diagnostic.config { virtual_text = true, severity_sort = true, float = { source = 'if_many' } }
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -65,10 +65,14 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- LSP servers
 local servers = {
-  clangd = {},
-  rust_analyzer = {},
-  jdtls = {},
-  lua_ls = {},
+  pylsp = {
+    pylsp = { -- it wont work without this extra level
+      plugins = {
+        pycodestyle = { ignore = 'E501' },
+        flake8 = { enabled = true, ignore = 'E501' },
+      }
+    }
+  },
 }
 
 require('mason').setup()
