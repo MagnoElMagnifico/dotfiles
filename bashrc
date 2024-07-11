@@ -24,8 +24,8 @@ shopt -s globstar       # use ** for recursive wildcard
 bind "set completion-ignore-case on"
 
 ### PROMPT ###
-# Using Fira Code or Cascadia Code with ligadures on
-export PS1='\[\033[1;32m\]\W |> \[\033[0m\]'
+# Using Nerd Fonts: "<current directory> <nf-md-chevron_triple_right> " all in green
+export PS1=$'\[\033[1;32m\]\W \U000f0dbb \[\033[0m\]'
 
 ### PATH ###
 export PATH=$PATH:/opt/bin
@@ -44,6 +44,9 @@ alias la='ls -lA'
 alias df='df -h'
 alias diff='diff --color=always -u'
 alias ip='ip --color=auto'
+
+alias cat='bat --theme="Visual Studio Dark+"'
+alias icat='wezterm imgcat'
 
 # Confirm before overwriting
 alias rm='rm -iv'
