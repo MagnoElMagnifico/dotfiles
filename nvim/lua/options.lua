@@ -15,7 +15,7 @@ vim.o.signcolumn     = 'yes'
 vim.g.have_nerd_font = true
 
 -- Timings
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 750
 vim.o.updatetime = 250
 
 -- Use Python inside Neovim

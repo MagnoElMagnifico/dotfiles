@@ -2,9 +2,17 @@
 
 These are my configuration files for Linux, including:
 
+- My user directories
 - [Neovim](https://github.com/neovim/neovim)
-- [tmux](https://github.com/tmux/tmux)
+- [wezterm](https://wezfurlong.org/wezterm/)
 - bashrc
+- Git
+
+And other tools that I use sometimes:
+
+- [tmux](https://github.com/tmux/tmux)
+- [Helix](https://helix-editor.com/)
+- [VS Codium](https://vscodium.com)
 
 
 # Installation
@@ -20,8 +28,7 @@ cd dotfiles
 ```
 
 This script will create several symbolic links from this repository to where
-each program expects its configuration file, with the `-i` flag, so you will
-get a prompt in case a file already exists.
+each program expects its configuration file.
 
 
 # Neovim
@@ -35,32 +42,57 @@ This configuration is based on [kickstart.nvim].
 | Mapping                   | Function                                                      |
 |:--------------------------|:--------------------------------------------------------------|
 | `<Leader>`                | `<Space>`                                                     |
-| `+`                       | Cursor to end of line (`$`)                                   |
-| `-`                       | Cursor to first non-whitespace character of the line (`^`)    |
+| `+`                       | Cursor to end of line (`$`)                                   | <!-- Problems when using US keyboard -->
+| `-`                       | Cursor to first non-whitespace character of the line (`^`)    | <!-- Problems when using US keyboard: maybe remap to & -->
 | `U`                       | Redo (`<C-r>`)                                                |
 | `<C-j>` / `<C-k>`         | Scroll                                                        |
 | `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
-| `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       |
+| `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       | <!-- Problems when using US keyboard -->
 | `jk` / `kj`               | Exit insert mode                                              |
 | `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
 | `<Leader>p` / `<Leader>P` | Paste from system clipboard                                   |
+| `<Leader>x`               | Delete current buffer                                         |
+| `<Leader>w`               | Write current buffer to disk                                  |
 
-Note that I don't use a US keyboard.
-
-Commands:
-
-| Mapping       | Function                                           |
-|:--------------|:---------------------------------------------------|
-| `<Leader>x`   | Delete current buffer                              |
-| `<Leader>w`   | Write current buffer to disk                       |
-
-Netrw (`<Leader>e`):
+Opening the file explorer (Netrw - `<Leader>e`):
 
 | Mapping       | Function                                           |
 |:--------------|:---------------------------------------------------|
 | `<Leader>ee`  | Open [E]xplorer in the current window              |
 | `<Leader>et`  | Open [E]xplorer in a new [T]ab                     |
 | `<Leader>ev`  | Open [E]xplorer in a [V]ertical split (Left)       |
+
+Navigating in the file explorer:
+
+| Mapping            | Function                                                 |
+|:-------------------|:---------------------------------------------------------|
+| `cd`               | Make browsing directory the working directory            |
+| `-`                | Go up one directory                                      |
+| `i`                | Listing: Thin - Long - Wide - Tree                       |
+| `s`                | Sort by: Name - Time - File size                         |
+| `S`                | Specify suffix prioriry for sorting                      |
+| `d`                | Create a directory                                       |
+| `%`                | Create a file                                            |
+| `D`                | [D]elete file under cursor  (works in `V` mode)          |
+| `R`                | [R]ename or move file                                    |
+| `<Enter>`          | Open file                                                |
+| `v`                | Open file in a vertical split                            |
+| `o`                | Open file in a horizontal split                          |
+| `t`                | Open file in a new tab                                   |
+| `p`                | Preview the file in a new horizontal split               |
+| `gp`               | Change file [p]ermission                                 |
+| `mf` / `mr`        | Mark file / Mark files using regex                       |
+| `mF` / `mu`        | Unmark file / Unmark all                                 |
+| `mt` / `:MF <dir>` | Set target directory (directory under cursor or current) |
+| `mm`               | Move marked files to target directory                    |
+| `mc`               | Copy marked files to target directory                    |
+| `mx`               | Apply shell command to files                             |
+
+Remember:
+
+- `:pwd`: to show the current working directory of neovim.
+- `:cd %`: to change the current working directory. `%` specifies the current
+  file.
 
 Comment.nvim (`gc` and `gb`):
 
@@ -96,8 +128,6 @@ Surroundings:
 - `t` and enter tag: `Hello` to `<p>Hello</p>`
 - `f` and enter name: `Hello` to `function(Hello)`
 - `?`: interactive
-
-pinta>fasdfas..fasd
 
 Telescope:
 
@@ -211,10 +241,84 @@ Mappings (`<Leader>d`, **D**ebug)
 
 ## Other commands
 
+Managers:
+
 - `:Mason`: Manage LSP servers
 - `:Lazy`: Manage plugins
+- `:ConformInfo`: Manage formatters
+
+Others:
+
 - `:Neogit`
-- `:Format`: use LSP formatter
 - `:Vter [<cmd>]` and `:Hter [<cmd>]` create a terminal and runs a command.
 - `:Vpy` and `:Hpy` opens a Python console.
+
+
+# WezTerm
+
+Tabs:
+
+| Mapping           | Function   |
+|:------------------|:-----------|
+| `Alt-t`           | New tab    |
+| `Alt-w`           | Close tab  |
+| `Alt-1` ... `9`   | Select tab |
+| `Alt-[` / `Alt-]` | Switch tab |
+| `Alt-{` / `Alt-}` | Move tabs  |
+| `Alt-.`           | Last tab   |
+
+Panes:
+
+| Mapping                   | Function               |
+|:--------------------------|:-----------------------|
+| `Alt-v`                   | Split [v]ertically     |
+| `Alt-b`                   | Split horizontally     |
+| `Alt-x`                   | Close pane             |
+| `Alt-z` / `Alt-Enter`     | Toggle [z]oom          |
+| `Alt-hjkl` / `Alt-Arrows` | Switch pane            |
+| `Alt-s`                   | [S]elect pane          |
+| `Alt-m`                   | [M]ove panes clockwise |
+| `Alt-S`                   | [S]wap two panes       |
+| `Alt-T`                   | Send pane to new [T]ab |
+
+Resize pane mode:
+
+| Mapping            | Function                      |
+|:-------------------|:------------------------------|
+| `Alt-r`            | Init resize mode              |
+| `hjkl`             | Resize pane                   |
+| `Arrows`           | Resize pane with more control |
+| `Escape` / `Enter` | Exit resize mode              |
+
+Search mode:
+
+| Mapping                        | Function                                                         |
+|:-------------------------------|:-----------------------------------------------------------------|
+| `Alt-f`                        | Init search mode                                                 |
+| `Enter` / `Ctrl-p` / `UpArrow` | Search previous                                                  |
+| `Ctrl-n` / `DownArrow`         | Search next                                                      |
+| `Ctrl-r`                       | Change search mode (Case sensitive - Case insensitive - [R]egex) |
+| `Ctrl-u`                       | Clear pattern                                                    |
+| `Escape` / `Ctrl-c`            | Exit search mode                                                 |
+
+Copy mode:
+
+- `Alt-c`: Init [c]opy mode
+- [WezTerm defaults](https://wezfurlong.org/wezterm/copymode.html#key-assignments)
+- Vim-like movement
+- Copy with `y` and exit
+
+Other:
+
+| Mapping                           | Function                          |
+|:----------------------------------|:----------------------------------|
+| `Ctrl-V` / `Ctrl-C`               | Regular copy and paste            |
+| `Shift-PageUp` / `Shift-PageDown` | Scroll line by line               |
+| `Ctrl-PageUp` / `Ctrl-PageDown`   | Scroll quickly                    |
+| `Alt-p`                           | Open command [p]alette            |
+| `Alt-d`                           | Open [d]ebug tab                  |
+| `Alt-L`                           | Clear scrollback (like `Ctrl-l`)  |
+| `Alt-R`                           | [R]eload config                   |
+| `Alt-P`                           | Open [P]ython interactive console |
+| `Ctrl-+-0`                        | Resize font                       |
 
