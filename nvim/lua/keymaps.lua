@@ -23,10 +23,10 @@ map('i', '<C-H>', '<C-w>', 'Delete word in insert mode')
 -- Moving faster in the line
 map({'n', 'v', 'o'}, '+', '$', 'Go to end of line')
 map({'n', 'v', 'o'}, '-', '^', 'Go to start of line')
+map({'n', 'v', 'o'}, '&', '^', 'Go to start of line')
 
--- NOTE: I use a EU keyboard, not US.
-map({'n', 'v', 'o'}, ';', ',')     -- Repeat f, F, t, T backwards
-map({'n', 'v', 'o'}, ',', ';')     -- Repeat f, F, t, T
+map({'n', 'v', 'o'}, ',', ';') -- Repeat f, F, t, T
+-- map({'n', 'v', 'o'}, ';', ',') -- Repeat f, F, t, T backwards
 
 -- Stay in visual mode after identing
 map('v', '<', '<gv')
@@ -54,6 +54,7 @@ map({'n', 'v'}, '<C-u>', '<C-u>zz')
 ---- Windows & Buffers & Tabs ----
 map({'n', 'v'}, 'ñ', '<C-w>', 'Window command')
 map({'n', 'v'}, 'Ñ', '<C-w>', 'Window command')
+map({'n', 'v'}, ';', '<C-w>', 'Window command')  -- NOTE: experimental
 map({'n', 'v'}, '<C-Right>', vim.cmd.bnext,     'Next buffer')
 map({'n', 'v'}, '<C-Left>',  vim.cmd.bprevious, 'Previous buffer')
 

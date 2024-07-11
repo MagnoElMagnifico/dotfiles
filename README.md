@@ -42,12 +42,12 @@ This configuration is based on [kickstart.nvim].
 | Mapping                   | Function                                                      |
 |:--------------------------|:--------------------------------------------------------------|
 | `<Leader>`                | `<Space>`                                                     |
-| `+`                       | Cursor to end of line (`$`)                                   | <!-- Problems when using US keyboard -->
-| `-`                       | Cursor to first non-whitespace character of the line (`^`)    | <!-- Problems when using US keyboard: maybe remap to & -->
+| `+`                       | Cursor to end of line (`$`)                                   |
+| `-` / `&`                 | Cursor to first non-whitespace character of the line (`^`)    |
 | `U`                       | Redo (`<C-r>`)                                                |
 | `<C-j>` / `<C-k>`         | Scroll                                                        |
 | `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
-| `ñ` / `Ñ`                 | Window comand (`<C-w>`)                                       | <!-- Problems when using US keyboard -->
+| `ñ` / `Ñ` / `;`           | Window comand (`<C-w>`)                                       |
 | `jk` / `kj`               | Exit insert mode                                              |
 | `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
 | `<Leader>p` / `<Leader>P` | Paste from system clipboard                                   |
