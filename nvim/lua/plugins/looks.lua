@@ -12,9 +12,9 @@ return {
     }
   },
 
-  -- 'Mofiqul/dracula.nvim',
-  -- 'sainnhe/sonokai',
-  -- 'folke/tokyonight.nvim',
+  'Mofiqul/dracula.nvim',
+  'sainnhe/sonokai',
+  'folke/tokyonight.nvim',
 
   -- Identation lines
   {
@@ -34,6 +34,12 @@ return {
   -- Status line
   {
     'nvim-lualine/lualine.nvim',
+
+    dependencies = {
+      -- Useful for getting pretty icons, but requires a Nerd Font
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font }
+    },
+
     opts = {
 
       -- See `:help lualine.txt`

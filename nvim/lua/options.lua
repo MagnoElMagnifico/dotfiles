@@ -10,6 +10,8 @@ vim.o.undofile       = true
 vim.o.showmode       = false -- Don't show the mode, since it's already in the status line
 vim.o.clipboard      = 'unnamedplus'
 vim.o.signcolumn     = 'yes'
+
+-- Fonts
 vim.g.have_nerd_font = true
 
 -- Timings
@@ -29,7 +31,7 @@ vim.o.spelllang    = 'es,en'
 -- Tabs and trailing spaces (:h 'list' and :h 'listchars')
 vim.o.list      = true
 vim.o.listchars = 'tab:>>,trail:·'
--- TODO: this do not work
+-- TODO: this do not work for some reason
 -- vim.o.listchars = {
 --   tab = '>>',
 --   trail = '·',
