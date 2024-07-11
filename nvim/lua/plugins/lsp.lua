@@ -156,12 +156,6 @@ local function autocommands(event)
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, '[T]oggle Inlay [H]ints')
   end
-
-  -- Create a command `:Format` local to the LSP buffer
-  -- TODO:
-  vim.api.nvim_buf_create_user_command(event.buf, 'LFormat', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
 end
 
 return {

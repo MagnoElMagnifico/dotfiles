@@ -48,6 +48,7 @@ require('lazy').setup({
   require 'plugins.lsp',
   require 'plugins.cmp',
   require 'plugins.git',
+  require 'plugins.format',
 
   -- TODO: Debug Adapter Protocol
   -- require 'plugins.debug',
@@ -65,4 +66,3 @@ require('lazy').setup({
   'numToStr/Comment.nvim', -- Toggle comments with 'gcc' and 'gbc'
   'tpope/vim-sleuth',      -- Detect tabstop and shiftwidth automatically
 })
-
