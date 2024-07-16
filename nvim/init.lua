@@ -49,9 +49,7 @@ require('lazy').setup({
   require 'plugins.cmp',
   require 'plugins.git',
   require 'plugins.format',
-
-  -- TODO: Debug Adapter Protocol
-  -- require 'plugins.debug',
+  require 'plugins.debug',
 
   ---- Utilities ----
   {

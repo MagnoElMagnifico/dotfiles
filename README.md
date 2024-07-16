@@ -193,7 +193,28 @@ TODO: Tree sitter text objects
 | `[m` `]m` | Move        | Previous / Next function start |
 | `[M` `]M` | Move        | Previous / Next function end   |
 | `[[` `]]` | Move        | Previous / Next class start    |
-| `[]` `][` | Move        | Previous / Next class end      | -->
+| `[]` `][` | Move        | Previous / Next class end      |
+
+Debugging with DAP (`<Leader>d` - [D]ebug):
+
+| Mapping          | Function                          |
+|:-----------------|:----------------------------------|
+| `<F9>` / `<F10>` | Start / Finish                    |
+| `<F11>`          | Toggle UI                         |
+| `<F1>`           | Step into function call           |
+| `<F2>`           | Step over to the next sentence    |
+| `<F3>`           | Step out of function              |
+| `<F4>`           | Run to cursor                     |
+| `<F5>`           | Step back (step into reversed)    |
+| `<F6>`           | Reverse continue until breakpoint |
+| `<Leader>b`      | Toggle [b]reakpoint               |
+| `<Leader>B`      | Create conditional [b]reakpoint   |
+| `<Leader>dl`     | Set [l]og breakpoint              |
+| `<Leader>db`     | List [b]reakpoints                |
+| `<Leader>dB`     | Remove all the [b]reakpoints      |
+| `<Leader>dh`     | [H]over expression                |
+| `<Leader>dj`     | [J]ump to current frame           |
+| `<Leader>dc`     | Open interactive [c]onsole        |
 
 <!-- ## Debugging (with `:Termdebug`)
 
