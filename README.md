@@ -163,13 +163,14 @@ LSP:
 | `gD`         | [G]o to [D]eclaration (header file)                         |
 | `gI`         | [G]o to [I]mplementation                                    |
 | `gr`         | [G]o to [R]eferences under cursor                           |
-| `<Leader>D`  | Type [D]efinitions                                          |
-| `<Leader>q`  | Open diagnostics in a Telescope window                      |
-| `<Leader>ds` | [D]ocument [S]ymbols                                        |
-| `<Leader>ws` | [W]orkspace [S]ymbols                                       |
-| `<Leader>rn` | [R]rename                                                   |
-| `<Leader>ca` | [C]ode [A]ction                                             |
-| `<Leader>th` | [T]oggle Inlay [H]ints                                      |
+| `<Leader>lt` | [T]ype Definition                                           |
+| `<Leader>ll` | Open [d]iagnostics in a Telescope window                    |
+| `<Leader>ld` | [D]ocument Symbols                                          |
+| `<Leader>lw` | [W]orks]pace Symbols                                         |
+| `<Leader>lr` | [R]ename                                                    |
+| `<Leader>la` | Code [A]ction                                               |
+| `<Leader>li` | Toggle [I]nlay Hints                                        |
+| `<Leader>lf` | Show [F]unction signature                                   |
 
 LSP complete (nvim-cmp):
 

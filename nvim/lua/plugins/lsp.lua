@@ -67,23 +67,23 @@ local function keymaps(event)
   -- Jump to the type of the word under your cursor.
   --  Useful when you're not sure what type a variable is and you want to see
   --  the definition of its *type*, not where it was *defined*.
-  nmap('<leader>D', tl.lsp_type_definitions, 'Type [D]efinition')
+  nmap('<leader>lt', tl.lsp_type_definitions, '[T]ype Definition')
 
   -- Fuzzy find all the symbols in your current document.
   --  Symbols are things like variables, functions, types, etc.
-  nmap('<leader>ds', tl.lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ld', tl.lsp_document_symbols, '[D]ocument Symbols')
 
   -- Fuzzy find all the symbols in your current workspace.
   --  Similar to document symbols, except searches over your entire project.
-  nmap('<leader>ws', tl.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>lw', tl.lsp_dynamic_workspace_symbols, '[W]orkspace Symbols')
 
   -- Rename the variable under your cursor.
   --  Most Language Servers support renaming across files, etc.
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>lr', vim.lsp.buf.rename, '[R]ename')
 
   -- Execute a code action, usually your cursor needs to be on top of an error
   -- or a suggestion from your LSP for this to activate.
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>la', vim.lsp.buf.code_action, 'Code [A]ction')
 
   -- Opens a popup that displays documentation about the word under your cursor
   --  See `:help K` for why this keymap.
@@ -97,8 +97,8 @@ local function keymaps(event)
   nmap(']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
   nmap('gl', vim.diagnostic.open_float, 'Open diagnostic in a floating window')
   nmap('gq', vim.diagnostic.setloclist, 'Open all diagnostics in a [Q]uickFix window')
-  nmap('<Leader>q', tl.diagnostics, 'Telescope [Q]uickfix diagnostics')
-  nmap('<leader>n', vim.lsp.buf.signature_help, 'Fu[N]ction signature')
+  nmap('<Leader>ll', tl.diagnostics, 'Telescope Quickfix diagnostics')
+  nmap('<leader>lf', vim.lsp.buf.signature_help, '[F]unction signature')
 
   -- -- Lesser used LSP functionality
   -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
@@ -152,9 +152,9 @@ local function autocommands(event)
   --
   -- This may be unwanted, since they displace some of your code
   if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-    nmap('<leader>th', function()
+    nmap('<Leader>li', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-    end, '[T]oggle Inlay [H]ints')
+    end, 'Toggle [I]nlay Hints')
   end
 end
 
