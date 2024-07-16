@@ -56,11 +56,12 @@ This configuration is based on [kickstart.nvim].
 
 Opening the file explorer (Netrw - `<Leader>e`):
 
-| Mapping       | Function                                           |
-|:--------------|:---------------------------------------------------|
-| `<Leader>ee`  | Open [E]xplorer in the current window              |
-| `<Leader>et`  | Open [E]xplorer in a new [T]ab                     |
-| `<Leader>ev`  | Open [E]xplorer in a [V]ertical split (Left)       |
+| Mapping       | Function                                              |
+|:--------------|:------------------------------------------------------|
+| `<Leader>ee`  | Open [E]xplorer in the current window (open file)     |
+| `<Leader>ec`  | Like before but opens the [C]urrent Working Directory |
+| `<Leader>et`  | Open [E]xplorer in a new [T]ab                        |
+| `<Leader>ev`  | Open [E]xplorer in a [V]ertical split (Left)          |
 
 Navigating in the file explorer:
 

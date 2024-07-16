@@ -8,7 +8,8 @@ vim.g.netrw_sort_sequence = '[\\/]$'
 
 -- More mappings :h netrw-quickhelp
 local map = vim.keymap.set
-map('n', '<Leader>ee', vim.cmd.Ex,  { desc = 'Launch [E]xplorer' })
-map('n', '<Leader>et', vim.cmd.Tex, { desc = 'Launch [E]xplorer in new [T]ab' })
-map('n', '<Leader>ev', vim.cmd.Lex, { desc = 'Launch [E]xplorer in new [V]ertical split' })
+map('n', '<Leader>ee', vim.cmd.Explore,  { desc = 'Launch [E]xplorer (opened file)' })
+map('n', '<Leader>ec', function() vim.cmd('Explore ' .. vim.fn.getcwd()) end,  { desc = 'Launch [E]xplorer (PWD)' })
+map('n', '<Leader>ev', vim.cmd.Lexplore, { desc = 'Toggle [E]xplorer in new [V]ertical split' })
+map('n', '<Leader>et', vim.cmd.Texplore, { desc = 'Launch [E]xplorer in new [T]ab' })
 
