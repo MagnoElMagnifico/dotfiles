@@ -1,14 +1,18 @@
 return {
   {
     "NeogitOrg/neogit",
-    -- Alternative: 'tpope/vim-fugitive',
+
     dependencies = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",  -- Diff integration
       "nvim-telescope/telescope.nvim",
     },
 
-    config = true
+    config = true,
+
+    keys = {
+      { '<Leader>G', ':Neogit<CR>', desc = 'Open Neo[G]it' }
+    },
   },
 
   {

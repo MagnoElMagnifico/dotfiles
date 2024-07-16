@@ -130,7 +130,7 @@ Surroundings:
 - `f` and enter name: `Hello` to `function(Hello)`
 - `?`: interactive
 
-Telescope:
+Telescope (`<Leader>s` - [S]earch):
 
 | Mapping        | Function                                   |
 |:-------------- |:-------------------------------------------|
@@ -149,14 +149,14 @@ Telescope:
 | `<Leader>sr`   | [S]earch [R]egisters                       |
 | `<Leader>sr`   | [S]earch [R]egisters                       |
 | `<Leader>/`    | Grep current buffer                        |
-| `<Leader>s/`   | Grep openfiles                             |
+| `<Leader>s/`   | Grep open files                            |
 | `<Leader>sc`   | [S]earch [C]onfig files                    |
 
-LSP:
+LSP (`<Leader>l` - [L]SP):
 
 | Mapping      | Function                                                    |
 |:-------------|:------------------------------------------------------------|
-| `[d` / `]d`  | Go to previous / next **D**iagnostic                        |
+| `[d` / `]d`  | Go to previous / next [D]iagnostic                          |
 | `K`          | Hover documentation for symbol under cursor                 |
 | `gl`         | Open diagnostic in floating window ([G]o [L]SP)             |
 | `gq`         | Open diagnostics in a quickfix window ([G]o [Q]uickfix)     |
@@ -167,7 +167,7 @@ LSP:
 | `<Leader>lt` | [T]ype Definition                                           |
 | `<Leader>ll` | Open [d]iagnostics in a Telescope window                    |
 | `<Leader>ld` | [D]ocument Symbols                                          |
-| `<Leader>lw` | [W]orks]pace Symbols                                         |
+| `<Leader>lw` | [W]orkspace Symbols                                         |
 | `<Leader>lr` | [R]ename                                                    |
 | `<Leader>la` | Code [A]ction                                               |
 | `<Leader>li` | Toggle [I]nlay Hints                                        |
@@ -177,19 +177,17 @@ LSP complete (nvim-cmp):
 
 | Mapping               | Function                                       |
 |:----------------------|:-----------------------------------------------|
-| `i_<C-Space>`         | St[a]rt complete menu                          |
-| `i_<C-u>` / `i_<C-d>` | Scroll completion docs                         |
+| `i_<C-Space>`         | Start complete menu                            |
+| `i_<C-u>` / `i_<C-d>` | Scroll completion docs ([U]p and [D]own)       |
 | `i_<Enter>`           | Confirm completion                             |
 | `i_<C-h>` / `i_<C-l>` | Select next item / go to next field in snippet |
 
-<!-- Tree Sitter:
-
-TODO: Tree sitter text objects
+Tree sitter text objects:
 
 | Mapping   | Type        | Function                       |
 |:----------|:------------|:-------------------------------|
 | `aa` `ia` | Text object | Parameter                      |
-| `af` `if` | Text object | Function                       |
+| `af` `if` | Text object | Function call                  |
 | `ac` `ic` | Text object | Class                          |
 | `[m` `]m` | Move        | Previous / Next function start |
 | `[M` `]M` | Move        | Previous / Next function end   |
@@ -272,7 +270,7 @@ Managers:
 
 Others:
 
-- `:Neogit`
+- `:Neogit` (or `<Leader>G`)
 - `:Vter [<cmd>]` and `:Hter [<cmd>]` create a terminal and runs a command.
 - `:Vpy` and `:Hpy` opens a Python console.
 
