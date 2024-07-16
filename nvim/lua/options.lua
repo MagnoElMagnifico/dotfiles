@@ -8,7 +8,6 @@ vim.o.mouse          = 'a'
 vim.o.termguicolors  = true
 vim.o.undofile       = true
 vim.o.showmode       = false -- Don't show the mode, since it's already in the status line
-vim.o.clipboard      = 'unnamedplus'
 vim.o.signcolumn     = 'yes'
 
 -- Fonts
@@ -56,7 +55,7 @@ vim.o.breakindent = true
 vim.o.showbreak   = '\\'
 
 -- Folds
-vim.o.foldmethod     = 'indent'
+vim.o.foldmethod     = 'manual'
 vim.o.foldenable     = true
 vim.o.foldlevelstart = 5
 vim.o.foldnestmax    = 5
