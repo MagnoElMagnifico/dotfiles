@@ -21,8 +21,8 @@ config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 
 config.window_padding = {
-  left = 0,
-  right = 0,
+  left = '4px',
+  right = '3px',
   top = 0,
   bottom = 0,
 }
@@ -123,6 +123,12 @@ config.keys = {
   { mods = 'CTRL',  key = 'PageDown', action = act.ScrollByPage(1) },
   { mods = 'SHIFT', key = 'PageUp',   action = act.ScrollByLine(-1) },
   { mods = 'SHIFT', key = 'PageDown', action = act.ScrollByLine(1) },
+
+  { mods = 'SHIFT', key = 'UpArrow',   action = act.ScrollToPrompt(-1) },
+  { mods = 'SHIFT', key = 'DownArrow', action = act.ScrollToPrompt(1) },
+
+  { mods = 'NONE', key = 'End', action = act.ScrollToBottom },
+  { mods = 'NONE', key = 'Home', action = act.ScrollToTop },
 
   -- Search mode
   { mods = 'ALT', key = 'f', action = act.Search 'CurrentSelectionOrEmptyString' },
