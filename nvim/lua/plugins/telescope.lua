@@ -63,30 +63,30 @@ return {
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      nmap('<leader>f', builtin.find_files, 'Search [F]iles')
-      nmap('<leader>g', builtin.live_grep,  'Search by [G]rep')
+      nmap('<leader>f', builtin.find_files, 'Search Files')
+      nmap('<leader>g', builtin.live_grep,  'Search by Grep')
 
-      nmap('<leader>st', builtin.builtin,  '[S]earch Select [T]elescope')
-      nmap('<leader>s.', builtin.resume,   '[S]earch Repeat (".")')
-      nmap('<leader>so', builtin.oldfiles, '[S]earch [R]ecent Files')
+      nmap('<leader>st', builtin.builtin,  'Search Select Telescope')
+      nmap('<leader>s.', builtin.resume,   'Search Repeat (".")')
+      nmap('<leader>so', builtin.oldfiles, 'Search Recent Files')
 
-      nmap('<leader>sg', builtin.git_files,   '[S]earch [G]it files')
-      nmap('<leader>sw', builtin.grep_string, '[S]earch current [W]ord')
+      nmap('<leader>sg', builtin.git_files,   'Search Git files')
+      nmap('<leader>sw', builtin.grep_string, 'Search current Word')
 
       -- Vim
-      nmap('<leader>sb', builtin.buffers,     '[S]earch [B]uffers')
-      nmap('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics')
-      nmap('<leader>sh', builtin.help_tags,   '[S]earch [H]elp')
-      nmap('<leader>sk', builtin.keymaps,     '[S]earch [K]eymaps')
-      nmap('<leader>sm', builtin.marks,       '[S]earch [M]arks')
-      nmap('<leader>sr', builtin.registers,   '[S]earch [R]egisters')
+      nmap('<leader>sb', builtin.buffers,     'Search Buffers')
+      nmap('<leader>sd', builtin.diagnostics, 'Search Diagnostics')
+      nmap('<leader>sh', builtin.help_tags,   'Search Help')
+      nmap('<leader>sk', builtin.keymaps,     'Search Keymaps')
+      nmap('<leader>sm', builtin.marks,       'Search Marks')
+      nmap('<leader>sr', builtin.registers,   'Search Registers')
 
       nmap('<leader>/', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
         })
-      end, '[/] Fuzzily search in current buffer')
+      end, '/ Fuzzily search in current buffer')
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
@@ -95,12 +95,12 @@ return {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
         }
-      end, '[S]earch [/] in Open Files')
+      end, 'Search / in Open Files')
 
       -- Shortcut for searching your Neovim configuration files
       nmap('<leader>sc', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, '[S]earch [C]onfig files')
+      end, 'Search Config files')
     end,
 
   }

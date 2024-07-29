@@ -17,7 +17,6 @@ vim.g.mapleader = ' '
 ---- Convenience changes ----
 map({'n', 'v'}, '<Space>', '<Nop>')
 map('n', 'U', '<C-R>', 'Redo')
-map({'n', 'v'}, "'", '`')
 map('i', '<C-H>', '<C-w>', 'Delete word in insert mode')
 
 -- Moving faster in the line
@@ -25,31 +24,31 @@ map({'n', 'v', 'o'}, '+', '$', 'Go to end of line')
 map({'n', 'v', 'o'}, '-', '^', 'Go to start of line')
 map({'n', 'v', 'o'}, '&', '^', 'Go to start of line')
 
-map({'n', 'v', 'o'}, ',', ';') -- Repeat f, F, t, T
--- map({'n', 'v', 'o'}, ';', ',') -- Repeat f, F, t, T backwards
+map({'n', 'v', 'o'}, ',', ';', 'Repeat f, F, t, T')
+-- map({'n', 'v', 'o'}, ';', ',', 'Repeat f, F, t, T backwards')
 
 -- Stay in visual mode after identing
-map('v', '<', '<gv')
-map('v', '>', '>gv')
+map('v', '<', '<gv', 'Unintend selection')
+map('v', '>', '>gv', 'Indent selection')
 
 -- Yank and Paste
-map({'n', 'v'}, '<Leader>y', '"+y',  '[Y]ank to system clipboard')
-map({'n', 'v'}, '<Leader>p', '"+p',  '[P]aste from system clipboard')
-map('n',        '<Leader>Y', '"+Y',  '[Y]ank to system clipboard')
-map('n',        '<Leader>P', '"+P',  '[P]aste from system clipboard')
+map({'n', 'v'}, '<Leader>y', '"+y',  'Yank to system clipboard')
+map({'n', 'v'}, '<Leader>p', '"+p',  'Paste from system clipboard')
+map('n',        '<Leader>Y', '"+Y',  'Yank to system clipboard')
+map('n',        '<Leader>P', '"+P',  'Paste from system clipboard')
 
 ---- Commands ----
 map('n', '<Leader>x', vim.cmd.bdel,  'Delete current buffer')
-map('n', '<Leader>w', vim.cmd.write, '[W]rite current buffer')
+map('n', '<Leader>w', vim.cmd.write, 'Write current buffer')
 
 ---- Centering cursor ----
-map({'n', 'v'}, 'n', 'nzz')
-map({'n', 'v'}, 'N', 'Nzz')
+map({'n', 'v'}, 'n', 'nzz', 'Next search match')
+map({'n', 'v'}, 'N', 'Nzz', 'Previous search match')
 
-map({'n', 'v'}, '<C-b>', '<C-b>zz')
-map({'n', 'v'}, '<C-f>', '<C-f>zz')
-map({'n', 'v'}, '<C-d>', '<C-d>zz')
-map({'n', 'v'}, '<C-u>', '<C-u>zz')
+map({'n', 'v'}, '<C-b>', '<C-b>zz', 'Scroll down half a window')
+map({'n', 'v'}, '<C-f>', '<C-f>zz', 'Scroll up half a window')
+map({'n', 'v'}, '<C-d>', '<C-d>zz', 'Scroll down a window')
+map({'n', 'v'}, '<C-u>', '<C-u>zz', 'Scroll up a window')
 
 ---- Windows & Buffers & Tabs ----
 map({'n', 'v'}, 'ñ', '<C-w>', 'Window command')

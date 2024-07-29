@@ -118,23 +118,23 @@ return {
     nmap('<F6>', dap.reverse_continue, 'Reverse Continue until breakpoint')
 
     -- Breakpoints
-    nmap('<Leader>b', dap.toggle_breakpoint, 'Toggle [B]reakpoint')
-    nmap('<Leader>B', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, 'Set conditional [B]reakpoint')
-    nmap('<Leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, 'Set [L]og point')
+    nmap('<Leader>db', dap.toggle_breakpoint, 'Toggle Breakpoint')
+    nmap('<Leader>dB', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, 'Set conditional Breakpoint')
+    nmap('<Leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, 'Set Log point')
 
-    nmap('<Leader>db', dap.list_breakpoints, 'List breakpoints in a quick fix window')
-    nmap('<Leader>dB', dap.clear_breakpoints, 'Remove all breakpoints')
+    nmap('<Leader>dq', dap.list_breakpoints, 'List breakpoints in a quick fix window')
+    nmap('<Leader>dd', dap.clear_breakpoints, 'Remove all breakpoints')
 
     -- Info
-    nvmap('<Leader>dh', dap_widgets.hover, '[H]over expression')
-    nmap('<Leader>dj', dap.focus_frame, '[J]ump to current frame')
+    nvmap('<Leader>dh', dap_widgets.hover, 'Hover expression')
+    nmap('<Leader>dj', dap.focus_frame, 'Jump to current frame')
 
     -- Already in the UI
     -- nmap('<Leader>df', function() dap_widgets.centered_float(dap_widgets.frames) end, 'Show call [F]rames')
     -- nmap('<Leader>ds', function() dap_widgets.centered_float(dap_widgets.scopes) end, 'Show [S]copes')
 
     -- Console
-    nmap('<Leader>dc', dap.repl.open, 'Open interactive [c]onsole')
+    nmap('<Leader>dc', dap.repl.open, 'Open interactive console')
     -- TODO: Add custom commmands (?)
     -- TODO: Set CLI arguments
 

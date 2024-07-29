@@ -11,7 +11,7 @@ return {
     config = true,
 
     keys = {
-      { '<Leader>G', ':Neogit<CR>', desc = 'Open Neo[G]it' }
+      { '<Leader>G', ':Neogit<CR>', desc = 'Open NeoGit' }
     },
   },
 

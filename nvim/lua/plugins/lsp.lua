@@ -13,7 +13,7 @@
 local servers = {
   -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
   clangd = {},
-  pyright = {}, -- TODO: or pylsp
+  pyright = {},
   rust_analyzer = {},
 
   -- pylsp = {
@@ -55,35 +55,35 @@ local function keymaps(event)
 
   --  This is where a variable was first declared, or where a function is defined, etc.
   --  To jump back, press <C-t>.
-  nmap('gd', tl.lsp_definitions, '[G]oto [D]efinition')
+  nmap('gd', tl.lsp_definitions, 'Goto Definition')
 
   -- Find references for the word under your cursor.
-  nmap('gr', tl.lsp_references, '[G]oto [R]eferences')
+  nmap('gr', tl.lsp_references, 'Goto References')
 
   -- Jump to the implementation of the word under your cursor.
   --  Useful when your language has ways of declaring types without an actual implementation.
-  nmap('gI', tl.lsp_implementations, '[G]oto [I]mplementation')
+  nmap('gI', tl.lsp_implementations, 'Goto Implementation')
 
   -- Jump to the type of the word under your cursor.
   --  Useful when you're not sure what type a variable is and you want to see
   --  the definition of its *type*, not where it was *defined*.
-  nmap('<leader>lt', tl.lsp_type_definitions, '[T]ype Definition')
+  nmap('<leader>lt', tl.lsp_type_definitions, 'Type Definition')
 
   -- Fuzzy find all the symbols in your current document.
   --  Symbols are things like variables, functions, types, etc.
-  nmap('<leader>ld', tl.lsp_document_symbols, '[D]ocument Symbols')
+  nmap('<leader>ld', tl.lsp_document_symbols, 'Document Symbols')
 
   -- Fuzzy find all the symbols in your current workspace.
   --  Similar to document symbols, except searches over your entire project.
-  nmap('<leader>lw', tl.lsp_dynamic_workspace_symbols, '[W]orkspace Symbols')
+  nmap('<leader>lw', tl.lsp_dynamic_workspace_symbols, 'Workspace Symbols')
 
   -- Rename the variable under your cursor.
   --  Most Language Servers support renaming across files, etc.
-  nmap('<leader>lr', vim.lsp.buf.rename, '[R]ename')
+  nmap('<leader>lr', vim.lsp.buf.rename, 'Rename')
 
   -- Execute a code action, usually your cursor needs to be on top of an error
   -- or a suggestion from your LSP for this to activate.
-  nmap('<leader>la', vim.lsp.buf.code_action, 'Code [A]ction')
+  nmap('<leader>la', vim.lsp.buf.code_action, 'Code Action')
 
   -- Opens a popup that displays documentation about the word under your cursor
   --  See `:help K` for why this keymap.
@@ -91,21 +91,21 @@ local function keymaps(event)
 
   -- WARN: This is not Goto Definition, this is Goto Declaration.
   --  For example, in C this would take you to the header.
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
-  nmap('[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
-  nmap(']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
+  nmap('[d', vim.diagnostic.goto_prev, 'Go to previous Diagnostic message')
+  nmap(']d', vim.diagnostic.goto_next, 'Go to next Diagnostic message')
   nmap('gl', vim.diagnostic.open_float, 'Open diagnostic in a floating window')
-  nmap('gq', vim.diagnostic.setloclist, 'Open all diagnostics in a [Q]uickFix window')
+  nmap('gq', vim.diagnostic.setloclist, 'Open all diagnostics in a QuickFix window')
   nmap('<Leader>ll', tl.diagnostics, 'Telescope Quickfix diagnostics')
-  nmap('<leader>lf', vim.lsp.buf.signature_help, '[F]unction signature')
+  nmap('<leader>lf', vim.lsp.buf.signature_help, 'Function signature')
 
   -- -- Lesser used LSP functionality
-  -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, 'Workspace Add Folder')
+  -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, 'Workspace Remove Folder')
   -- nmap('<leader>wl', function()
   --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  -- end, '[W]orkspace [L]ist Folders')
+  -- end, 'Workspace List Folders')
 end
 
 
@@ -154,7 +154,7 @@ local function autocommands(event)
   if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
     nmap('<Leader>li', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-    end, 'Toggle [I]nlay Hints')
+    end, 'Toggle Inlay Hints')
   end
 end
 
@@ -180,6 +180,7 @@ return {
           keymaps(event)
           autocommands(event)
 
+          -- Other config
           vim.diagnostic.config {
             virtual_text = true,
             severity_sort = true,

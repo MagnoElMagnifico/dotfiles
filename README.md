@@ -136,8 +136,9 @@ Telescope (`<Leader>s` - [S]earch):
 |:-------------- |:-------------------------------------------|
 | `<Leader>f`    | Search [F]iles                             |
 | `<Leader>g`    | [G]rep files                               |
-| `<Leader>st`   | [S]earch [T]elescope pickers               |
+| `<Leader>/`    | Grep current buffer                        |
 | `<Leader>s.`   | Repeat last [S]earch                       |
+| `<Leader>st`   | [S]earch [T]elescope pickers               |
 | `<Leader>so`   | [S]earch [O]ld files                       |
 | `<Leader>sg`   | [S]earch [G]it files                       |
 | `<Leader>sw`   | [S]earch current [W]ord                    |
@@ -148,7 +149,6 @@ Telescope (`<Leader>s` - [S]earch):
 | `<Leader>sm`   | [S]earch [M]aps                            |
 | `<Leader>sr`   | [S]earch [R]egisters                       |
 | `<Leader>sr`   | [S]earch [R]egisters                       |
-| `<Leader>/`    | Grep current buffer                        |
 | `<Leader>s/`   | Grep open files                            |
 | `<Leader>sc`   | [S]earch [C]onfig files                    |
 
@@ -206,11 +206,11 @@ Debugging with DAP (`<Leader>d` - [D]ebug):
 | `<F4>`           | Run to cursor                     |
 | `<F5>`           | Step back (step into reversed)    |
 | `<F6>`           | Reverse continue until breakpoint |
-| `<Leader>b`      | Toggle [b]reakpoint               |
-| `<Leader>B`      | Create conditional [b]reakpoint   |
+| `<Leader>db`     | Toggle [b]reakpoint               |
+| `<Leader>dB`     | Create conditional [b]reakpoint   |
 | `<Leader>dl`     | Set [l]og breakpoint              |
-| `<Leader>db`     | List [b]reakpoints                |
-| `<Leader>dB`     | Remove all the [b]reakpoints      |
+| `<Leader>dq`     | List breakpoints                  |
+| `<Leader>dd`     | Remove all the breakpoints        |
 | `<Leader>dh`     | [H]over expression                |
 | `<Leader>dj`     | [J]ump to current frame           |
 | `<Leader>dc`     | Open interactive [c]onsole        |
@@ -270,6 +270,7 @@ Managers:
 
 Others:
 
+- `:WhichKey`
 - `:Neogit` (or `<Leader>G`)
 - `:Vter [<cmd>]` and `:Hter [<cmd>]` create a terminal and runs a command.
 - `:Vpy` and `:Hpy` opens a Python console.
