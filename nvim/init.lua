@@ -60,6 +60,6 @@ require('lazy').setup({
     end
   },
 
-  'numToStr/Comment.nvim', -- Toggle comments with 'gcc' and 'gbc'
-  'tpope/vim-sleuth',      -- Detect tabstop and shiftwidth automatically
+  { 'numToStr/Comment.nvim', opts = {} }, -- Toggle comments with 'gcc' and 'gbc'
+  'tpope/vim-sleuth',                     -- Detect tabstop and shiftwidth automatically
 })
