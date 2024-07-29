@@ -48,7 +48,7 @@ require('lazy').setup({
   require 'plugins.git',
   require 'plugins.format',
   require 'plugins.debug',
-  require 'plugins.which-key',
+  require 'plugins.whichkey',
 
   ---- Utilities ----
   {
