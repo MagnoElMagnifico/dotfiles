@@ -1,9 +1,7 @@
 require 'autocommands'
 require 'options'
 require 'keymaps'
-
 require 'netrw'
-require 'command'
 
 -- Bootstrap lazy.nvim package manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
