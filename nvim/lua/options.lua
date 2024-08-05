@@ -29,13 +29,11 @@ vim.o.spelllang    = 'es,en'
 
 -- Tabs and trailing spaces (:h 'list' and :h 'listchars')
 vim.o.list      = true
-vim.o.listchars = 'tab:>>,trail:·'
--- TODO: this do not work for some reason
--- vim.o.listchars = {
---   tab = '>>',
---   trail = '·',
---   nbsp = '␣',
--- }
+vim.opt.listchars = {
+  tab = '>>',
+  trail = '·',
+  nbsp = '␣',
+}
 
 -- Format
 vim.o.autoindent    = true
@@ -74,9 +72,7 @@ vim.o.ignorecase = true
 vim.o.incsearch  = true
 vim.o.inccommand = 'nosplit'
 
--- Highlight on search, but clear on <Esc> in normal mode
-vim.o.hlsearch = true -- No highlight
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.o.hlsearch = false -- No highlight
 
 -- Window opening
 vim.o.splitbelow = true
