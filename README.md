@@ -44,56 +44,26 @@ This configuration is based on [kickstart.nvim].
 | `<Leader>`                | `<Space>`                                                     |
 | `+`                       | Cursor to end of line (`$`)                                   |
 | `-` / `&`                 | Cursor to first non-whitespace character of the line (`^`)    |
+| `,` / `_` | Repeat search forward / backwards |
 | `U`                       | Redo (`<C-r>`)                                                |
-| `<C-j>` / `<C-k>`         | Scroll                                                        |
-| `<C-Left>` / `<C-Right>`  | Move between tabs                                             |
-| `ñ` / `Ñ` / `;`           | Window comand (`<C-w>`)                                       |
 | `jk` / `kj`               | Exit insert mode                                              |
 | `<Leader>y` / `<Leader>Y` | Yank to system clipboard                                      |
 | `<Leader>p` / `<Leader>P` | Paste from system clipboard                                   |
 | `<Leader>x`               | Delete current buffer                                         |
 | `<Leader>w`               | Write current buffer to disk                                  |
+| `<Leader>-`               | Open file explorer                                            |
+| `<Leader>_`               | Open file explorer in current working directory               |
 
-Opening the file explorer (Netrw - `<Leader>e`):
+Windows, buffers and scroll
 
-| Mapping       | Function                                              |
-|:--------------|:------------------------------------------------------|
-| `<Leader>ee`  | Open [E]xplorer in the current window (open file)     |
-| `<Leader>ec`  | Like before but opens the [C]urrent Working Directory |
-| `<Leader>et`  | Open [E]xplorer in a new [T]ab                        |
-| `<Leader>ev`  | Open [E]xplorer in a [V]ertical split (Left)          |
-
-Navigating in the file explorer:
-
-| Mapping            | Function                                                 |
-|:-------------------|:---------------------------------------------------------|
-| `cd`               | Make browsing directory the working directory            |
-| `-`                | Go up one directory                                      |
-| `i`                | Listing: Thin - Long - Wide - Tree                       |
-| `s`                | Sort by: Name - Time - File size                         |
-| `S`                | Specify suffix prioriry for sorting                      |
-| `d`                | Create a directory                                       |
-| `%`                | Create a file                                            |
-| `D`                | [D]elete file under cursor  (works in `V` mode)          |
-| `R`                | [R]ename or move file                                    |
-| `<Enter>`          | Open file                                                |
-| `v`                | Open file in a vertical split                            |
-| `o`                | Open file in a horizontal split                          |
-| `t`                | Open file in a new tab                                   |
-| `p`                | Preview the file in a new horizontal split               |
-| `gp`               | Change file [p]ermission                                 |
-| `mf` / `mr`        | Mark file / Mark files using regex                       |
-| `mF` / `mu`        | Unmark file / Unmark all                                 |
-| `mt` / `:MF <dir>` | Set target directory (directory under cursor or current) |
-| `mm`               | Move marked files to target directory                    |
-| `mc`               | Copy marked files to target directory                    |
-| `mx`               | Apply shell command to files                             |
-
-Remember:
-
-- `:pwd`: to show the current working directory of neovim.
-- `:cd %`: to change the current working directory. `%` specifies the current
-  file.
+| Mapping                   | Function                                                         |
+|:--------------------------|:-----------------------------------------------------------------|
+| `ñ` / `;`                 | Window comand (`<C-w>`)                                          |
+| `<C-hjkl>`                | Jump to window                                                   |
+| `<C-n>` / `<C-N>`         | Jump to next / previous window                                   |
+| `<C-.>`                   | Jump to last accessed window                                     |
+| `<C-Left>` / `<C-Right>`  | Move between buffers                                             |
+| `go`                      | Jump to alternate file                                           |
 
 Comment.nvim (`gc` and `gb`):
 
@@ -165,7 +135,7 @@ LSP (`<Leader>l` - [L]SP):
 | `gI`         | [G]o to [I]mplementation                                    |
 | `gr`         | [G]o to [R]eferences under cursor                           |
 | `<Leader>lt` | [T]ype Definition                                           |
-| `<Leader>ll` | Open [d]iagnostics in a Telescope window                    |
+| `<Leader>ll` | [L]ist diagnostics in a Telescope window                    |
 | `<Leader>ld` | [D]ocument Symbols                                          |
 | `<Leader>lw` | [W]orkspace Symbols                                         |
 | `<Leader>lr` | [R]ename                                                    |
@@ -182,7 +152,7 @@ LSP complete (nvim-cmp):
 | `i_<Enter>`           | Confirm completion                             |
 | `i_<C-h>` / `i_<C-l>` | Select next item / go to next field in snippet |
 
-Tree sitter text objects:
+<!-- Tree sitter text objects:
 
 | Mapping   | Type        | Function                       |
 |:----------|:------------|:-------------------------------|
@@ -192,7 +162,7 @@ Tree sitter text objects:
 | `[m` `]m` | Move        | Previous / Next function start |
 | `[M` `]M` | Move        | Previous / Next function end   |
 | `[[` `]]` | Move        | Previous / Next class start    |
-| `[]` `][` | Move        | Previous / Next class end      |
+| `[]` `][` | Move        | Previous / Next class end      | -->
 
 Debugging with DAP (`<Leader>d` - [D]ebug):
 
@@ -272,8 +242,6 @@ Others:
 
 - `:WhichKey`
 - `:Neogit` (or `<Leader>G`)
-- `:Vter [<cmd>]` and `:Hter [<cmd>]` create a terminal and runs a command.
-- `:Vpy` and `:Hpy` opens a Python console.
 
 
 # WezTerm
