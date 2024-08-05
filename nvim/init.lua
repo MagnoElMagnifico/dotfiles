@@ -40,6 +40,7 @@ vim.opt.rtp:prepend(lazypath)
 --  To update plugins you can run
 --    :Lazy update
 require('lazy').setup({
+  -- Plugins with more configuration
   require 'plugins.looks',
   require 'plugins.telescope',
   require 'plugins.treesitter',
@@ -49,6 +50,7 @@ require('lazy').setup({
   require 'plugins.format',
   require 'plugins.debug',
   require 'plugins.whichkey',
+  require 'plugins.oil',
 
   ---- Utilities ----
   {
