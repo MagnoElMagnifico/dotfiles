@@ -1,184 +1,135 @@
--- -- Maybe even better than DAP:
--- vim.cmd.packadd('termdebug')
--- vim.g.termdebug_wide = 80
---
--- local map = vim.keymap.set
---
--- map('n', '<Leader>db', vim.cmd.Break)    -- Add breakpoint
--- map('n', '<Leader>dB', vim.cmd.Clear)    -- Remove breakpoint
--- map('n', '<Leader>n',  vim.cmd.Step)     -- Advance to next line
--- map('n', '<Leader>o',  vim.cmd.Over)     -- Advance to the next line without entering functions
--- map('n', '<Leader>du', vim.cmd.Until)    -- Run until cursor
--- map('n', '<Leader>dc', vim.cmd.Continue) -- Continue until next breakpoint
--- map('n', '<Leader>df', vim.cmd.Finish)   -- Continue until the end of the function
-
 return {
   'mfussenegger/nvim-dap',
 
+  lazy = true,
+  -- TODO: load on commands?
+
+  keys = {
+    -- TODO: Add custom commmands (?)
+    -- TODO: Set CLI arguments
+
+    { '<Leader>dc', function() require('dap').repl.open() end, desc = 'Debug: Open interactive console' },
+
+    -- Start / Continue / Finish / Terminate
+    { '<F9>', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
+    { '<F10>', function() require('dap').terminate() end, desc = 'Debug: Finish debugging' },
+
+    -- Toggle to see last session result. Without this, you can't see session
+    -- output in case of unhandled exception.
+    { '<F11>', function() require('dapui').toggle() end, desc = 'Debug: Toggle UI' },
+
+    -- Stepping
+    { '<F1>', function() require('dap').step_into() end, desc = 'Debug: Step Into function call' },
+    { '<F2>', function() require('dap').step_over() end, desc = 'Debug: Step Over to next sentence' },
+    { '<F3>', function() require('dap').step_out() end, desc = 'Debug: Step Out of function' },
+    { '<F4>', function() require('dap').run_to_cursor() end, desc = 'Debug: Run to cursor' },
+
+    { '<F5>', function() require('dap').step_back() end, desc = 'Debug: Step Back (Step Into Reversed)' },
+    { '<F6>', function() require('dap').reverse_continue() end, desc = 'Debug: Reverse Continue until breakpoint' },
+
+    -- Breakpoints
+    { '<Leader>db', function() require('dap').toggle_breakpoint() end, desc = 'Debug: Toggle Breakpoint' },
+    { '<Leader>dB', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Debug: Set conditional Breakpoint' },
+    { '<Leader>dl', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, desc = 'Debug: Set Log point' },
+
+    { '<Leader>dq', function() require('dap').list_breakpoints() end, desc = 'Debug: List breakpoints in a quick fix window' },
+    { '<Leader>dd', function() require('dap').clear_breakpoints() end, desc = 'Debug: Remove all breakpoints' },
+
+    -- Info
+    { '<Leader>dh', function() require('dap.ui.widgets').hover() end, desc = 'Debug: Hover expression', mode = { 'n', 'v' } },
+    { '<Leader>dj', function() require('dap').focus_frame() end, desc = 'Debug: Jump to current frame' },
+  },
+
   dependencies = {
-    -- Creates a debugger UI
-    'rcarriga/nvim-dap-ui',
-
-    -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
-
     -- Virtual text for variables values
     {'theHamsta/nvim-dap-virtual-text', opts = {}},
 
     -- Installs the debug adapters for me
     'williamboman/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
-  },
+
+    {
+      'jay-babu/mason-nvim-dap.nvim',
+      opts = {
+        -- Makes a best effort to setup the various debuggers with
+        -- reasonable debug configurations
+        automatic_installation = true,
+
+        -- Ensure to install these debuggers
+        ensure_installed = {
+          'codelldb',
+        },
+
+        -- Additional configuration to the handlers
+        handlers = {
+          ---- Default handler configuration ----
+          function(config)
+            require('mason-nvim-dap').default_setup(config)
+          end,
+
+          ---- C / C++ / Rust ----
+          codelldb = function(config)
+            -- https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
+            -- https://github.com/vadimcn/codelldb/blob/master/MANUAL.md
+            config.adapters = {
+              type = 'server',
+              port = '${port}',
+              executable = {
+                command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+                args = {'--port', '${port}'},
+              },
+            }
+
+            config.configurations.cpp = {
+              {
+                name = 'Debug program',
+                type = 'codelldb',
+                request = 'launch',
+                program = function()
+                  return vim.fn.input('Path to executable')
+                end,
+                cwd = '${workspaceFolder}',
+                stopOnEntry = false,
+              }
+            }
+
+            config.configurations.c = config.configurations.cpp
+            config.configurations.rust = config.configurations.cpp
+
+            require('mason-nvim-dap').default_setup(config)
+          end,
+        }, -- handlers
+      }, -- opts
+    }, -- mason-nvim-dap
+
+    -- Creates a debugger UI
+    {
+      'rcarriga/nvim-dap-ui',
+      dependencies = { 'nvim-neotest/nvim-nio' },
+      opts = {
+        -- Set icons to characters that are more likely to work in every terminal.
+        icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+        controls = {
+          icons = {
+            pause = '⏸',
+            play = '▶',
+            step_into = '⏎',
+            step_over = '⏭',
+            step_out = '⏮',
+            step_back = 'b',
+            run_last = '▶▶',
+            terminate = '⏹',
+            disconnect = '⏏',
+          },
+        },
+      }, -- opts
+    }, -- dapui
+  }, -- dependencies
 
   config = function()
     local dap = require 'dap'
     local dap_ui = require 'dapui'
-    local dap_widgets = require 'dap.ui.widgets'
-
-    require('mason-nvim-dap').setup {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
-      automatic_installation = true,
-
-      -- Ensure to install these debuggers
-      ensure_installed = {
-        'codelldb',
-      },
-
-      -- Additional configuration to the handlers
-      handlers = {
-        ---- Default handler configuration ----
-        function(config)
-          require('mason-nvim-dap').default_setup(config)
-        end,
-
-        ---- C / C++ / Rust ----
-        codelldb = function(config)
-          -- https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
-          -- https://github.com/vadimcn/codelldb/blob/master/MANUAL.md
-          config.adapters = {
-            type = 'server',
-            port = '${port}',
-            executable = {
-              command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
-              args = {'--port', '${port}'},
-            },
-          }
-
-          config.configurations.cpp = {
-            {
-              name = 'Debug program',
-              type = 'codelldb',
-              request = 'launch',
-              program = function()
-                return vim.fn.input('Path to executable')
-              end,
-              cwd = '${workspaceFolder}',
-              stopOnEntry = false,
-            }
-          }
-
-          config.configurations.c = config.configurations.cpp
-          config.configurations.rust = config.configurations.cpp
-
-          require('mason-nvim-dap').default_setup(config)
-        end,
-      },
-    }
-
-    -- Add more information to :DapShowLog
-    dap.set_log_level('INFO')
-
-    ---------------------------------------------------------------------
-    ---- Keymaps --------------------------------------------------------
-    ---------------------------------------------------------------------
-    local function nmap(keys, func, desc)
-      vim.keymap.set('n', keys, func, { desc = 'Debug: ' .. desc })
-    end
-
-    local function nvmap(keys, func, desc)
-      vim.keymap.set({'n', 'v'}, keys, func, { desc = 'Debug: ' .. desc })
-    end
-
-    -- Start / Continue / Finish / Terminate
-    nmap('<F9>', dap.continue, 'Start/Continue')
-    nmap('<F10>', dap.terminate, 'Finish debugging')
-
-    -- Toggle to see last session result. Without this, you can't see session
-    -- output in case of unhandled exception.
-    nmap('<F11>', dap_ui.toggle, 'Toggle UI')
-
-    -- Stepping
-    nmap('<F1>', dap.step_into, 'Step Into function call')
-    nmap('<F2>', dap.step_over, 'Step Over to next sentence')
-    nmap('<F3>', dap.step_out, 'Step Out of function')
-    nmap('<F4>', dap.run_to_cursor, 'Run to cursor')
-
-    nmap('<F5>', dap.step_back, 'Step Back (Step Into Reversed)')
-    nmap('<F6>', dap.reverse_continue, 'Reverse Continue until breakpoint')
-
-    -- Breakpoints
-    nmap('<Leader>db', dap.toggle_breakpoint, 'Toggle Breakpoint')
-    nmap('<Leader>dB', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, 'Set conditional Breakpoint')
-    nmap('<Leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, 'Set Log point')
-
-    nmap('<Leader>dq', dap.list_breakpoints, 'List breakpoints in a quick fix window')
-    nmap('<Leader>dd', dap.clear_breakpoints, 'Remove all breakpoints')
-
-    -- Info
-    nvmap('<Leader>dh', dap_widgets.hover, 'Hover expression')
-    nmap('<Leader>dj', dap.focus_frame, 'Jump to current frame')
-
-    -- Already in the UI
-    -- nmap('<Leader>df', function() dap_widgets.centered_float(dap_widgets.frames) end, 'Show call [F]rames')
-    -- nmap('<Leader>ds', function() dap_widgets.centered_float(dap_widgets.scopes) end, 'Show [S]copes')
-
-    -- Console
-    nmap('<Leader>dc', dap.repl.open, 'Open interactive console')
-    -- TODO: Add custom commmands (?)
-    -- TODO: Set CLI arguments
-
-    ---------------------------------------------------------------------
-    ---- DAP UI Setup ---------------------------------------------------
-    ---------------------------------------------------------------------
-    -- For more information, see |:help nvim-dap-ui|
-    dap_ui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
-        },
-      },
-    }
-
     dap.listeners.after.event_initialized['dapui_config'] = dap_ui.open
     dap.listeners.before.event_terminated['dapui_config'] = dap_ui.close
     dap.listeners.before.event_exited['dapui_config'] = dap_ui.close
   end,
-
-  -- keys = {
-  --   -- For codelldb: source a launch.json and resume sessions
-  --   {
-  --     '<F5>',
-  --     function()
-  --       -- (Re-)reads launch.json if present
-  --       if vim.fn.filereadable('.vscode/launch.json') then
-  --         require('dap.ext.vscode').load_launchjs(nil, {
-  --           ['codelldb'] = { 'c', 'cpp' },
-  --         })
-  --       end
-  --       require('dap').continue()
-  --     end,
-  --     desc = 'DAP Continue',
-  --   },
-  -- },
 }

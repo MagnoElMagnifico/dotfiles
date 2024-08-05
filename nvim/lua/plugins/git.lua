@@ -2,6 +2,12 @@ return {
   {
     "NeogitOrg/neogit",
 
+    lazy = true,
+    cmd = 'Neogit',
+    keys = {
+      { '<Leader>G', '<cmd>Neogit<CR>', desc = 'Open NeoGit' }
+    },
+
     dependencies = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",  -- Diff integration
@@ -9,14 +15,15 @@ return {
     },
 
     config = true,
-
-    keys = {
-      { '<Leader>G', ':Neogit<CR>', desc = 'Open NeoGit' }
-    },
   },
 
   {
     'lewis6991/gitsigns.nvim',
+
+    lazy = true,
+    cmd = 'Gitsigns',
+    event = 'BufEnter',
+
     opts = {
       signs = {
         add          = { text = '┃' },
@@ -34,7 +41,7 @@ return {
         changedelete = { text = '~' },
         untracked    = { text = '┆' },
       },
-    },
+    }, -- opts
   },
 
 } -- return

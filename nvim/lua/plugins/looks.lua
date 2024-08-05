@@ -12,13 +12,17 @@ return {
     }
   },
 
-  'Mofiqul/dracula.nvim',
-  'sainnhe/sonokai',
-  'folke/tokyonight.nvim',
+  { 'Mofiqul/dracula.nvim',  lazy = true },
+  { 'sainnhe/sonokai',       lazy = true },
+  { 'folke/tokyonight.nvim', lazy = true },
 
   -- Identation lines
   {
     'lukas-reineke/indent-blankline.nvim',
+
+    lazy = true,
+    event = 'BufEnter',
+
     main = 'ibl',
     opts = {},
   },
@@ -26,7 +30,10 @@ return {
   -- Highlight todo, notes, etc in comments
   {
     'folke/todo-comments.nvim',
-    event = 'VimEnter',
+
+    lazy = true,
+    event = 'BufEnter',
+
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false }
   },
@@ -35,13 +42,15 @@ return {
   {
     'nvim-lualine/lualine.nvim',
 
+    lazy = true,
+    event = 'VimEnter',
+
     dependencies = {
       -- Useful for getting pretty icons, but requires a Nerd Font
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font }
     },
 
     opts = {
-
       -- See `:help lualine.txt`
       options = {
         icons_enabled = false,

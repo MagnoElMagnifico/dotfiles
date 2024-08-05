@@ -6,7 +6,10 @@ local disable_filetypes = {
 return {
   {
     'stevearc/conform.nvim',
-    lazy = false,
+
+    lazy = true,
+    event = 'BufWrite',  -- Load before writting a buffer so it can be formatted
+    cmd = 'ConformInfo', -- Also load when trying to run this command
 
     keys = {
       {
@@ -14,7 +17,7 @@ return {
         function()
           require('conform').format { async = true, lsp_fallback = true }
         end,
-        mode = '',
+        mode = { 'n', 'v' },
         desc = 'Format buffer'
       },
     },
@@ -36,6 +39,6 @@ return {
         rust = { 'rustfmt' },
         python = { 'black' },
       },
-    },
+    }, -- opts
   },
 } -- return

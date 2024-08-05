@@ -57,12 +57,16 @@ local function keymaps(event)
   --  To jump back, press <C-t>.
   nmap('gd', tl.lsp_definitions, 'Goto Definition')
 
-  -- Find references for the word under your cursor.
-  nmap('gr', tl.lsp_references, 'Goto References')
+  -- WARN: This is not Goto Definition, this is Goto Declaration.
+  --  For example, in C this would take you to the header.
+  nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
   -- Jump to the implementation of the word under your cursor.
   --  Useful when your language has ways of declaring types without an actual implementation.
   nmap('gI', tl.lsp_implementations, 'Goto Implementation')
+
+  -- Find references for the word under your cursor.
+  nmap('gr', tl.lsp_references, 'Goto References')
 
   -- Jump to the type of the word under your cursor.
   --  Useful when you're not sure what type a variable is and you want to see
@@ -88,10 +92,6 @@ local function keymaps(event)
   -- Opens a popup that displays documentation about the word under your cursor
   --  See `:help K` for why this keymap.
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-
-  -- WARN: This is not Goto Definition, this is Goto Declaration.
-  --  For example, in C this would take you to the header.
-  nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
   nmap('[d', vim.diagnostic.goto_prev, 'Go to previous Diagnostic message')
   nmap(']d', vim.diagnostic.goto_next, 'Go to next Diagnostic message')
@@ -161,6 +161,10 @@ end
 return {
   {
     'neovim/nvim-lspconfig',
+
+    lazy = true,
+    event = 'VimEnter',
+
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants

@@ -1,7 +1,7 @@
 return {
   {
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
+    event = 'InsertEnter', -- Load when entering insert mode
 
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -55,7 +55,7 @@ return {
           -- Select the [p]revious item
           ['<C-p>'] = cmp.mapping.select_prev_item(),
 
-          -- Scroll the documentation window [b]ack / [f]orward
+          -- Scroll the documentation window [u]p / [d]own
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
@@ -95,7 +95,7 @@ return {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
-          {name = 'buffer' },
+          { name = 'buffer' },
         },
       }
     end,
