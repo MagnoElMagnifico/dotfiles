@@ -7,6 +7,7 @@ export HISTCONTROL=ignoredups:erasedups  # Ignore duplicates entries
 export HISTSIZE=1000
 export HISTFILESIZE=2000
 export EDITOR=nvim
+export MANPAGER='less -R'
 
 ### OTHER SCRIPTS ###
 # Rust & cargo
@@ -28,6 +29,7 @@ bind "set completion-ignore-case on"
 export PS1=$'\[\033[1;32m\]\W \U000f0dbb \[\033[0m\]'
 
 ### PATH ###
+# TODO: shouldn't this be in .profile?
 export PATH=$PATH:/opt/bin
 
 ### ALIAS ###
@@ -37,21 +39,37 @@ alias ....='cd ../../..'
 alias   .4='cd ../../../..'
 alias   .5='cd ../../../../..'
 
+# Prefered format and colors
 alias grep='grep --color=always'
-alias ls='ls --color=always --group-directories-first -h'
+alias ls='ls --color=always --group-directories-first -hv'
+alias ip='ip --color=auto'
+alias diff='diff --color=always -u'
+alias less='less -R'
+alias df='df -h'
 alias ll='ls -l'
 alias la='ls -lA'
-alias df='df -h'
-alias diff='diff --color=always -u'
-alias ip='ip --color=auto'
 
+# Better cat
 alias cat='bat --theme="Visual Studio Dark+"'
 alias icat='wezterm imgcat'
 
-# Confirm before overwriting
+# Fuzzy find
+alias fvim='nvim $(fzf)'
+
+# Confirm before overwriting or deleting
 alias rm='rm -iv'
 alias mv='mv -iv'
 alias cp='cp -iv'
+
+### FUNTIONS ###
+
+cdf() {
+    cd $(find $1 -type d -not -path '*/[@.]*' | fzf)
+}
+
+dvim() {
+    cdf $1 && nvim .
+}
 
 # Startup program
 [[ -x $(command -v fastfetch) ]] && fastfetch
