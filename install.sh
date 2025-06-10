@@ -13,9 +13,9 @@ By Magno El Magnífico
 EOF
 
 # $1 Program name
-# $2 source file/directory
-# $3 destination file (if source is a file)
-#                parent directory (if the source is a directory)
+# $2 src: file/directory
+# $3 dst: file (if source is a file)
+#         parent directory (if the source is a directory)
 function create_link {
     printf     "[+] $1: $2 -> $3\n"
     read -e -p "    Create link? [y/N] "
@@ -47,7 +47,8 @@ SCRIPT=$(realpath "$0")
 DOTFILES_DIR=$(dirname "$SCRIPT")
 
 create_link "User dirs" $DOTFILES_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
-create_link "bashrc"    $DOTFILES_DIR/bashrc         $HOME/.bashrc
+create_link "bashrc"    $DOTFILES_DIR/bash/bashrc    $HOME/.bashrc
+create_link "profile"   $DOTFILES_DIR/bash/profile   $HOME/.profile
 create_link "Neovim"    $DOTFILES_DIR/nvim           $HOME/.config/nvim
 create_link "Git"       $DOTFILES_DIR/gitconfig      $HOME/.gitconfig
 create_link "tmux"      $DOTFILES_DIR/tmux.conf      $HOME/.tmux.conf
