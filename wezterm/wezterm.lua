@@ -3,7 +3,9 @@ local act = wezterm.action;
 
 local config = {}
 
--- Looks
+---------------------------------------------------------
+---- Looks ----------------------------------------------
+---------------------------------------------------------
 -- Fonts:
 --   - FiraCode Nerd Font      10
 --   - Hurmit Nerd Font        10
@@ -13,7 +15,21 @@ local config = {}
 config.font = wezterm.font('FiraCode Nerd Font', { weight = 'Medium' })
 config.font_size = 10
 
-config.color_scheme = 'Breeze'
+config.command_palette_font = wezterm.font('FiraCode Nerd Font', { weight = 'Medium' })
+config.command_palette_font_size = 10
+
+-- TODO: colors when highlight text on copy/search mode
+-- https://gogh-co.github.io/Gogh/
+-- https://terminal.sexy/
+--
+-- Themes:
+--   - Dracula (Gogh)
+--   - Monokai Soda (Gogh)
+--   - Sonokai (Gogh)
+--   - Spacegray (Gogh)
+--   - Sweet Eliverlara (Gogh)
+--   - Ayu Mirage (Gogh)
+config.color_scheme = 'Sonokai (Gogh)'
 config.audible_bell = 'Disabled'
 
 config.enable_scroll_bar = false
@@ -28,19 +44,28 @@ config.window_padding = {
 }
 
 -- TODO: background
+-- config.window_background_image = '/path/to/wallpaper.jpg'
+--
+-- TODO: Maybe setup a keybind for this
+-- config.window_background_opacity = 0.7
 
 -- Initial sizes
 config.initial_cols = 150
 config.initial_rows = 40
 config.scrollback_lines = 3500
 
+-- FIXME: This will prevent the terminal from opening.
 -- GPU usage
-config.front_end = 'WebGpu'
-config.webgpu_power_preference = 'LowPower' -- Extend battery life
+-- config.front_end = 'WebGpu'
+-- config.webgpu_power_preference = 'LowPower' -- Extend battery life
 
--- Other
+---------------------------------------------------------
+---- Other ----------------------------------------------
+---------------------------------------------------------
 config.adjust_window_size_when_changing_font_size = false
 config.switch_to_last_active_tab_when_closing_tab = true
+
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
 ---------------------------------------------------------
 ---- Keymaps --------------------------------------------
@@ -116,9 +141,8 @@ config.keys = {
   }},
 
   ---------------------------------------------------------
-  ---- Other ----------------------------------------------
+  ---- Scroll ---------------------------------------------
   ---------------------------------------------------------
-  -- Scroll
   { mods = 'CTRL',  key = 'PageUp',   action = act.ScrollByPage(-1) },
   { mods = 'CTRL',  key = 'PageDown', action = act.ScrollByPage(1) },
   { mods = 'SHIFT', key = 'PageUp',   action = act.ScrollByLine(-1) },
@@ -130,76 +154,55 @@ config.keys = {
   { mods = 'NONE', key = 'End', action = act.ScrollToBottom },
   { mods = 'NONE', key = 'Home', action = act.ScrollToTop },
 
+  -- Clear scroll back
+  { mods = 'ALT|SHIFT', key = 'L', action = act.ClearScrollback 'ScrollbackAndViewport'},
+
   -- Search mode
   { mods = 'ALT', key = 'f', action = act.Search 'CurrentSelectionOrEmptyString' },
 
-  -- TODO: Quick select mode
+  -- TODO: Quick select mode (haven't found a use for it yet)
   -- { mods = 'ALT', key = 'a', action = act.QuickSelect },
+
+  -- Copy mode
+  { mods = 'ALT', key = 'c', action = act.ActivateCopyMode },
 
   -- Copy & Paste
   { mods = 'CTRL|SHIFT', key = 'c', action = act.CopyTo 'Clipboard' },
   { mods = 'CTRL|SHIFT', key = 'v', action = act.PasteFrom 'Clipboard' },
 
-  -- Copy mode
-  { mods = 'ALT', key = 'c', action = act.ActivateCopyMode },
-
-  -- Modal Palette
-  { mods = 'ALT', key = 'p', action = act.ActivateCommandPalette },
-
-  -- TODO?: Launcher Menu
-  -- { mods = 'ALT', key = '???', action = act.ShowLauncherArgs { flags = 'FUZZY|TABS' } },
-
-  -- TODO?: Is this useful?
-  { mods = 'ALT', key = 'a', action = act.CharSelect { copy_on_select = false }},
-
-  -- Debug overlay
-  { mods = 'ALT', key = 'd', action = act.ShowDebugOverlay },
-
-  -- Clear scroll back
-  { mods = 'ALT|SHIFT', key = 'L', action = act.ClearScrollback 'ScrollbackAndViewport'},
-
-  -- Reload this config
-  { mods = 'ALT|SHIFT', key = 'R', action = act.ReloadConfiguration },
-
+  ---------------------------------------------------------
+  ---- Other ----------------------------------------------
+  ---------------------------------------------------------
   -- Quickly launch python
-  { mods = 'ALT|SHIFT', key = 'P', action = act.SplitPane {
+  { mods = 'ALT', key = 'p', action = act.SplitPane {
       direction = 'Right',
       size = { Cells = 40 },
-      command = { label = 'Run Python', args = { 'python3', '-q' } },
+      command = { label = 'Run Python', args = { 'python3', '-qic', 'from math import *; from statistics import *;' } },
       top_level = true,
     }
   },
 
-  -- Font
+  -- Modal Palette
+  { mods = 'ALT|SHIFT', key = 'P', action = act.ActivateCommandPalette },
+
+  -- Launcher Menu
+  { mods = 'ALT', key = '0', action = act.ShowLauncherArgs { flags = 'FUZZY|LAUNCH_MENU_ITEMS' } },
+
+  -- Font resize
   { mods = 'CTRL', key = '+', action = act.IncreaseFontSize },
   { mods = 'CTRL', key = '-', action = act.DecreaseFontSize },
   { mods = 'CTRL', key = '0', action = act.ResetFontSize },
+
+  -- Reload this config
+  { mods = 'ALT|SHIFT', key = 'R', action = act.ReloadConfiguration },
+
+  -- Debug overlay
+  -- It can be used to run lua code, to evaluate math expressions (as
+  -- a calculator) for example
+  { mods = 'ALT', key = 'd', action = act.ShowDebugOverlay },
 }
 
 config.key_tables = {
-  ---------------------------------------------------------
-  ---- Search mode ----------------------------------------
-  ---------------------------------------------------------
-  search_mode = {
-    { mods = 'CTRL', key = 'r', action = act.CopyMode 'CycleMatchType' },
-    { mods = 'CTRL', key = 'u', action = act.CopyMode 'ClearPattern' },
-
-    -- Search previous
-    { mods = 'NONE', key = 'Enter',   action = act.CopyMode 'PriorMatch' },
-    { mods = 'CTRL', key = 'p',       action = act.CopyMode 'PriorMatch' },
-    { mods = 'NONE', key = 'UpArrow', action = act.CopyMode 'PriorMatch' },
-    { mods = 'NONE', key = 'PageUp',  action = act.CopyMode 'PriorMatchPage' },
-
-    -- Search next
-    { mods = 'CTRL', key = 'n',         action = act.CopyMode 'NextMatch' },
-    { mods = 'NONE', key = 'DownArrow', action = act.CopyMode 'NextMatch' },
-    { mods = 'NONE', key = 'PageDown',  action = act.CopyMode 'NextMatchPage' },
-
-    -- Quit
-    { mods = 'NONE', key = 'Escape', action = act.CopyMode 'Close' },
-    { mods = 'CTRL', key = 'c',      action = act.CopyMode 'Close' },
-  },
-
   ---------------------------------------------------------
   ---- Resize mode ----------------------------------------
   ---------------------------------------------------------
@@ -222,73 +225,112 @@ config.key_tables = {
   },
 
   ---------------------------------------------------------
+  ---- Search mode ----------------------------------------
+  ---------------------------------------------------------
+  search_mode = {
+    { mods = 'CTRL', key = 'r', action = act.CopyMode 'CycleMatchType' }, -- Case-sensitive, case-insensitive, regex
+    { mods = 'CTRL', key = 'u', action = act.CopyMode 'ClearPattern' },
+
+    -- Search previous
+    { mods = 'NONE', key = 'Enter',   action = act.CopyMode 'PriorMatch' },
+    { mods = 'CTRL', key = 'p',       action = act.CopyMode 'PriorMatch' },
+    { mods = 'NONE', key = 'UpArrow', action = act.CopyMode 'PriorMatch' },
+    -- { mods = 'NONE', key = 'PageUp',  action = act.CopyMode 'PriorMatchPage' },
+
+    -- Search next
+    { mods = 'CTRL', key = 'n',         action = act.CopyMode 'NextMatch' },
+    { mods = 'NONE', key = 'DownArrow', action = act.CopyMode 'NextMatch' },
+    -- { mods = 'NONE', key = 'PageDown',  action = act.CopyMode 'NextMatchPage' },
+
+    -- Quit
+    { mods = 'NONE', key = 'Escape', action = act.CopyMode 'Close' },
+    { mods = 'CTRL', key = 'c',      action = act.CopyMode 'Close' },
+  },
+
+  ---------------------------------------------------------
   ---- Copy mode ------------------------------------------
   ---------------------------------------------------------
-  -- Dump defaults
   copy_mode = {
-    { key = 'Tab',        mods = 'NONE',  action = act.CopyMode 'MoveForwardWord' },
-    { key = 'Tab',        mods = 'SHIFT', action = act.CopyMode 'MoveBackwardWord' },
-    { key = 'Enter',      mods = 'NONE',  action = act.CopyMode 'MoveToStartOfNextLine' },
-    { key = 'Escape',     mods = 'NONE',  action = act.CopyMode 'Close' },
-    { key = 'Space',      mods = 'NONE',  action = act.CopyMode { SetSelectionMode =  'Cell' } },
-    { key = '$',          mods = 'NONE',  action = act.CopyMode 'MoveToEndOfLineContent' },
-    { key = '$',          mods = 'SHIFT', action = act.CopyMode 'MoveToEndOfLineContent' },
-    { key = ',',          mods = 'NONE',  action = act.CopyMode 'JumpReverse' },
-    { key = '0',          mods = 'NONE',  action = act.CopyMode 'MoveToStartOfLine' },
-    { key = ';',          mods = 'NONE',  action = act.CopyMode 'JumpAgain' },
-    { key = 'F',          mods = 'NONE',  action = act.CopyMode { JumpBackward = { prev_char = false } } },
-    { key = 'F',          mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = false } } },
-    { key = 'G',          mods = 'NONE',  action = act.CopyMode 'MoveToScrollbackBottom' },
-    { key = 'G',          mods = 'SHIFT', action = act.CopyMode 'MoveToScrollbackBottom' },
-    { key = 'H',          mods = 'NONE',  action = act.CopyMode 'MoveToViewportTop' },
-    { key = 'H',          mods = 'SHIFT', action = act.CopyMode 'MoveToViewportTop' },
-    { key = 'L',          mods = 'NONE',  action = act.CopyMode 'MoveToViewportBottom' },
-    { key = 'L',          mods = 'SHIFT', action = act.CopyMode 'MoveToViewportBottom' },
-    { key = 'M',          mods = 'NONE',  action = act.CopyMode 'MoveToViewportMiddle' },
-    { key = 'M',          mods = 'SHIFT', action = act.CopyMode 'MoveToViewportMiddle' },
-    { key = 'O',          mods = 'NONE',  action = act.CopyMode 'MoveToSelectionOtherEndHoriz' },
-    { key = 'O',          mods = 'SHIFT', action = act.CopyMode 'MoveToSelectionOtherEndHoriz' },
-    { key = 'T',          mods = 'NONE',  action = act.CopyMode { JumpBackward = { prev_char = true } } },
-    { key = 'T',          mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = true } } },
-    { key = 'V',          mods = 'NONE',  action = act.CopyMode { SetSelectionMode = 'Line' } },
-    { key = 'V',          mods = 'SHIFT', action = act.CopyMode { SetSelectionMode = 'Line' } },
-    { key = '^',          mods = 'NONE',  action = act.CopyMode 'MoveToStartOfLineContent' },
-    { key = '^',          mods = 'SHIFT', action = act.CopyMode 'MoveToStartOfLineContent' },
-    { key = 'b',          mods = 'NONE',  action = act.CopyMode 'MoveBackwardWord' },
-    { key = 'b',          mods = 'ALT',   action = act.CopyMode 'MoveBackwardWord' },
-    { key = 'b',          mods = 'CTRL',  action = act.CopyMode 'PageUp' },
-    { key = 'c',          mods = 'CTRL',  action = act.CopyMode 'Close' },
-    { key = 'd',          mods = 'CTRL',  action = act.CopyMode { MoveByPage = (0.5) } },
-    { key = 'e',          mods = 'NONE',  action = act.CopyMode 'MoveForwardWordEnd' },
-    { key = 'f',          mods = 'NONE',  action = act.CopyMode { JumpForward = { prev_char = false } } },
-    { key = 'f',          mods = 'ALT',   action = act.CopyMode 'MoveForwardWord' },
-    { key = 'f',          mods = 'CTRL',  action = act.CopyMode 'PageDown' },
-    { key = 'g',          mods = 'NONE',  action = act.CopyMode 'MoveToScrollbackTop' },
-    { key = 'g',          mods = 'CTRL',  action = act.CopyMode 'Close' },
-    { key = 'h',          mods = 'NONE',  action = act.CopyMode 'MoveLeft' },
-    { key = 'j',          mods = 'NONE',  action = act.CopyMode 'MoveDown' },
-    { key = 'k',          mods = 'NONE',  action = act.CopyMode 'MoveUp' },
-    { key = 'l',          mods = 'NONE',  action = act.CopyMode 'MoveRight' },
-    { key = 'm',          mods = 'ALT',   action = act.CopyMode 'MoveToStartOfLineContent' },
-    { key = 'o',          mods = 'NONE',  action = act.CopyMode 'MoveToSelectionOtherEnd' },
-    { key = 'q',          mods = 'NONE',  action = act.CopyMode 'Close' },
-    { key = 't',          mods = 'NONE',  action = act.CopyMode { JumpForward = { prev_char = true } } },
-    { key = 'u',          mods = 'CTRL',  action = act.CopyMode { MoveByPage = (-0.5) } },
-    { key = 'v',          mods = 'NONE',  action = act.CopyMode { SetSelectionMode = 'Cell' } },
-    { key = 'v',          mods = 'CTRL',  action = act.CopyMode { SetSelectionMode = 'Block' } },
-    { key = 'w',          mods = 'NONE',  action = act.CopyMode 'MoveForwardWord' },
-    { key = 'y',          mods = 'NONE',  action = act.Multiple { { CopyTo = 'ClipboardAndPrimarySelection' }, { CopyMode =  'Close' } } },
-    { key = 'PageUp',     mods = 'NONE',  action = act.CopyMode 'PageUp' },
-    { key = 'PageDown',   mods = 'NONE',  action = act.CopyMode 'PageDown' },
-    { key = 'End',        mods = 'NONE',  action = act.CopyMode 'MoveToEndOfLineContent' },
-    { key = 'Home',       mods = 'NONE',  action = act.CopyMode 'MoveToStartOfLine' },
-    { key = 'LeftArrow',  mods = 'NONE',  action = act.CopyMode 'MoveLeft' },
-    { key = 'LeftArrow',  mods = 'ALT',   action = act.CopyMode 'MoveBackwardWord' },
-    { key = 'RightArrow', mods = 'NONE',  action = act.CopyMode 'MoveRight' },
-    { key = 'RightArrow', mods = 'ALT',   action = act.CopyMode 'MoveForwardWord' },
-    { key = 'UpArrow',    mods = 'NONE',  action = act.CopyMode 'MoveUp' },
-    { key = 'DownArrow',  mods = 'NONE',  action = act.CopyMode 'MoveDown' },
+    -- Copy and exit
+    { mods = 'NONE', key = 'y',     action = act.Multiple { { CopyTo = 'ClipboardAndPrimarySelection' }, { CopyMode =  'Close' } } },
+    { mods = 'NONE', key = 'Enter', action = act.Multiple { { CopyTo = 'ClipboardAndPrimarySelection' }, { CopyMode =  'Close' } } },
+
+    -- Close without copying
+    { mods = 'NONE',   key = 'Escape',     action = act.CopyMode 'Close' },
+    { mods = 'CTRL',   key = 'c',          action = act.CopyMode 'Close' },
+    { mods = 'NONE',   key = 'q',          action = act.CopyMode 'Close' },
+
+    -- Selection modes
+    { mods = 'NONE',   key = 'Space',      action = act.CopyMode { SetSelectionMode =  'Cell' } },
+    { mods = 'NONE',   key = 'v',          action = act.CopyMode { SetSelectionMode = 'Cell' } },
+    { mods = 'CTRL',   key = 'v',          action = act.CopyMode { SetSelectionMode = 'Block' } },
+    { mods = 'NONE',   key = 'V',          action = act.CopyMode { SetSelectionMode = 'Line' } },
+    { mods = 'SHIFT',  key = 'V',          action = act.CopyMode { SetSelectionMode = 'Line' } },
+
+    { mods = 'NONE',   key = 'o',          action = act.CopyMode 'MoveToSelectionOtherEnd' },
+    { mods = 'NONE',   key = 'O',          action = act.CopyMode 'MoveToSelectionOtherEndHoriz' },
+    { mods = 'SHIFT',  key = 'O',          action = act.CopyMode 'MoveToSelectionOtherEndHoriz' },
+
+    -- Vim movement
+    { mods = 'NONE',   key = 'w',          action = act.CopyMode 'MoveForwardWord' },
+    { mods = 'NONE',   key = 'b',          action = act.CopyMode 'MoveBackwardWord' },
+    { mods = 'NONE',   key = 'e',          action = act.CopyMode 'MoveForwardWordEnd' },
+
+    { mods = 'NONE',   key = 'h',          action = act.CopyMode 'MoveLeft' },
+    { mods = 'NONE',   key = 'j',          action = act.CopyMode 'MoveDown' },
+    { mods = 'NONE',   key = 'k',          action = act.CopyMode 'MoveUp' },
+    { mods = 'NONE',   key = 'l',          action = act.CopyMode 'MoveRight' },
+    { mods = 'NONE',   key = 'LeftArrow',  action = act.CopyMode 'MoveLeft' },
+    { mods = 'NONE',   key = 'DownArrow',  action = act.CopyMode 'MoveDown' },
+    { mods = 'NONE',   key = 'UpArrow',    action = act.CopyMode 'MoveUp' },
+    { mods = 'NONE',   key = 'RightArrow', action = act.CopyMode 'MoveRight' },
+
+    -- Line jumping
+    { mods = 'NONE',   key = '0',          action = act.CopyMode 'MoveToStartOfLine' },
+    { mods = 'NONE',   key = '-',          action = act.CopyMode 'MoveToStartOfLineContent' },
+    { mods = 'NONE',   key = 'Home',       action = act.CopyMode 'MoveToStartOfLine' },
+
+    { mods = 'NONE',   key = '$',          action = act.CopyMode 'MoveToEndOfLineContent' },
+    { mods = 'SHIFT',  key = '$',          action = act.CopyMode 'MoveToEndOfLineContent' },
+    { mods = 'NONE',   key = '+',          action = act.CopyMode 'MoveToEndOfLineContent' },
+    { mods = 'NONE',   key = 'End',        action = act.CopyMode 'MoveToEndOfLineContent' },
+
+    -- Search
+    { mods = 'NONE',   key = 'f',          action = act.CopyMode { JumpForward = { prev_char = false } } },
+    { mods = 'NONE',   key = 'F',          action = act.CopyMode { JumpBackward = { prev_char = false } } },
+    { mods = 'SHIFT',  key = 'F',          action = act.CopyMode { JumpBackward = { prev_char = false } } },
+    { mods = 'NONE',   key = 't',          action = act.CopyMode { JumpForward = { prev_char = true } } },
+    { mods = 'NONE',   key = 'T',          action = act.CopyMode { JumpBackward = { prev_char = true } } },
+    { mods = 'SHIFT',  key = 'T',          action = act.CopyMode { JumpBackward = { prev_char = true } } },
+    { mods = 'NONE',   key = ',',          action = act.CopyMode 'JumpAgain' },
+    { mods = 'NONE',   key = ';',          action = act.CopyMode 'JumpReverse' },
+
+    -- Scroll
+    { mods = 'NONE',   key = 'g',          action = act.CopyMode 'MoveToScrollbackTop' },
+    { mods = 'NONE',   key = 'G',          action = act.CopyMode 'MoveToScrollbackBottom' },
+    { mods = 'SHIFT',  key = 'G',          action = act.CopyMode 'MoveToScrollbackBottom' },
+
+    { mods = 'CTRL',   key = 'u',          action = act.CopyMode { MoveByPage = (-0.5) } },
+    { mods = 'CTRL',   key = 'd',          action = act.CopyMode { MoveByPage = (0.5) } },
+
+    { mods = 'CTRL',   key = 'f',          action = act.CopyMode 'PageDown' },
+    { mods = 'NONE',   key = 'PageDown',   action = act.CopyMode 'PageDown' },
+
+    { mods = 'CTRL',   key = 'b',          action = act.CopyMode 'PageUp' },
+    { mods = 'NONE',   key = 'PageUp',     action = act.CopyMode 'PageUp' },
+
+    { mods = 'NONE',   key = 'H',          action = act.CopyMode 'MoveToViewportTop' },
+    { mods = 'SHIFT',  key = 'H',          action = act.CopyMode 'MoveToViewportTop' },
+    { mods = 'NONE',   key = 'L',          action = act.CopyMode 'MoveToViewportBottom' },
+    { mods = 'SHIFT',  key = 'L',          action = act.CopyMode 'MoveToViewportBottom' },
+    { mods = 'NONE',   key = 'M',          action = act.CopyMode 'MoveToViewportMiddle' },
+    { mods = 'SHIFT',  key = 'M',          action = act.CopyMode 'MoveToViewportMiddle' },
   },
+}
+
+-- TODO: More
+config.launch_menu = {
+  { label = 'htop', args = {'htop'}, cwd = '/home/magno' },
 }
 
 return config
