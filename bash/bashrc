@@ -1,18 +1,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-### EXPORT ###
-export TERM='xterm-256color'             # Colors
-export HISTCONTROL=ignoredups:erasedups  # Ignore duplicates entries
-export HISTSIZE=1000
-export HISTFILESIZE=2000
-export EDITOR=nvim
-export MANPAGER='less -R'
-
-### OTHER SCRIPTS ###
-# Rust & cargo
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
 ### SHOPT ###
 shopt -s autocd         # change to named directory
 shopt -s cdspell        # autocorrects cd misspellings
@@ -27,10 +15,6 @@ bind "set completion-ignore-case on"
 ### PROMPT ###
 # Using Nerd Fonts: "<current directory> <nf-md-chevron_triple_right> " all in green
 export PS1=$'\[\033[1;32m\]\W \U000f0dbb \[\033[0m\]'
-
-### PATH ###
-# TODO: shouldn't this be in .profile?
-export PATH=$PATH:/opt/bin
 
 ### ALIAS ###
 alias   ..='cd ..'
@@ -53,15 +37,12 @@ alias la='ls -lA'
 alias cat='bat --theme="Visual Studio Dark+"'
 alias icat='wezterm imgcat'
 
-# Fuzzy find
-alias fvim='nvim $(fzf)'
-
 # Confirm before overwriting or deleting
 alias rm='rm -iv'
 alias mv='mv -iv'
 alias cp='cp -iv'
 
-### FUNTIONS ###
+### FUZZY STUFF ###
 
 cdf() {
     cd $(find $1 -type d -not -path '*/[@.]*' | fzf)
@@ -70,6 +51,10 @@ cdf() {
 dvim() {
     cdf $1 && nvim .
 }
+
+# Fuzzy find
+alias fvim='nvim $(fzf)'
+
 
 # Startup program
 [[ -x $(command -v fastfetch) ]] && fastfetch
