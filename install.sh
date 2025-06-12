@@ -49,8 +49,10 @@ DOTFILES_DIR=$(dirname "$SCRIPT")
 create_link "User dirs" $DOTFILES_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
 create_link "bashrc"    $DOTFILES_DIR/bash/bashrc    $HOME/.bashrc
 create_link "profile"   $DOTFILES_DIR/bash/profile   $HOME/.profile
+create_link "fish"      $DOTFILES_DIR/fish           $HOME/.config/fish
 create_link "Neovim"    $DOTFILES_DIR/nvim           $HOME/.config/nvim
 create_link "Git"       $DOTFILES_DIR/gitconfig      $HOME/.gitconfig
+create_link "Yazi"      $DOTFILES_DIR/yazi           $HOME/.config/yazi
 create_link "tmux"      $DOTFILES_DIR/tmux.conf      $HOME/.tmux.conf
 create_link "Wezterm"   $DOTFILES_DIR/wezterm        $HOME/.config/wezterm
 

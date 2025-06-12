@@ -55,6 +55,5 @@ dvim() {
 # Fuzzy find
 alias fvim='nvim $(fzf)'
 
-
 # Startup program
 [[ -x $(command -v fastfetch) ]] && fastfetch
