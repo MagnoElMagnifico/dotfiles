@@ -12,8 +12,18 @@ return {
     }
   },
 
-  { 'Mofiqul/dracula.nvim',  lazy = true },
-  { 'sainnhe/sonokai',       lazy = true },
+   -- :colorscheme drakula, drakula-soft
+  { 'Mofiqul/dracula.nvim', lazy = true },
+
+  -- :colorscheme sonokai
+  -- :let g:sonokai_style = default, atlantis, andromeda, shusia, maia, espresso
+  { 'sainnhe/sonokai', lazy = true },
+
+  -- :colorscheme tokyonight
+  -- :colorscheme tokyonight-night
+  -- :colorscheme tokyonight-storm
+  -- :colorscheme tokyonight-day
+  -- :colorscheme tokyonight-moon
   { 'folke/tokyonight.nvim', lazy = true },
 
   -- Identation lines
@@ -44,11 +54,6 @@ return {
 
     lazy = true,
     event = 'VimEnter',
-
-    dependencies = {
-      -- Useful for getting pretty icons, but requires a Nerd Font
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font }
-    },
 
     opts = {
       -- See `:help lualine.txt`

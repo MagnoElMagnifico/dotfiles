@@ -1,4 +1,7 @@
 return {
+  -----------------------------------------------------------------------------
+  ---- TREESITTER -------------------------------------------------------------
+  -----------------------------------------------------------------------------
   -- Tree-sitter is a parsing library that generates a tree of some source code.
   -- As a result, Neovim has more information about the code since it
   -- understands how it is structured, so it can provide additional
@@ -27,7 +30,10 @@ return {
   --
   {
     'nvim-treesitter/nvim-treesitter',
-    lazy = false,        -- Lazy loading is not supported
+    lazy = false, -- Lazy loading is not supported
+
+    -- 'build' is used to run some command when the plugin is installed/updated.
+    -- This is only run then, not every time Neovim starts up.
     build = ':TSUpdate', -- Must update parsers at the same time
 
     opts = {
@@ -48,6 +54,7 @@ return {
       },
 
       -- Autoinstall languages that are not installed
+      -- They will be installed in '~/.local/share/nvim/lazy/nvim-treesitter/parser'
       auto_install = true,
 
       ---- MODULES ------------------------------------------------------------
