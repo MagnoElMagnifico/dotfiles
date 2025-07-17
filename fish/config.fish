@@ -11,12 +11,16 @@ set -gx MANPAGER less
 set -gx PAGER less
 
 # PATH
+if test -d $HOME/.opam/default/bin
+    fish_add_path $HOME/.opam/default/bin
+end
+
 if test -d $HOME/.cargo/bin
     fish_add_path -g $HOME/.cargo/bin
 end
 
-if test -e $HOME/.opam/opam-init/init.fish
-    source $HOME/.opam/opam-init/init.fish
+if test -d /opt/bin
+    fish_add_path -g /opt/bin
 end
 
 # Set XDG basedirs.
