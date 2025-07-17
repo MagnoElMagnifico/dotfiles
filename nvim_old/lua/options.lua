@@ -60,7 +60,7 @@ vim.o.autowrite    = false
 vim.o.autoindent    = true
 vim.o.textwidth     = 80
 vim.o.colorcolumn   = '80'
-vim.o.formatoptions = 'tcro/qjnl1' -- :h fo-table
+vim.o.formatoptions = 'tcro/qnl1j' -- :h fo-table
 
 -- Indent
 vim.o.autoindent  = true

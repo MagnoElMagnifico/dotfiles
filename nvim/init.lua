@@ -1,108 +1,95 @@
-require 'options'
-require 'keymaps'
--- require 'commands'
-require 'autocommands'
-require 'netrw'
-
--- TODO: https://github.com/radleylewis/nvim-lite/blob/youtube_demo/init.lua
-
----- LAZY PACKAGE MANAGER ----
--- This plugin allows to manage other plugins automatically.
 --
---    :Lazy         Open lazy.nvim menu to check your plugins' status
---                  You can use '?' in this menu for help.
---                  ':q' closes the window.
---    :Lazy check   Check for updates (git fetch)
---    :Lazy update  Updates all the installed plugins (updates lockfile)
---    :Lazy clean   Delete plugins no longer needed
---    :Lazy restore Goes back to the version of the lockfile
+-- NEW RULES:
+--   - Use defaults whenever possible, specially for keymaps. Some options may
+--     be set explicitly in case they're important or planned to be changed in
+--     the future.
+--   - No need to list every possible configuration, just change what it needs
+--     to be changed
+--   - Not every command must be mapped to a key, only what I use the most
 --
--- Plugins are installed in the following directories, so to remove lazy.nvim,
--- you can just delete them.
---
---    data      ~/.local/share/nvim/lazy/
---    state     ~/.local/state/nvim/lazy/
---    lockfile  ~/.config/nvim/lazy-lock.json
---
--- Bootstrap lazy.nvim package manager
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local out = vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    '--branch=stable',
-    'https://github.com/folke/lazy.nvim.git',
-    lazypath
-  }
+---- OPTIONS ----
+-- TODO: not sure about this
+vim.o.completeopt = 'fuzzy,menu,menuone,noinsert,popup'
+vim.o.selection = 'exclusive' -- Show the selection exactly
+vim.opt.iskeyword:append('-') -- Treat '-' as part of a word
 
-  if vim.v.shell_error ~= 0 then
-    -- Show the error it the previous command was not successful
-    vim.api.nvim_echo({
-      { 'Failed to clone lazy.nvim\nError message' },
-      { out, 'Warning message' },
-      { '\nPress any key to exit...' },
-    }, true, {})
+-- TODO: folds
+-- vim.o.foldmethod     = 'indent'
+-- vim.o.foldenable     = true
+-- vim.o.foldlevelstart = 5
+-- vim.o.foldnestmax    = 5
 
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
+-- Scroll margins
+vim.o.scrolloff     = 10
+vim.o.sidescrolloff = 10
 
-vim.opt.rtp:prepend(lazypath)
+-- Show relative line numbers
+vim.o.number         = true
+vim.o.relativenumber = true
 
--- Now, specify which plugins to download
-require('lazy').setup({
-  -- Plugins with its own configuration
-  require 'plugins.treesitter', -- Better syntax highlighting
-  require 'plugins.telescope',  -- Fuzzy find files and grep
+-- Wrap
+vim.o.wrap        = true -- Wrap long lines to fit the screen
+vim.o.breakindent = true -- Wrapped lines must follow indentation
+vim.o.showbreak   = '\\' -- Show this char when a line is wrapped
 
-  -- TODO:
-  require 'plugins.lsp',        -- Language Servers
-  require 'plugins.cmp',        -- Autocompletion
-  require 'plugins.git',        -- Git integration
-  require 'plugins.format',     -- Formatting code
-  -- require 'plugins.debug',      -- Debugger support
-  -- require 'plugins.whichkey',   -- Help with keybinds
-  require 'plugins.looks',      -- Visuals, colorschemes and status line
-  -- require 'plugins.oil',        -- File manager
+-- Search
+vim.opt.path:append('**')    -- Search in all subdirectories as well
+vim.o.smartcase  = true      -- Search case insensitive, unless searching uppercase
+vim.o.ignorecase = true      -- Required for 'smartcase' to work
+vim.o.incsearch  = true      -- Show matches while typing
+vim.o.hlsearch   = true      -- Highlight matches
+vim.o.inccommand = 'nosplit' -- Show substitutions live in the window
 
-  ---- Utilities ----
-  -- Other plugins to make a better experience
-  'tpope/vim-sleuth',  -- Detect tabstop and shiftwidth automatically
+-- Visuals
+vim.o.termguicolors = true -- Use 24 bit colors in the terminal
+vim.o.lazyredraw    = true -- Don't update screen while executing macros
+vim.o.colorcolumn   = '80' -- Show ruler at column 80
+vim.o.cursorline    = true -- Show current line
+vim.o.list          = true -- Show whitespaces
+vim.opt.listchars = {
+	tab   = '> ', -- Tabs rendered as '>' when they start
+	trail = '·',  -- Trailing spaces
+	nbsp  = '␣',  -- Non breaking spaces
+}
 
-  -- Not a recurrent problem, but might be interesting to have:
-  -- https://github.com/LunarVim/bigfile.nvim
+-- Format
+vim.o.autoindent = true  -- Keep same indentation on the next line
+vim.o.smartindent = true -- C-like indenting
 
-  {
-    'echasnovski/mini.nvim',
-    config = function()
-      require('mini.ai').setup { n_lines = 500 } -- Expansion of a/i text-objects
-      require('mini.surround').setup()           -- Surround actions
-      require('mini.align').setup()              -- Align text interactively
-      require('mini.icons').setup()              -- Icon provider
-      require('mini.files').setup()
+vim.o.shiftwidth = 4     -- Amount of spaces for indentation
+vim.o.expandtab  = false -- '<Tab>' insert tabs, not spaces
+vim.o.tabstop    = 4     -- Make tabs render and behave like 4 spaces
 
-      vim.keymap.set({'n', 'v', 'x'}, '<leader>-', function()
-        MiniFiles.open(vim.api.nvim_buf_get_name(0))
-      end, { desc = 'Open file explorer in parent directory', silent = true })
+vim.o.textwidth   = 80   -- Maximum length of the text
+-- t  Autowrap on textwidth
+-- c  Wrap comments
+-- r  Inside comments, '<Enter>' inserts a new comment
+-- o  Same as before, but with 'o' command
+-- /  When 'o', don't insert comment if it's not the whole line
+-- q  Formatting comments
+-- a  Automatic formatting for paragraphs
+-- n  Recognize numbered lists
+-- l  Don't format longer lines
+-- j  Remove comment leader when joining lines
+vim.o.formatoptions = 'tcro/qnlj'
+-- Include unnumbered lists (with '*' may not work that well)
+vim.o.formatlistpat = [[^\s*\(\d\+[\.)]\|[-+*]\)\s\+]]
 
-      vim.keymap.set({'n', 'v', 'x'}, '<leader>_', function()
-        MiniFiles.open(nil, false)
-      end, { desc = 'Open file explorer in current working directory', silent = true })
+-- Key behaviour
+vim.o.mouse = 'a'                           -- Use mouse in command mode as well
+vim.o.backspace = 'indent,eol,start,nostop' -- No limitations to backspace
 
-      -- Interesting to checkout:
-      --     - bracketed:  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
-      --     - jump:       https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
-      --     - statusline  lualine
-      --     - miniclue
-      --     - operators
-    end
-  },
+-- Files
+vim.o.fileencoding = 'UTF-8' -- Use UTF-8 always
+vim.o.spelllang    = 'es,en' -- Vocabulary check in Spanish and English
 
-  -- NOTE: using nvim's functionality for now (:h commenting), but it's missing:
-  --    - Block comments: gb
-  --    - Comments on newlines: gco gcO
-  -- { 'numToStr/Comment.nvim', opts = {} }, -- Toggle comments with 'gcc' and 'gbc'
-})
+vim.o.undofile  = true  -- Keep undo history even after restart
+vim.o.autoread  = true  -- Update buffer if file changed on disk
+vim.o.autowrite = false -- Don't write to disk automatically
+vim.o.hidden    = true  -- Keep buffers loaded even if no window is showing them
+
+-- Window opening
+vim.o.splitbelow = true
+vim.o.splitright = true
+
