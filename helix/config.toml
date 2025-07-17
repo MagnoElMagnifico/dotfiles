@@ -1,14 +1,13 @@
-# No git integration
-# No way to render trailing whitespace
-# LSP servers are managed outside
-# ci" -> mi" (being inside the quotes)
-
-# https://docs.helix-editor.com/languages.html
-# https://docs.helix-editor.com/keymap.html#changes
 theme = "onedark"
 
 [editor]
 line-number = "relative"
+
+[editor.indent-guides]
+render = true
+
+[editor.whitespace]
+render = "none"
 
 [editor.cursor-shape]
 insert = "bar"
