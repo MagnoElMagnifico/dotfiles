@@ -1,95 +1,117 @@
 --
--- NEW RULES:
+-- CONFIGURATION RULES:
+--   - Keep dependencies to a minimum, while keeping a full editing experience:
+--
+--          Lazy          Automatic installs and updates for plugins
+--                        TODO: Setup Lazy events
+--          Mason         The same for other tools (LSPs)
+--
+--          Treesitter    Better highlighting
+--          LSP           Faster navigation, inline errors
+--          completion    Documentation, faster typing, no typos
+--          snippets      Writing faster
+--    TODO: Formatting    Consistent format and avoid tedious tasks
+--    TODO: ToggleTerm    Terminal handling
+--          Telescope     Jump files easily
+--          Gitsigns      Git status and hunk management
+--          Mini.nvim     AI              -- tree-sitter operators
+--                        Align, Surround -- automate tedious tasks
+--                        Bracketed       -- easy navigation (conflict markers for git)
+--                        Files           -- netrw moving and coping is annoying
+--                        Statusline      -- prettier status line
+--
+--          GuessIndent   Maybe replaceable with .editorconfig
+--
+--          Looks         Colorschemes: onedark, drakula, sonokai, tokyonight
+--                        Todo-comments: highlight special comments
+--                        Indent-blanklines
+--
+--
 --   - Use defaults whenever possible, specially for keymaps. Some options may
 --     be set explicitly in case they're important or planned to be changed in
 --     the future.
 --   - No need to list every possible configuration, just change what it needs
---     to be changed
---   - Not every command must be mapped to a key, only what I use the most
+--     to be changed. However, important keymaps should be listed as
+--     documentation.
+--   - Not every command must be mapped to a key, only what I use most
+--     frequently.
+-------------------------------------------------------------------------------
+---- LAZY PACKAGE MANAGER -----------------------------------------------------
+-------------------------------------------------------------------------------
+-- This plugin allows to manage other plugins automatically.
 --
+--    :Lazy         Open lazy.nvim menu to check your plugins' status
+--                  You can use '?' in this menu for help.
+--                  ':q' closes the window.
+--    :Lazy check   Check for updates (git fetch)
+--    :Lazy update  Updates all the installed plugins (updates lockfile)
+--    :Lazy clean   Delete plugins no longer needed
+--    :Lazy restore Goes back to the version of the lockfile
+--
+-- Plugins are installed in the following directories, so to remove lazy.nvim,
+-- you can just delete them.
+--
+--    data      ~/.local/share/nvim/lazy/
+--    state     ~/.local/state/nvim/lazy/
+--    lockfile  ~/.config/nvim/lazy-lock.json
+--
+-- Bootstrap lazy.nvim package manager
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
----- OPTIONS ----
--- TODO: not sure about this
-vim.o.completeopt = 'fuzzy,menu,menuone,noinsert,popup'
-vim.o.selection = 'exclusive' -- Show the selection exactly
-vim.opt.iskeyword:append('-') -- Treat '-' as part of a word
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local out = vim.fn.system {
+    'git',
+    'clone',
+    '--filter=blob:none',
+    '--branch=stable',
+    'https://github.com/folke/lazy.nvim.git',
+    lazypath
+  }
 
--- TODO: folds
--- vim.o.foldmethod     = 'indent'
--- vim.o.foldenable     = true
--- vim.o.foldlevelstart = 5
--- vim.o.foldnestmax    = 5
+  if vim.v.shell_error ~= 0 then
+    -- Show the error it the previous command was not successful
+    vim.api.nvim_echo({
+      { 'Failed to clone lazy.nvim\nError message' },
+      { out, 'Warning message' },
+      { '\nPress any key to exit...' },
+    }, true, {})
 
--- Scroll margins
-vim.o.scrolloff     = 10
-vim.o.sidescrolloff = 10
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
 
--- Show relative line numbers
-vim.o.number         = true
-vim.o.relativenumber = true
+vim.opt.rtp:prepend(lazypath)
 
--- Wrap
-vim.o.wrap        = true -- Wrap long lines to fit the screen
-vim.o.breakindent = true -- Wrapped lines must follow indentation
-vim.o.showbreak   = '\\' -- Show this char when a line is wrapped
+-------------------------------------------------------------------------------
+---- CALL OTHER FILES ---------------------------------------------------------
+-------------------------------------------------------------------------------
+-- This is modular, comment out what you don't need
 
--- Search
-vim.opt.path:append('**')    -- Search in all subdirectories as well
-vim.o.smartcase  = true      -- Search case insensitive, unless searching uppercase
-vim.o.ignorecase = true      -- Required for 'smartcase' to work
-vim.o.incsearch  = true      -- Show matches while typing
-vim.o.hlsearch   = true      -- Highlight matches
-vim.o.inccommand = 'nosplit' -- Show substitutions live in the window
+-- Builtin configuration
+require 'options'      -- Most basic settings
+require 'keymaps'      -- Basic keybindings
+require 'commands'     -- Auto-commands and user commands
+--require 'netrw'        -- Netrw configuration (deprecated by mini.files)
 
--- Visuals
-vim.o.termguicolors = true -- Use 24 bit colors in the terminal
-vim.o.lazyredraw    = true -- Don't update screen while executing macros
-vim.o.colorcolumn   = '80' -- Show ruler at column 80
-vim.o.cursorline    = true -- Show current line
-vim.o.list          = true -- Show whitespaces
-vim.opt.listchars = {
-	tab   = '> ', -- Tabs rendered as '>' when they start
-	trail = '·',  -- Trailing spaces
-	nbsp  = '␣',  -- Non breaking spaces
-}
+-- Third party plugins
+require('lazy').setup({
+  require 'treesitter',
+  require 'telescope_config',
+  require 'mini_config',
+  require 'lsp',
+  require 'completion',
+  require 'git',
+  require 'looks',
 
--- Format
-vim.o.autoindent = true  -- Keep same indentation on the next line
-vim.o.smartindent = true -- C-like indenting
+  -- Detect tabstop and shiftwidth automatically (alternative to 'tpope/vim-sleuth')
+  -- Command ':GuessIndent'
+  -- TODO: does not work always
+  { 'NMAC427/guess-indent.nvim', opts = {} },
+})
 
-vim.o.shiftwidth = 4     -- Amount of spaces for indentation
-vim.o.expandtab  = false -- '<Tab>' insert tabs, not spaces
-vim.o.tabstop    = 4     -- Make tabs render and behave like 4 spaces
-
-vim.o.textwidth   = 80   -- Maximum length of the text
--- t  Autowrap on textwidth
--- c  Wrap comments
--- r  Inside comments, '<Enter>' inserts a new comment
--- o  Same as before, but with 'o' command
--- /  When 'o', don't insert comment if it's not the whole line
--- q  Formatting comments
--- a  Automatic formatting for paragraphs
--- n  Recognize numbered lists
--- l  Don't format longer lines
--- j  Remove comment leader when joining lines
-vim.o.formatoptions = 'tcro/qnlj'
--- Include unnumbered lists (with '*' may not work that well)
-vim.o.formatlistpat = [[^\s*\(\d\+[\.)]\|[-+*]\)\s\+]]
-
--- Key behaviour
-vim.o.mouse = 'a'                           -- Use mouse in command mode as well
-vim.o.backspace = 'indent,eol,start,nostop' -- No limitations to backspace
-
--- Files
-vim.o.fileencoding = 'UTF-8' -- Use UTF-8 always
-vim.o.spelllang    = 'es,en' -- Vocabulary check in Spanish and English
-
-vim.o.undofile  = true  -- Keep undo history even after restart
-vim.o.autoread  = true  -- Update buffer if file changed on disk
-vim.o.autowrite = false -- Don't write to disk automatically
-vim.o.hidden    = true  -- Keep buffers loaded even if no window is showing them
-
--- Window opening
-vim.o.splitbelow = true
-vim.o.splitright = true
+---- CONFIGURED COLORSCHEME ---------------------------------------------------
+-- Preferred builtin colorchemes:  habamax, slate, sorbet, unokai
+-- Third party:                    onedark, drakula, sonokai, tokyonight
+vim.cmd.colorscheme 'tokyonight'
 
