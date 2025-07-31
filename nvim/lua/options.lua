@@ -57,8 +57,7 @@ vim.o.textwidth   = 80   -- Maximum length of the text
 -- o  Same as before, but with 'o' command
 -- /  When 'o', don't insert comment if it's not the whole line
 -- q  Formatting comments
--- a  Automatic formatting for paragraphs
--- n  Recognize numbered lists
+-- n  Recognize numbered lists ('formatlistpat')
 -- l  Don't format longer lines
 -- j  Remove comment leader when joining lines
 vim.o.formatoptions = 'tcro/qnlj'
@@ -82,6 +81,15 @@ vim.o.hidden    = true  -- Keep buffers loaded even if no window is showing them
 vim.o.splitbelow = true
 vim.o.splitright = true
 
+-- Folding
+vim.o.foldmethod = 'expr' -- or marker: using '{{{' and '}}}'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+vim.o.foldcolumn = '0' -- No columns in gutter for folds ('auto' to show)
+vim.o.foldtext = ''    -- Text to show on folded sections
+vim.o.foldlevel = 99   -- No folds closed by default (set to 0 to close all)
+vim.o.foldnestmax = 4  -- Max fold nesting
+
 -- Disable providers
 vim.g.python_host_skip_check = 0
 vim.g.loaded_python_provider = 0
@@ -91,7 +99,7 @@ vim.g.loaded_perl_provider = 0
 
 -- Disable built-in plugins
 local disabled_built_ins = {
-  "2html_plugin",
+  "2html_plugin", -- :TOhtml
   "getscript",
   "getscriptPlugin",
   "gzip",

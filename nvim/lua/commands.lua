@@ -55,29 +55,24 @@ vim.api.nvim_create_autocmd('FileType', {
 --    +N    Increases
 --    -N    Decreases
 --    %N    Percentaje relative to full window size
-vim.api.nvim_create_user_command(
-  'Size',
-  function(args)
-    if #args.fargs ~= 2 then
-      error('Two arguments must be provided')
-    end
+vim.api.nvim_create_user_command('Size', function(args)
+  if #args.fargs ~= 2 then
+    error('Two arguments must be provided')
+  end
 
-    local width = args.fargs[1]
-    if width ~= '-' then
-      if width:sub(1, 1) == '%' then
-        width = math.floor(width:sub(2, -1) / 100 * vim.o.columns)
-      end
-      vim.cmd('vertical resize ' .. width)
+  local width = args.fargs[1]
+  if width ~= '-' then
+    if width:sub(1, 1) == '%' then
+      width = math.floor(width:sub(2, -1) / 100 * vim.o.columns)
     end
+    vim.cmd('vertical resize ' .. width)
+  end
 
-    local height = args.fargs[2]
-    if height ~= '-' then
-      if height:sub(1, 1) == '%' then
-        height = math.floor(height:sub(2, -1)/100 * vim.o.lines)
-      end
-      vim.cmd.resize(height)
+  local height = args.fargs[2]
+  if height ~= '-' then
+    if height:sub(1, 1) == '%' then
+      height = math.floor(height:sub(2, -1)/100 * vim.o.lines)
     end
-  end,
-  { desc = 'Resize window', bang = false, nargs='+'}
-)
-
+    vim.cmd.resize(height)
+  end
+end, { desc = 'Resize window', bang = false, nargs='+'})

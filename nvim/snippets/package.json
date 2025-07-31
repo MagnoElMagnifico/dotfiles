@@ -2,7 +2,8 @@
   "name": "personal-snippets",
   "contributes": {
     "snippets": [
-      { "language": "odin", "path": "./odin.json" }
+      { "language": "odin", "path": "./odin.json" },
+      { "language": "markdown", "path": "./markdown.json" }
     ]
   }
 }

@@ -32,8 +32,7 @@ local function keymaps(buffer, client)
   ---- Actions ----
   map('grn', vim.lsp.buf.rename, 'Rename symbol under cursor')
   map('gra', vim.lsp.buf.code_action, 'Code Action')
-  -- FIXME: throws error when this is nil
-  -- map('gq',  vim.lsp.format, 'Format with LSP')
+  map('gq',  vim.lsp.buf.format, 'Format with LSP')
 
   ---- Navigation ----
   map('grr', tl.lsp_references,                'Goto References of word under cursor')
@@ -123,21 +122,9 @@ end
 -- These are implemented by 'neovim/nvim-lspconfig'. Since I am using very few
 -- servers, I will do them myself. However, this repo is useful as a reference.
 --
--- TODO: Implement some nvim-lspconfig commands
---
---    :LspInfo           Status of active and configured servers (alias to checkhealth vim.lsp)
---    :LspStart {name}   Request start of specific server or attached to current buffer
---    :LspStop [name]    Stops the current's buffer server or by name
---    :LspRestart {name} Restarts
---    :LspLog            Open the LSP logfile
---
---         -- Reload is something like this
---         local function reload_lsp()
---           vim.lsp.stop_client(vim.lsp.getclients())
---           vim.cmd.edit()
---         end
---
--- TODO: vim.lsp: File Watcher file watching "(workspace/didChangeWatchedFiles)" disabled on all clients
+--    :LspInfo     Status of active and configured servers (alias to checkhealth vim.lsp)
+--    :LspLog      Open the LSP logfile
+--    :LspRestart  Restarts all the servers
 --
 -- This generic configuration ('*') will merged for the with the others
 vim.lsp.config("*", {
@@ -219,6 +206,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     autocommands(event.buf, client)
   end,
 })
+
+-- Useful commands
+vim.api.nvim_create_user_command('LspInfo', 'checkhealth vim.lsp', { desc = 'Run checkhealth vim.lsp' })
+
+vim.api.nvim_create_user_command('LspLog', function()
+  vim.cmd(string.format('tabnew %s', vim.lsp.get_log_path()))
+end, { desc = 'Opens the Nvim LSP client log.' })
+
+vim.api.nvim_create_user_command('LspRestart', function()
+  vim.lsp.stop_client(vim.lsp.getclients())
+  vim.cmd.edit()
+end, { desc = 'Restart all the servers' })
 
 return {
   ---- MASON --------------------------------------------------------------

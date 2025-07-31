@@ -39,6 +39,15 @@ return {
   },
 
   ---- OTHER VISUAL EFECTS ----------------------------------------------------
+  -- TEST: render-markdown plugin
+  -- Render Markdown inside the editor
+  -- :RenderMardown
+  --   enable / disable / toggle Activate or deactivate the plugin
+  --   buf_*                     Same as before, but just current buffer
+  --   log                       Opens log for the plugin
+  --   expand / contract         Manages anti-hiding caracters in the cursor line
+  { 'MeanderingProgrammer/render-markdown.nvim', opts = {} },
+
   -- Render indentation lines
   {
     'lukas-reineke/indent-blankline.nvim',

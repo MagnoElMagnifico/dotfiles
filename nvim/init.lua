@@ -11,7 +11,7 @@
 --          completion    Documentation, faster typing, no typos
 --          snippets      Writing faster
 --    TODO: Formatting    Consistent format and avoid tedious tasks
---    TODO: ToggleTerm    Terminal handling
+--          ToggleTerm    Faster terminal handling
 --          Telescope     Jump files easily
 --          Gitsigns      Git status and hunk management
 --          Mini.nvim     AI              -- tree-sitter operators
@@ -25,7 +25,7 @@
 --          Looks         Colorschemes: onedark, drakula, sonokai, tokyonight
 --                        Todo-comments: highlight special comments
 --                        Indent-blanklines
---
+--                        render-markdown.nvim
 --
 --   - Use defaults whenever possible, specially for keymaps. Some options may
 --     be set explicitly in case they're important or planned to be changed in
@@ -101,6 +101,7 @@ require('lazy').setup({
   require 'mini_config',
   require 'lsp',
   require 'completion',
+  require 'terminal',
   require 'git',
   require 'looks',
 

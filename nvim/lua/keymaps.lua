@@ -16,8 +16,8 @@ map({'n', 'v', 'o'}, ';', ',', 'Repeat f, F, t, T in the opposite direction')
 ---- Convenient keymaps ----
 map('n', 'U', '<C-R>', 'Redo')
 map('v', 'p', 'P', "Don't overwrite yanked text with the selected content")
-map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal')
 map('n', '<Esc>', '<cmd>nohlsearch<Enter>', 'Clear highlightings')
+map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal')
 
 -- Stay in visual mode after indenting
 map('v', '<', '<gv', 'Unintend selection')
@@ -86,4 +86,5 @@ map({'n', 'v'}, '<Leader>d', '"_d', 'Delete without changing the registers')
 map({'n', 'v'}, '<Leader>D', '"_D', 'Delete without changing the registers')
 
 map({'n', 'v'}, '<Leader>w', vim.cmd.write, 'Save file')
+map({'n', 'v'}, '<Leader>q', '<cmd>confirm qall<enter>', 'Quit Neovim')
 

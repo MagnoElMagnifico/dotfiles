@@ -12,7 +12,7 @@ return {
         preset = 'none',
 
         ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        ['<Tab>'] = { 'select_and_accept' },
+        ['<Tab>'] = { 'select_and_accept', 'fallback' },
 
         ['<C-c>'] = { 'cancel' },
 

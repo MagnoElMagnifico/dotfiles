@@ -1,3 +1,83 @@
+local function mini_files_config()
+  local function map(mapping, mapped, opts)
+    vim.keymap.set('n', mapping, mapped, opts)
+  end
+
+  ---- NEW IN EDITOR OPTIONS --------------------------------------------------
+
+  local show_dotfiles = true
+  local toggle_dotfiles = function()
+    -- Show everything
+    local function filter_show(_)
+      return true
+    end
+
+    -- Hide dotfiles
+    local function filter_hide(fs_entry)
+      return not vim.startswith(fs_entry.name, '.')
+    end
+
+    -- Toggle filters
+    show_dotfiles = not show_dotfiles
+    local new_filter = show_dotfiles and filter_show or filter_hide
+
+    -- Apply the new filter
+    MiniFiles.refresh({ content = { filter = new_filter } })
+  end
+
+  -- Set focused directory as current working directory
+  local set_cwd = function()
+    local path = (MiniFiles.get_fs_entry() or {}).path
+    if path == nil then
+      return vim.notify('Cursor is not on valid entry')
+    end
+    vim.fn.chdir(vim.fs.dirname(path))
+  end
+
+  -- Yank in register full path of entry under cursor
+  local yank_path = function()
+    local path = (MiniFiles.get_fs_entry() or {}).path
+    if path == nil then
+      return vim.notify('Cursor is not on valid entry')
+    end
+    vim.fn.setreg(vim.v.register, path)
+  end
+
+  -- Open path with system default handler (useful for non-text files)
+  local ui_open = function()
+    vim.ui.open(MiniFiles.get_fs_entry().path)
+  end
+
+  -- Not, setup the keymaps
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniFilesBufferCreate',
+    callback = function(args)
+      local buf = args.data.buf_id
+      map('g.', toggle_dotfiles, { buffer = buf, desc = 'Toggle dotfiles' })
+      map('g~', set_cwd,         { buffer = buf, desc = 'Set CWD to current' })
+      map('gX', ui_open,         { buffer = buf, desc = 'Open with OS program' })
+      map('gy', yank_path,       { buffer = buf, desc = 'Yank path' })
+    end,
+  })
+
+  ---- OPENING KEYMAPS --------------------------------------------------------
+
+  map('<leader>-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, { desc = 'Launch file editor' })
+  map('<leader>_', function() MiniFiles.open(nil, false) end, { desc = 'Launch file editor in CWD' })
+  map('<leader>.', function() MiniFiles.open() end, { desc = 'Launch file editor the previous state' })
+
+  -- Close mini.files when opening telescope
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "TelescopeFindPre",
+    callback = function()
+      local ok, mini_files = pcall(require, "mini.files")
+      if ok then
+        mini_files.close()
+      end
+    end
+  })
+end
+
 return {
   {
     ---------------------------------------------------------------------------
@@ -155,29 +235,13 @@ return {
       --   '   Jump to bookmark
       --   g?  Show help
       require('mini.files').setup()
-
-      local function map(mapping, mapped, desc)
-        vim.keymap.set('n', mapping, mapped, { desc = desc, silent = true })
-      end
-      map('<leader>-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, 'Launch file editor')
-      map('<leader>_', function() MiniFiles.open(nil, false) end, 'Launch file editor in CWD')
-      map('<leader>.', function() MiniFiles.open() end, 'Launch file editor the previous state')
-
-      -- Close mini.files when opening telescope
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "TelescopeFindPre",
-        callback = function()
-          local ok, mini_files = pcall(require, "mini.files")
-          if ok then
-            mini_files.close()
-          end
-        end
-      })
+      mini_files_config()
 
       ---- STATUS LINE --------------------------------------------------------
       require('mini.statusline').setup {
         use_icons = true,
         content = {
+          -- TODO: change inactive colors to highlight windows better
           inactive = nil, -- Inactive windows, use defaults (just the filename)
           active = function()
             -- Vim mode: Normal, Insert, Visual, Command, Terminal
