@@ -34,9 +34,9 @@ map({'n', 'v'}, '<C-k>', '<C-w>k', 'Jump one window up')
 map({'n', 'v'}, 'go', '<C-^>', 'Alternate file') -- Similar to 'gt'
 
 -- Tabs (I don't use them very often)
-map({'n', 'v'}, '<C-.>',     function() vim.cmd.tabnext('#') end, 'Jump to the last accessed tab')
-map({'n', 'v'}, '<C-Right>', function() vim.cmd.tabnext('+') end, 'Jump to the next tab')
-map({'n', 'v'}, '<C-Left>',  function() vim.cmd.tabnext('-') end, 'Jump to the previous tab')
+map({'n', 'v'}, '<C-.>',     function() pcall(vim.cmd.tabnext('#')) end, 'Jump to the last accessed tab')
+map({'n', 'v'}, '<C-Right>', function() pcall(vim.cmd.tabnext('+')) end, 'Jump to the next tab')
+map({'n', 'v'}, '<C-Left>',  function() pcall(vim.cmd.tabnext('-')) end, 'Jump to the previous tab')
 for i = 1,9 do
   map({'n', 'v'}, '<C-' .. i .. '>',
   function()
@@ -55,13 +55,21 @@ local function keepjumps(cmd)
 end
 
 -- Make the bottom line be the centered one
-map({'n', 'v'}, '<C-d>', keepjumps('M<C-d>zz'), 'Scroll down half a screen')
--- Make the top line be the centered one
-map({'n', 'v'}, '<C-u>', keepjumps('M<C-u>zz'), 'Scroll up half a screen')
--- Make the bottom line the top one
-map({'n', 'v'}, '<C-f>', keepjumps('<C-f><C-e>M'), 'Scroll down a screen')
--- Make the top line the bottom one
-map({'n', 'v'}, '<C-b>', keepjumps('<C-b><C-y>M'), 'Scroll down a screen')
+-- map({'n', 'v'}, '<C-d>', keepjumps('M<C-d>zz'), 'Scroll down half a screen')
+-- -- Make the top line be the centered one
+-- map({'n', 'v'}, '<C-u>', keepjumps('M<C-u>zz'), 'Scroll up half a screen')
+-- -- Make the bottom line the top one
+-- map({'n', 'v'}, '<C-f>', keepjumps('<C-f><C-e>M'), 'Scroll down a screen')
+-- -- Make the top line the bottom one
+-- map({'n', 'v'}, '<C-b>', keepjumps('<C-b><C-y>M'), 'Scroll down a screen')
+
+-- TEST: what about these to center the cursor when scrolling?
+map({'n', 'v'}, '<C-d>', '<C-d>zz', 'Scroll down half a screen')
+map({'n', 'v'}, '<C-u>', '<C-u>zz', 'Scroll up half a screen')
+map({'n', 'v'}, '<C-f>', '<C-f>zz', 'Scroll down a screen')
+map({'n', 'v'}, '<C-b>', '<C-b>zz', 'Scroll down a screen')
+map({'n', 'v'}, '<C-o>', '<C-o>zz', 'Go back in the jumplist')
+map({'n', 'v'}, '<C-i>', '<C-i>zz', 'Go forward in the jumplist')
 
 -- In my opinion, these commands should not be considered jumps, as they are not
 -- that big and easily undoable.

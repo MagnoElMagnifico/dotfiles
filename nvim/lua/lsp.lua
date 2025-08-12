@@ -43,19 +43,13 @@ local function keymaps(buffer, client)
   map('gO',  tl.lsp_document_symbols,          'Document symbols')
   map('gW',  tl.lsp_dynamic_workspace_symbols, 'Workspace symbols')
 
-  local function signature_help()
-    vim.lsp.buf.signature_help({
-      title = 'Signature help',
-      border = 'rounded'
-    })
-  end
-  map('gs',    signature_help, 'Function Signature')
-  map('<C-s>', signature_help, 'Function Signature', 'i')
+  map('gs',    vim.lsp.buf.signature_help, 'Function Signature')
+  map('<C-s>', vim.lsp.buf.signature_help, 'Function Signature', 'i')
 
   ---- Diagnostics ----
-  map('K', function() vim.lsp.buf.hover({ title = 'Symbol info', border = 'rounded' }) end, 'Hover Documentation of symbol under cursor')
-  map('gl', function() vim.diagnostic.open_float({ border = 'rounded' }) end, 'Open diagnostic in a floating window')
-  map('<Leader>lt', tl.diagnostics, 'Telescope Quickfix diagnostics')
+  map('K',          vim.lsp.buf.hover,         'Hover Documentation of symbol under cursor')
+  map('gl',         vim.diagnostic.open_float, 'Open diagnostic in a floating window')
+  map('<Leader>lt', tl.diagnostics,            'Telescope Quickfix diagnostics')
   map('<leader>ll', vim.diagnostic.setloclist, 'Open all diagnostics in a Location List')
 
   map('[d', vim.diagnostic.goto_prev, 'Go to previous Diagnostic message')
@@ -140,34 +134,46 @@ vim.lsp.config("*", {
 
 ---- Configuration for each LSP server ----
 -- Lua Language Server config
-vim.lsp.config.lua_ls = {
+vim.lsp.config['lua_ls'] = {
   cmd = {'lua-language-server'},
   filetypes = {'lua'},
   root_markers = {},
   settings = {
     Lua = {
       runtime = { version = { 'LuaJIT' } },
-      diagnostics = { globals = { 'vim' } },
+      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+      -- diagnostics = { globals = { 'vim' } },
     },
   },
 }
 
 -- C/C++ LSP server config
-vim.lsp.config.clangd = {
+vim.lsp.config['clangd'] = {
   cmd = { 'clangd', '--background-index' },
   filetypes = { 'c', 'cpp' },
   root_markers = { 'Makefile', 'CMakeLists.txt', 'compile_commands.json', 'compile_flags.txt' },
 }
 
+vim.lsp.config['rust_analyzer'] = {
+  cmd = { 'rust-analyzer' },
+  filetypes = { 'rust' },
+  root_markers = { 'Cargo.toml', '.git' },
+  -- capabilities = {
+  --   experimental = {
+  --     serverStatusNotification = true,
+  --   }
+  -- }
+}
+
 -- Odin language server
-vim.lsp.config.ols = {
+vim.lsp.config['ols'] = {
   cmd = { 'ols' },
   filetypes = { 'odin' },
   root_markers = { 'ols.json', '.git' },
 }
 
 -- Python language server
-vim.lsp.config.pyright = {
+vim.lsp.config['pyright'] = {
   cmd = { 'pyright-langserver', '--stdio' },
   filetypes = { 'python' },
   root_markers = { 'setup.py', 'requirements.txt', '.git' },
@@ -179,6 +185,7 @@ vim.lsp.enable({
   'lua_ls',
   'ols',
   'pyright',
+  'rust_analyzer',
 })
 
 -- Diagnostics config ':h vim.diagnostic.Opts'
@@ -187,10 +194,7 @@ vim.diagnostic.config {
   virtual_text = true,     -- Show diagnostics in virtual text
   severity_sort = true,    -- List important first
   underline = false,
-  float = {
-    border = 'rounded',
-    source = 'if_many',
-  },
+  float = { source = 'if_many' },
 }
 
 -- Create the mappings and autocommands when an LSP is attached

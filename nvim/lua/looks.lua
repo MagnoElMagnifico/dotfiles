@@ -46,7 +46,7 @@ return {
   --   buf_*                     Same as before, but just current buffer
   --   log                       Opens log for the plugin
   --   expand / contract         Manages anti-hiding caracters in the cursor line
-  { 'MeanderingProgrammer/render-markdown.nvim', opts = {} },
+  { 'MeanderingProgrammer/render-markdown.nvim', ft = { 'markdown' }, opts = {} },
 
   -- Render indentation lines
   {
@@ -60,13 +60,12 @@ return {
   },
 
   -- Highlight specific comments:
-  --   FIX: FIXME, BUG, FIXIT, ISSUE
   --   TODO:
-  --   HACK:
-  --   WARN: WARNING, XXX
+  --   FIX: FIXME, ISSUE
+  --   WARN: WARNING
+  --   TEST: TESTING HACK: DONTFIX
   --   PERF: OPTIM, PERFORMANCE, OPTIMIZE
   --   NOTE: INFO
-  --   TEST: TESTING, PASSED, FAILED
   --
   -- Also adds the following commands to easily jump to them:
   --
@@ -79,6 +78,7 @@ return {
   --  cwd       Directory where to search
   --  keywords  Comma-separated list of types (FIX, TODO, HACK...)
   --
+  -- TODO: create DONTFIX
   {
     'folke/todo-comments.nvim',
 
@@ -86,10 +86,34 @@ return {
     event = 'BufEnter',
 
     dependencies = { 'nvim-lua/plenary.nvim' },
+
     opts = {
-      signs = true,
-      highlight = { multiline = false },
-    }
+      signs = false,
+      highlight = { multiline = true },
+      -- Default colors: error, warning, info, hint, default, test
+      keywords = {
+        TODO = { color = 'info' },
+        FIX  = { color = 'error',   alt = { 'FIXME', 'ISSUE' } },
+        WARN = { color = 'warning', alt = { 'WARNING' } },
+        TEST = { color = 'test',    alt = { 'TESTING' } },
+        HACK = { color = 'hint',    alt = { 'DONTFIX' } },
+        PERF = { color = 'hint',    alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
+        NOTE = { color = 'hint',    alt = { 'INFO' } },
+      },
+    },
+
+    config = function(_, opts)
+      require('todo-comments').setup(opts)
+
+      vim.keymap.set("n", "]t", function()
+        require("todo-comments").jump_next()
+      end, { desc = "Next TODO comment" })
+
+      vim.keymap.set("n", "[t", function()
+        require("todo-comments").jump_prev()
+      end, { desc = "Previous TODO comment" })
+
+    end
   },
 
 } -- return

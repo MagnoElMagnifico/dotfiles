@@ -2,11 +2,13 @@ return {
   {
     'saghen/blink.cmp',
     version = '1.*',
+    event = 'InsertEnter',
 
     opts = {
       cmdline = { enabled = true },
       signature = { enabled = true },
       sources = { default = { 'lsp', 'buffer', 'path', 'snippets' } },
+      completion = { menu = { border = 'none' } },
 
       keymap = {
         preset = 'none',

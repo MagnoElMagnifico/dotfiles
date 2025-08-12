@@ -49,15 +49,15 @@ vim.api.nvim_create_autocmd('FileType', {
 
 ---- User commands ------------------------------------------------------------
 
--- :Size <width> <height>
+-- :Size <width> [<height>]
 --     -    Leaves as it is
 --     N    Sets
 --    +N    Increases
 --    -N    Decreases
 --    %N    Percentaje relative to full window size
 vim.api.nvim_create_user_command('Size', function(args)
-  if #args.fargs ~= 2 then
-    error('Two arguments must be provided')
+  if #args.fargs < 1 then
+    error('One argument must be provided')
   end
 
   local width = args.fargs[1]
@@ -68,6 +68,10 @@ vim.api.nvim_create_user_command('Size', function(args)
     vim.cmd('vertical resize ' .. width)
   end
 
+  if #args.fargs < 2 then
+    return
+  end
+
   local height = args.fargs[2]
   if height ~= '-' then
     if height:sub(1, 1) == '%' then
@@ -76,3 +80,31 @@ vim.api.nvim_create_user_command('Size', function(args)
     vim.cmd.resize(height)
   end
 end, { desc = 'Resize window', bang = false, nargs='+'})
+
+vim.api.nvim_create_user_command('Go', function(args)
+  local line = nil
+  local column = nil
+
+  if #args.fargs == 1 then
+    local matches =  string.gmatch(args.args, '%d+')
+    line = matches()
+    column = matches()
+    -- Maybe this is innecessary
+    if matches() ~= nil then
+      error('Too many numbers')
+    end
+  elseif  #args.fargs == 2 then
+    line = args.fargs[1]
+    column = args.fargs[2]
+  else
+    error('Too many arguments')
+  end
+
+  line = tonumber(line)
+  column = tonumber(column)
+  if line == nil or column == nil then
+    error('Arguments are not numbers')
+  end
+
+  vim.cmd.normal(line .. 'G' .. column .. '|')
+end, { desc = 'Go to location inside current file', bang = false, nargs='+' })

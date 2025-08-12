@@ -102,13 +102,14 @@ require('lazy').setup({
   require 'lsp',
   require 'completion',
   require 'terminal',
+  -- require 'format',
   require 'git',
   require 'looks',
 
   -- Detect tabstop and shiftwidth automatically (alternative to 'tpope/vim-sleuth')
   -- Command ':GuessIndent'
   -- TODO: does not work always
-  { 'NMAC427/guess-indent.nvim', opts = {} },
+  { 'NMAC427/guess-indent.nvim', event = 'BufEnter',  opts = {} },
 })
 
 ---- CONFIGURED COLORSCHEME ---------------------------------------------------

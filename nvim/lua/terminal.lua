@@ -28,6 +28,7 @@ return {
   -- Using multiple terminals is unsupported, in that case use a multiplexer.
   {
     'akinsho/toggleterm.nvim',
+    keys = { { '<C-,>', mode = { 'n', 'v', 't', 'i' } } },
 
     -- I don't know the defaults
     opts = {

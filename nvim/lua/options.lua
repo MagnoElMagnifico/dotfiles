@@ -2,10 +2,6 @@
 vim.opt.completeopt = { 'fuzzy', 'menu', 'menuone', 'popup' }
 vim.opt.iskeyword:append('-') -- Treat '-' as part of a word
 
--- FIXME: Telescope window with 'winborder' makes it look bad.
--- https://github.com/nvim-telescope/telescope.nvim/issues/3436
--- vim.o.winborder = 'bold' -- Default border style of floating windows
-
 -- Scroll margins
 vim.o.scrolloff     = 10
 vim.o.sidescrolloff = 10
@@ -29,11 +25,12 @@ vim.o.hlsearch   = true      -- Highlight matches
 vim.o.inccommand = 'nosplit' -- Show substitutions live in the window
 
 -- Visuals
-vim.o.termguicolors = true -- Use 24 bit colors in the terminal
-vim.o.lazyredraw    = true -- Don't update screen while executing macros
-vim.o.colorcolumn   = '80' -- Show ruler at column 80
-vim.o.cursorline    = true -- Show current line
-vim.o.list          = true -- Show whitespaces
+vim.o.winborder     = 'bold' -- Default border style of floating windows
+vim.o.termguicolors = true   -- Use 24 bit colors in the terminal
+vim.o.lazyredraw    = true   -- Don't update screen while executing macros
+vim.o.colorcolumn   = '80'   -- Show ruler at column 80
+vim.o.cursorline    = true   -- Show current line
+vim.o.list          = true   -- Show whitespaces
 vim.opt.listchars = {
   tab   = '> ', -- Tabs rendered as '>' when they start
   trail = '·',  -- Trailing spaces

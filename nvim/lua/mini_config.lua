@@ -112,6 +112,7 @@ return {
       --   ?       User prompt, specify start and end char
       --   <Other> Start and end chars are the specified
       --
+      -- WARN: changes base Neovim funcionalities (new textobjects)
       require('mini.ai').setup()
 
       ---- SURROUNDS ----------------------------------------------------------
@@ -135,6 +136,7 @@ return {
       --   b  Defaults to ), but matches to )]}>  (braces)
       --   q  Defaults to ", but matches to "'`   (quotes)
       --
+      -- WARN: changes base Neovim funcionalities (new operations)
       require('mini.surround').setup()
 
       ---- ALIGN --------------------------------------------------------------
@@ -234,7 +236,14 @@ return {
       --   m   Create bookmark
       --   '   Jump to bookmark
       --   g?  Show help
-      require('mini.files').setup()
+      require('mini.files').setup({
+        mappings = {
+          go_in = '',
+          go_in_plus = '<Enter>',
+          go_out = '',
+          go_out_plus = '-',
+        }
+      })
       mini_files_config()
 
       ---- STATUS LINE --------------------------------------------------------
