@@ -2,7 +2,6 @@ return {
   {
     'saghen/blink.cmp',
     version = '1.*',
-    event = 'InsertEnter',
 
     opts = {
       cmdline = { enabled = true },

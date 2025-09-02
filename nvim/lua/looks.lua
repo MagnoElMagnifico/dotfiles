@@ -39,15 +39,6 @@ return {
   },
 
   ---- OTHER VISUAL EFECTS ----------------------------------------------------
-  -- TEST: render-markdown plugin
-  -- Render Markdown inside the editor
-  -- :RenderMardown
-  --   enable / disable / toggle Activate or deactivate the plugin
-  --   buf_*                     Same as before, but just current buffer
-  --   log                       Opens log for the plugin
-  --   expand / contract         Manages anti-hiding caracters in the cursor line
-  { 'MeanderingProgrammer/render-markdown.nvim', ft = { 'markdown' }, opts = {} },
-
   -- Render indentation lines
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -61,9 +52,10 @@ return {
 
   -- Highlight specific comments:
   --   TODO:
-  --   FIX: FIXME, ISSUE
+  --   FIX: FIXME, ISSUE, BUG
   --   WARN: WARNING
-  --   TEST: TESTING HACK: DONTFIX
+  --   TEST: TESTING
+  --   HACK: DONTFIX
   --   PERF: OPTIM, PERFORMANCE, OPTIMIZE
   --   NOTE: INFO
   --
@@ -78,7 +70,6 @@ return {
   --  cwd       Directory where to search
   --  keywords  Comma-separated list of types (FIX, TODO, HACK...)
   --
-  -- TODO: create DONTFIX
   {
     'folke/todo-comments.nvim',
 
@@ -89,11 +80,12 @@ return {
 
     opts = {
       signs = false,
-      highlight = { multiline = true },
+      highlight = { multiline = false },
+      search = { pattern = [[\b(KEYWORDS)(\(.*\))?:]] },
       -- Default colors: error, warning, info, hint, default, test
       keywords = {
         TODO = { color = 'info' },
-        FIX  = { color = 'error',   alt = { 'FIXME', 'ISSUE' } },
+        FIX  = { color = 'error',   alt = { 'FIXME', 'ISSUE', 'BUG' } },
         WARN = { color = 'warning', alt = { 'WARNING' } },
         TEST = { color = 'test',    alt = { 'TESTING' } },
         HACK = { color = 'hint',    alt = { 'DONTFIX' } },

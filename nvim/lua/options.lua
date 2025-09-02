@@ -1,6 +1,5 @@
 -- TEST: not sure about these options
 vim.opt.completeopt = { 'fuzzy', 'menu', 'menuone', 'popup' }
-vim.opt.iskeyword:append('-') -- Treat '-' as part of a word
 
 -- Scroll margins
 vim.o.scrolloff     = 10

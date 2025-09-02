@@ -48,15 +48,40 @@ local function mini_files_config()
     vim.ui.open(MiniFiles.get_fs_entry().path)
   end
 
+  -- Open the current file under the cursor
+  local open_file = function()
+    MiniFiles.go_in({ close_on_file = true })
+  end
+
   -- Not, setup the keymaps
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniFilesBufferCreate',
     callback = function(args)
       local buf = args.data.buf_id
+
+      -- Custom mappings
       map('g.', toggle_dotfiles, { buffer = buf, desc = 'Toggle dotfiles' })
       map('g~', set_cwd,         { buffer = buf, desc = 'Set CWD to current' })
       map('gX', ui_open,         { buffer = buf, desc = 'Open with OS program' })
       map('gy', yank_path,       { buffer = buf, desc = 'Yank path' })
+
+      -- This way, you can navigate holding Shift
+      map('H',  MiniFiles.go_out, { buffer = buf, desc = 'Go to parent directory' })
+      map('J',  'j',              { buffer = buf, desc = 'Move cursor down' })
+      map('K',  'k',              { buffer = buf, desc = 'Move cursor up' })
+      map('L',  open_file,        { buffer = buf, desc = 'Open directory or file' })
+
+      -- More options because we can
+      map('<Left>',  MiniFiles.go_out, { buffer = buf, desc = 'Go to parent directory' })
+      map('<Right>', open_file,        { buffer = buf, desc = 'Open directory or file' })
+
+      -- These are the oil.nvim/netrw way
+      map('-',       MiniFiles.go_out, { buffer = buf, desc = 'Go to parent directory' })
+      map('<Enter>', open_file,        { buffer = buf, desc = 'Open directory or file' })
+
+      -- Closing
+      map('<Esc>', MiniFiles.close, { buffer = buf, desc = 'Close' })
+      map('<C-c>', MiniFiles.close, { buffer = buf, desc = 'Close' })
     end,
   })
 
@@ -239,9 +264,9 @@ return {
       require('mini.files').setup({
         mappings = {
           go_in = '',
-          go_in_plus = '<Enter>',
+          go_in_plus = '',
           go_out = '',
-          go_out_plus = '-',
+          go_out_plus = '',
         }
       })
       mini_files_config()

@@ -88,7 +88,6 @@ return {
       local builtin = require 'telescope.builtin'
       local themes  = require 'telescope.themes'
 
-      -- TODO: move these mappings to lazy.keys: https://lazy.folke.io/spec/lazy_loading#%EF%B8%8F-lazy-key-mappings
       -- Must-have for quick navigation
       nmap('<leader>f', builtin.find_files, 'Search and jump to Files')
       nmap('<leader>g', builtin.live_grep,  'Search by Grep and jump to result')

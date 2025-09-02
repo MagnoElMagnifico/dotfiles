@@ -63,7 +63,6 @@ end
 -- -- Make the top line the bottom one
 -- map({'n', 'v'}, '<C-b>', keepjumps('<C-b><C-y>M'), 'Scroll down a screen')
 
--- TEST: what about these to center the cursor when scrolling?
 map({'n', 'v'}, '<C-d>', '<C-d>zz', 'Scroll down half a screen')
 map({'n', 'v'}, '<C-u>', '<C-u>zz', 'Scroll up half a screen')
 map({'n', 'v'}, '<C-f>', '<C-f>zz', 'Scroll down a screen')

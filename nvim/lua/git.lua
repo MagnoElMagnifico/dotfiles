@@ -22,6 +22,10 @@ return {
   --     :Gitsigns toggle_word_diff    Intraline word-diff
   {
     'lewis6991/gitsigns.nvim',
+
+    lazy = true,
+    event = 'BufEnter',
+
     opts = {},
     config = function()
       local function map(mapping, mapped, desc)

@@ -108,3 +108,100 @@ vim.api.nvim_create_user_command('Go', function(args)
 
   vim.cmd.normal(line .. 'G' .. column .. '|')
 end, { desc = 'Go to location inside current file', bang = false, nargs='+' })
+
+
+
+
+--[[
+vim.keymap.set("x", "<leader>0", function()
+  local start_line = vim.fn.getpos("'<")[2]
+  local end_line   = vim.fn.getpos("'>")[2]
+
+  if end_line < start_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  if #lines == 0 then return end
+
+  local text_width = vim.bo.textwidth > 0 and vim.bo.textwidth or 80
+
+  print(vim.inspect(lines))
+
+  for _, line in ipairs(lines) do
+      local _, _, indent_width, bullet, extra_indent, text = string.find(line, '^(%s*)([-*+])(%s+)(.*)')
+      if indent_width then
+
+        indent_width = #indent_width
+        extra_indent = #extra_indent
+
+        print(indent_width .. ': ' .. text)
+
+        if #line > text_width then
+          print('acortar')
+        end
+
+      end
+  end
+
+end, { desc = "Format selected list item" })
+
+  local function flush_buffer()
+    if #buffer == 0 then return end
+    local _, _, ind, bul, rest = string.find(buffer[1], "^(%s*)([-*+])%s+(.*)")
+    if not bul then
+      vim.list_extend(formatted, buffer)
+      buffer = {}
+      return
+    end
+    indent, bullet = ind, bul
+    local indent_str = indent .. string.rep(" ", 4)
+
+    -- une todo el contenido
+    local text = rest
+    for i = 2, #buffer do
+      text = text .. " " .. buffer[i]
+    end
+    text = text:gsub("%s+", " ")
+
+    -- wrap manual respetando `width`
+    local wrapped = {}
+    local line = ""
+    for word in text:gmatch("%S+") do
+      if #line + #word + 1 > width then
+        table.insert(wrapped, line)
+        line = word
+      else
+        if line == "" then
+          line = word
+        else
+          line = line .. " " .. word
+        end
+      end
+    end
+    if line ~= "" then
+      table.insert(wrapped, line)
+    end
+
+    -- reconstruye líneas
+    wrapped[1] = indent .. bullet .. "   " .. wrapped[1]
+    for i = 2, #wrapped do
+      wrapped[i] = indent_str .. wrapped[i]
+    end
+
+    vim.list_extend(formatted, wrapped)
+    buffer = {}
+  end
+
+  for _, l in ipairs(lines) do
+    if l:match("^%s*[-*+]%s+") then
+      flush_buffer()
+    end
+    table.insert(buffer, l)
+  end
+  flush_buffer()
+
+  vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, formatted)
+end
+vim.keymap.set("v", "<leader>t", format_list_selection, { desc = "Format selected list item" })
+--]]
