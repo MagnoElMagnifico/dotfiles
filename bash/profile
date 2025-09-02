@@ -6,7 +6,7 @@ export HISTFILESIZE=2000
 export EDITOR=nvim
 export MANPAGER='less -R'
 
-export PATH=$PATH:/opt/bin
+export PATH="$PATH:/opt/bin"
 
 #### CONFIG TOOLS ####
 # BEGIN cargo configuration

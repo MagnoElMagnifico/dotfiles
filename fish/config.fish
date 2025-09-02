@@ -6,21 +6,24 @@ set -gx HISTFILESIZE 3000
 # Programs
 set -gx BROWSER brave-browser
 set -gx EDITOR nvim
-set -gx VISUAL kwrite
 set -gx MANPAGER less
 set -gx PAGER less
 
 # PATH
-if test -d $HOME/.opam/default/bin
-    fish_add_path $HOME/.opam/default/bin
+if test -d $HOME/.cargo/bin
+    fish_add_path $HOME/.cargo/bin
 end
 
-if test -d $HOME/.cargo/bin
-    fish_add_path -g $HOME/.cargo/bin
+if test -d $HOME/Downloads/emsdk
+    fish_add_path --path $HOME/Downloads/emsdk $HOME/Downloads/emsdk/upstream/emscripten
 end
+
+# if test -d $HOME/.opam/default/bin
+#     fish_add_path --path $HOME/.opam/default/bin
+# end
 
 if test -d /opt/bin
-    fish_add_path -g /opt/bin
+    fish_add_path --append /opt/bin
 end
 
 # Set XDG basedirs.
@@ -31,18 +34,6 @@ set -q XDG_STATE_HOME; or set -Ux XDG_STATE_HOME $HOME/.local/state
 set -q XDG_CACHE_HOME; or set -Ux XDG_CACHE_HOME $HOME/.cache
 
 #### INTERACTIVE ####
-
-# TODO:
-# cdf() {
-#     cd $(find $1 -type d -not -path '*/[@.]*' | fzf)
-# }
-#
-# dvim() {
-#     cdf $1 && nvim .
-# }
-#
-# # Fuzzy find
-# alias fvim='nvim $(fzf)'
 
 if status is-interactive
     # NOTE: when the list is big enough, move to conf.d/ directory
@@ -67,17 +58,7 @@ if status is-interactive
     alias cat='bat --theme="Visual Studio Dark+"'
     alias icat='wezterm imgcat'
 
-    #### ABBREVIATIONS ####
-    # Git
-    abbr --add gs 'git status'
-    abbr --add gc 'git commit -m ""'
-    abbr --add gd 'git diff'
-    abbr --add ga 'git add'
-
     # Recurrently used commands
     abbr --add up 'sudo dnf update && flatpak update'
-
-    #### BINDINGS ####
-    bind ctrl-g accept-autosuggestion
 end
 

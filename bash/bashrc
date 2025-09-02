@@ -13,8 +13,8 @@ shopt -s globstar       # use ** for recursive wildcard
 bind "set completion-ignore-case on"
 
 ### PROMPT ###
-# Using Nerd Fonts: "<current directory> <nf-md-chevron_triple_right> " all in green
-export PS1=$'\[\033[1;32m\]\W \U000f0dbb \[\033[0m\]'
+# Using Nerd Fonts: "<current directory> $ " all in green
+export PS1=$'\[\033[1;32m\]\W $ \[\033[0m\]'
 
 ### ALIAS ###
 alias   ..='cd ..'
@@ -55,5 +55,16 @@ dvim() {
 # Fuzzy find
 alias fvim='nvim $(fzf)'
 
-# Startup program
-[[ -x $(command -v fastfetch) ]] && fastfetch
+# Run fastfetch on startup if:
+#   - the command exists
+#   - not running inside Vim or Neovim
+#   - not running inside tmux or zellij
+#   - not running inside SSH
+if command -v fastfetch >/dev/null 2>&1 \
+   && [ -z "${NVIM+x}" ] \
+   && [ -z "${VIMRUNTIME+x}" ] \
+   && [ -z "${TMUX+x}" ] \
+   && [ -z "${ZELLIJ+x}" ] \
+   && [ -z "${SSH_TTY+x}" ]; then
+    fastfetch
+fi
