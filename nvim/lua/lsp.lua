@@ -38,6 +38,7 @@ local function keymaps(buffer, client)
   map('grr', tl.lsp_references,                'Goto References of word under cursor')
   map('gri', tl.lsp_implementations,           'Goto Implementation of word under cursor')
   map('grt', tl.lsp_type_definitions,          'Goto Type definition under cursor')
+
   map('gd',  tl.lsp_definitions,               'Goto Definition') -- First declaration, to go back use '<C-t>'
   map('gD',  vim.lsp.buf.declaration,          'Goto Declaration') -- Jump to header file (not very used)
   map('gO',  tl.lsp_document_symbols,          'Document symbols')
@@ -52,13 +53,12 @@ local function keymaps(buffer, client)
   map('<Leader>lt', tl.diagnostics,            'Telescope Quickfix diagnostics')
   map('<leader>ll', vim.diagnostic.setloclist, 'Open all diagnostics in a Location List')
 
-  map('[d', vim.diagnostic.goto_prev, 'Go to previous Diagnostic message')
-  map(']d', vim.diagnostic.goto_next, 'Go to next Diagnostic message')
+  map('[d', function() vim.diagnostic.jump { count = 1, float = true } end, 'Go to previous Diagnostic message')
+  map(']d', function() vim.diagnostic.jump { count =-1, float = true } end, 'Go to next Diagnostic message')
 
   ---- Other ----
   -- tl.lsp_incoming_calls
   -- tl.lsp_outgoing_calls
-  -- format
 
   -- Toggle inlay hints in code, if the language server you are using supports
   -- them. This may be unwanted, since they displace some of your code.
@@ -103,6 +103,20 @@ local function autocommands(buffer, client)
   end
 end
 
+-- Create the mappings and autocommands when an LSP is attached
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+      return
+    end
+    -- The new buffer will have these new keymaps and autocommands
+    keymaps(event.buf, client)
+    autocommands(event.buf, client)
+  end,
+})
+
 ---- SERVER CONFIG ------------------------------------------------------------
 -- Enable the following language servers with additional configuration options.
 --
@@ -112,13 +126,6 @@ end
 --   settings     Specific configurations options for the server.
 --   root_markers How to choose the working directory for project.
 --                If the same directory is used, we'll use the same server.
---
--- These are implemented by 'neovim/nvim-lspconfig'. Since I am using very few
--- servers, I will do them myself. However, this repo is useful as a reference.
---
---    :LspInfo     Status of active and configured servers (alias to checkhealth vim.lsp)
---    :LspLog      Open the LSP logfile
---    :LspRestart  Restarts all the servers
 --
 -- This generic configuration ('*') will merged for the with the others
 vim.lsp.config("*", {
@@ -170,6 +177,14 @@ vim.lsp.config['ols'] = {
   cmd = { 'ols' },
   filetypes = { 'odin' },
   root_markers = { 'ols.json', '.git' },
+  settings = {
+    init_options = {
+      checker_args = { '-vet', '-strict-style' },
+      collections = {
+        -- { name = 'example', path = vim.fn.expand('$HOME/odin-lib') },
+      },
+    },
+  },
 }
 
 -- Python language server
@@ -188,6 +203,14 @@ vim.lsp.enable({
   'rust_analyzer',
 })
 
+---- DIAGNOSTICS --------------------------------------------------------------
+-- These are implemented by 'neovim/nvim-lspconfig'. Since I am using very few
+-- servers, I will do them myself. However, this repo is useful as a reference.
+--
+--    :LspInfo     Status of active and configured servers (alias to checkhealth vim.lsp)
+--    :LspLog      Open the LSP logfile
+--    :LspRestart  Restarts all the servers
+--
 -- Diagnostics config ':h vim.diagnostic.Opts'
 vim.diagnostic.config {
   update_in_insert = true, -- Update LSP while in insert mode
@@ -197,21 +220,7 @@ vim.diagnostic.config {
   float = { source = 'if_many' },
 }
 
--- Create the mappings and autocommands when an LSP is attached
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
-  callback = function(event)
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if not client then
-      return
-    end
-    -- The new buffer will have these new keymaps and autocommands
-    keymaps(event.buf, client)
-    autocommands(event.buf, client)
-  end,
-})
-
--- Useful commands
+---- COMMANDS -----------------------------------------------------------------
 vim.api.nvim_create_user_command('LspInfo', 'checkhealth vim.lsp', { desc = 'Run checkhealth vim.lsp' })
 
 vim.api.nvim_create_user_command('LspLog', function()
