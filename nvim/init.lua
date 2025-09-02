@@ -3,14 +3,13 @@
 --   - Keep dependencies to a minimum, while keeping a full editing experience:
 --
 --          Lazy          Automatic installs and updates for plugins
---                        TODO: Setup Lazy events
---          Mason         The same for other tools (LSPs)
+--          Mason         The same for third-party tools (LSPs)
 --
 --          Treesitter    Better highlighting
 --          LSP           Faster navigation, inline errors
 --          completion    Documentation, faster typing, no typos
 --          snippets      Writing faster
---    TODO: Formatting    Consistent format and avoid tedious tasks
+--          Formatting    Consistent format and avoid tedious tasks
 --          ToggleTerm    Faster terminal handling
 --          Telescope     Jump files easily
 --          Gitsigns      Git status and hunk management
@@ -20,9 +19,10 @@
 --                        Files           -- netrw moving and coping is annoying
 --                        Statusline      -- prettier status line
 --
---          GuessIndent   Maybe replaceable with .editorconfig
+--          GuessIndent   Avoid having to do `:set sw=4 et` every time
+--                        Maybe replaceable with .editorconfig
 --
---          Looks         Colorschemes: onedark, drakula, sonokai, tokyonight
+--          Looks (opt)   Colorschemes: onedark, drakula, sonokai, tokyonight
 --                        Todo-comments: highlight special comments
 --                        Indent-blanklines
 --                        render-markdown.nvim
@@ -96,15 +96,15 @@ require 'commands'     -- Auto-commands and user commands
 
 -- Third party plugins
 require('lazy').setup({
-  require 'treesitter',
-  require 'telescope_config',
-  require 'mini_config',
-  require 'lsp',
   require 'completion',
-  require 'terminal',
-  -- require 'format',
+  require 'format',
   require 'git',
   require 'looks',
+  require 'lsp',
+  require 'mini_config',
+  require 'telescope_config',
+  require 'terminal',
+  require 'treesitter',
 
   -- Detect tabstop and shiftwidth automatically (alternative to 'tpope/vim-sleuth')
   -- Command ':GuessIndent'
@@ -115,5 +115,5 @@ require('lazy').setup({
 ---- CONFIGURED COLORSCHEME ---------------------------------------------------
 -- Preferred builtin colorchemes:  habamax, slate, sorbet, unokai
 -- Third party:                    onedark, drakula, sonokai, tokyonight
-vim.cmd.colorscheme 'tokyonight'
+vim.cmd.colorscheme 'sonokai'
 
