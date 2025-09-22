@@ -68,6 +68,29 @@ config.switch_to_last_active_tab_when_closing_tab = true
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
 ---------------------------------------------------------
+---- Mouse ----------------------------------------------
+---------------------------------------------------------
+
+config.disable_default_mouse_bindings = true
+
+config.mouse_bindings = {
+  -- Left click creates selections
+  { mods = 'NONE', event = { Down = { button = 'Left', streak = 1 }}, action = act.SelectTextAtMouseCursor 'Cell' },
+  { mods = 'NONE', event = { Down = { button = 'Left', streak = 2 }}, action = act.SelectTextAtMouseCursor 'Word' },
+  { mods = 'NONE', event = { Down = { button = 'Left', streak = 3 }}, action = act.SelectTextAtMouseCursor 'Line' },
+
+  -- Dragging left click extends selections
+  { mods = 'NONE', event = { Drag = { button = 'Left', streak = 1 }}, action = act.ExtendSelectionToMouseCursor 'Cell' },
+  { mods = 'NONE', event = { Drag = { button = 'Left', streak = 2 }}, action = act.ExtendSelectionToMouseCursor 'Word' },
+  { mods = 'NONE', event = { Drag = { button = 'Left', streak = 3 }}, action = act.ExtendSelectionToMouseCursor 'Line' },
+
+  -- Other actions
+  { mods = 'SHIFT', event = { Down = { button = 'Left', streak = 1 }}, action = act.ExtendSelectionToMouseCursor 'Cell' },
+  { mods = 'CTRL',  event = { Down = { button = 'Left', streak = 1 }}, action = act.OpenLinkAtMouseCursor },
+  { mods = 'ALT',   event = { Drag = { button = 'Left', streak = 1 }}, action = act.SelectTextAtMouseCursor 'Block' },
+}
+
+---------------------------------------------------------
 ---- Keymaps --------------------------------------------
 ---------------------------------------------------------
 config.disable_default_key_bindings = true
@@ -328,6 +351,9 @@ config.key_tables = {
   },
 }
 
+---------------------------------------------------------
+---- Launch menu ----------------------------------------
+---------------------------------------------------------
 -- TODO: More
 config.launch_menu = {
   { label = 'htop', args = {'htop'}, cwd = '/home/magno' },
