@@ -131,6 +131,14 @@ return {
       nmap('<leader>sc', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, 'Search Config files')
+
+      -- Shortcut for searching in my notes
+      nmap('<leader>sn', function()
+        builtin.find_files {
+          cwd = '~/Notes',
+          find_command = { 'fd', '-tf', '-E', '*.pdf' },
+        }
+      end, 'Search Config files')
     end,
   }, -- telescope
 } -- return

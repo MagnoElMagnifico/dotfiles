@@ -34,15 +34,11 @@ map({'n', 'v'}, '<C-k>', '<C-w>k', 'Jump one window up')
 map({'n', 'v'}, 'go', '<C-^>', 'Alternate file') -- Similar to 'gt'
 
 -- Tabs (I don't use them very often)
-map({'n', 'v'}, '<C-.>',     function() pcall(vim.cmd.tabnext('#')) end, 'Jump to the last accessed tab')
-map({'n', 'v'}, '<C-Right>', function() pcall(vim.cmd.tabnext('+')) end, 'Jump to the next tab')
-map({'n', 'v'}, '<C-Left>',  function() pcall(vim.cmd.tabnext('-')) end, 'Jump to the previous tab')
-for i = 1,9 do
-  map({'n', 'v'}, '<C-' .. i .. '>',
-  function()
-    -- Ignore error if a tab doesn't exist
-    pcall(vim.cmd.tabnext(i))
-  end, 'Jump to tab number ' .. i)
+map({'n', 'v'}, '<C-.>',     'g<Tab>',            'Jump to the last accessed tab')
+map({'n', 'v'}, '<C-Right>', vim.cmd.tabnext,     'Jump to the next tab')
+map({'n', 'v'}, '<C-Left>',  vim.cmd.tabprevious, 'Jump to the previous tab')
+for i = 1, 9 do
+  map({'n', 'v'}, '<C-' .. i .. '>', i .. 'gt', 'Jump to tab number ' .. i)
 end
 
 ---- Centering cursor ----

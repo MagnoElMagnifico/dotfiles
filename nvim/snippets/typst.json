@@ -1,0 +1,49 @@
+{
+  "Code block": {
+    "prefix": "code",
+    "description": "Create a code block with a specific language",
+    "body": [
+      "```$1",
+      "$0",
+      "```"
+    ]
+  },
+
+  "Simple Template": {
+    "prefix": "template",
+    "description": "Create basic Latex-like article template",
+    "body": [
+      "#set text(lang: \"es\", size: 10pt)",
+      "#set document(",
+      "\ttitle: \"$1\",",
+      "\tauthor: \"$2\",",
+      "\tdate: datetime.today(),",
+      ")",
+      "#set page(margin: 1.75in, numbering: \"1\")",
+      "#set heading(numbering: \"1.\")",
+      "#set par(",
+      "\tleading: 0.5em,",
+      "\tspacing: 0.4cm,",
+      "\tfirst-line-indent: 0.5cm,",
+      "\tjustify: true,",
+      ")",
+      "",
+      "#show ref: it => underline(text(blue, it))",
+      "#show link: it => underline(text(blue, it))",
+      "#show raw: set text(font: \"Fira Code\")",
+      "#show raw.where(block: true): it => pad(left: 1cm, text(size: 8pt, it))",
+      "#show list: it => pad(left: 0.5cm, it)",
+      "",
+      "#align(center)[",
+      "\t#text(25pt, weight: \"bold\")[$1]",
+      "",
+      "\t#text(16pt, smallcaps[$2])",
+      "",
+      "\t#datetime.today().display(\"[day]/[month]/[year]\")",
+      "]",
+      "",
+      "$0"
+    ]
+  }
+}
+
