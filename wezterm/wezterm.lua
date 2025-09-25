@@ -84,6 +84,12 @@ config.mouse_bindings = {
   { mods = 'NONE', event = { Drag = { button = 'Left', streak = 2 }}, action = act.ExtendSelectionToMouseCursor 'Word' },
   { mods = 'NONE', event = { Drag = { button = 'Left', streak = 3 }}, action = act.ExtendSelectionToMouseCursor 'Line' },
 
+  -- Scrolling
+  { mods = 'NONE', event = { Down = { button = { WheelUp = 1   }, streak = 1 } }, action = act.ScrollByLine(-10) },
+  { mods = 'NONE', event = { Down = { button = { WheelDown = 1 }, streak = 1 } }, action = act.ScrollByLine(10) },
+  { mods = 'CTRL', event = { Down = { button = { WheelUp = 1   }, streak = 1 } }, action = act.ScrollByPage(-1) },
+  { mods = 'CTRL', event = { Down = { button = { WheelDown = 1 }, streak = 1 } }, action = act.ScrollByPage(1) },
+
   -- Other actions
   { mods = 'SHIFT', event = { Down = { button = 'Left', streak = 1 }}, action = act.ExtendSelectionToMouseCursor 'Cell' },
   { mods = 'CTRL',  event = { Down = { button = 'Left', streak = 1 }}, action = act.OpenLinkAtMouseCursor },
@@ -166,25 +172,42 @@ config.keys = {
   ---------------------------------------------------------
   ---- Scroll ---------------------------------------------
   ---------------------------------------------------------
-  { mods = 'CTRL',  key = 'PageUp',   action = act.ScrollByPage(-1) },
-  { mods = 'CTRL',  key = 'PageDown', action = act.ScrollByPage(1) },
-  { mods = 'SHIFT', key = 'PageUp',   action = act.ScrollByLine(-1) },
-  { mods = 'SHIFT', key = 'PageDown', action = act.ScrollByLine(1) },
+  -- Scroll lines
+  { mods = 'NONE', key = 'PageUp',    action = act.ScrollByLine(-1) },
+  { mods = 'NONE', key = 'PageDown',  action = act.ScrollByLine(1) },
+  { mods = 'CTRL', key = 'UpArrow',   action = act.ScrollByLine(-1) },
+  { mods = 'CTRL', key = 'DownArrow', action = act.ScrollByLine(1) },
 
+  -- Scroll pages
+  { mods = 'CTRL',       key = 'PageUp',    action = act.ScrollByPage(-1) },
+  { mods = 'CTRL',       key = 'PageDown',  action = act.ScrollByPage(1) },
+  { mods = 'CTRL|SHIFT', key = 'UpArrow',   action = act.ScrollByPage(-1) },
+  { mods = 'CTRL|SHIFT', key = 'DownArrow', action = act.ScrollByPage(1) },
+
+  -- Scroll to prompt
   { mods = 'SHIFT', key = 'UpArrow',   action = act.ScrollToPrompt(-1) },
   { mods = 'SHIFT', key = 'DownArrow', action = act.ScrollToPrompt(1) },
 
-  { mods = 'NONE', key = 'End', action = act.ScrollToBottom },
+  -- Other scroll movements
+  { mods = 'NONE', key = 'End',  action = act.ScrollToBottom },
   { mods = 'NONE', key = 'Home', action = act.ScrollToTop },
 
   -- Clear scroll back
   { mods = 'ALT|SHIFT', key = 'L', action = act.ClearScrollback 'ScrollbackAndViewport'},
 
-  -- Search mode
-  { mods = 'ALT', key = 'f', action = act.Search 'CurrentSelectionOrEmptyString' },
+  ---------------------------------------------------------
+  ---- Modes ----------------------------------------------
+  ---------------------------------------------------------
+  -- Debug overlay
+  -- It can be used to run lua code, to evaluate math expressions (as
+  -- a calculator) for example
+  { mods = 'ALT', key = 'd', action = act.ShowDebugOverlay },
 
   -- TODO: Quick select mode (haven't found a use for it yet)
   -- { mods = 'ALT', key = 'a', action = act.QuickSelect },
+
+  -- Search mode
+  { mods = 'ALT', key = 'f', action = act.Search 'CurrentSelectionOrEmptyString' },
 
   -- Copy mode
   { mods = 'ALT', key = 'c', action = act.ActivateCopyMode },
@@ -193,9 +216,12 @@ config.keys = {
   { mods = 'CTRL|SHIFT', key = 'c', action = act.CopyTo 'Clipboard' },
   { mods = 'CTRL|SHIFT', key = 'v', action = act.PasteFrom 'Clipboard' },
 
-  ---------------------------------------------------------
-  ---- Other ----------------------------------------------
-  ---------------------------------------------------------
+  -- Modal Palette
+  { mods = 'ALT|SHIFT', key = 'P', action = act.ActivateCommandPalette },
+
+  -- Launcher Menu
+  { mods = 'ALT', key = '0', action = act.ShowLauncherArgs { flags = 'FUZZY|LAUNCH_MENU_ITEMS' } },
+
   -- Quickly launch python
   { mods = 'ALT', key = 'p', action = act.SplitPane {
       direction = 'Right',
@@ -205,12 +231,6 @@ config.keys = {
     }
   },
 
-  -- Modal Palette
-  { mods = 'ALT|SHIFT', key = 'P', action = act.ActivateCommandPalette },
-
-  -- Launcher Menu
-  { mods = 'ALT', key = '0', action = act.ShowLauncherArgs { flags = 'FUZZY|LAUNCH_MENU_ITEMS' } },
-
   -- Font resize
   { mods = 'CTRL', key = '+', action = act.IncreaseFontSize },
   { mods = 'CTRL', key = '-', action = act.DecreaseFontSize },
@@ -218,11 +238,6 @@ config.keys = {
 
   -- Reload this config
   { mods = 'ALT|SHIFT', key = 'R', action = act.ReloadConfiguration },
-
-  -- Debug overlay
-  -- It can be used to run lua code, to evaluate math expressions (as
-  -- a calculator) for example
-  { mods = 'ALT', key = 'd', action = act.ShowDebugOverlay },
 }
 
 config.key_tables = {
@@ -356,7 +371,7 @@ config.key_tables = {
 ---------------------------------------------------------
 -- TODO: More
 config.launch_menu = {
-  { label = 'htop', args = {'htop'}, cwd = '/home/magno' },
+  -- { label = 'htop', args = {'htop'}, cwd = '/home/magno' },
 }
 
 return config
