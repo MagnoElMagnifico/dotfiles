@@ -89,5 +89,6 @@ map({'n', 'v'}, '<Leader>d', '"_d', 'Delete without changing the registers')
 map({'n', 'v'}, '<Leader>D', '"_D', 'Delete without changing the registers')
 
 map({'n', 'v'}, '<Leader>w', vim.cmd.write, 'Save file')
+map({'n', 'v'}, '<Leader>x', vim.cmd.bdel, 'Save file')
 map({'n', 'v'}, '<Leader>q', '<cmd>confirm qall<enter>', 'Quit Neovim')
 

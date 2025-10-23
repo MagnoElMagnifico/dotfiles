@@ -6,7 +6,18 @@ return {
     opts = {
       cmdline = { enabled = true },
       signature = { enabled = true },
-      sources = { default = { 'lsp', 'buffer', 'path', 'snippets' } },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          path = {
+            opts = {
+              get_cwd = function(_)
+                return vim.fn.getcwd()
+              end
+            },
+          },
+        },
+      },
       completion = { menu = { border = 'none' } },
 
       keymap = {

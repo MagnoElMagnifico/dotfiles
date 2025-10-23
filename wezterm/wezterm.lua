@@ -30,7 +30,6 @@ config.command_palette_font_size = 10
 --   - Sweet Eliverlara (Gogh)
 --   - Ayu Mirage (Gogh)
 config.color_scheme = 'Sonokai (Gogh)'
-config.audible_bell = 'Disabled'
 
 config.enable_scroll_bar = false
 config.use_fancy_tab_bar = false
@@ -43,21 +42,10 @@ config.window_padding = {
   bottom = 0,
 }
 
--- TODO: background
--- config.window_background_image = '/path/to/wallpaper.jpg'
---
--- TODO: Maybe setup a keybind for this
--- config.window_background_opacity = 0.7
-
 -- Initial sizes
 config.initial_cols = 150
 config.initial_rows = 40
 config.scrollback_lines = 3500
-
--- FIXME: This will prevent the terminal from opening.
--- GPU usage
--- config.front_end = 'WebGpu'
--- config.webgpu_power_preference = 'LowPower' -- Extend battery life
 
 ---------------------------------------------------------
 ---- Other ----------------------------------------------
@@ -66,6 +54,8 @@ config.adjust_window_size_when_changing_font_size = false
 config.switch_to_last_active_tab_when_closing_tab = true
 
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
+config.audible_bell = 'Disabled'
+config.warn_about_missing_glyphs = false
 
 ---------------------------------------------------------
 ---- Mouse ----------------------------------------------

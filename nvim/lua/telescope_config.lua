@@ -72,9 +72,20 @@ return {
     config = function()
       local telescope = require 'telescope'
 
-      -- Here, we can configure each picker. Defaults are fine.
+      -- Here we can configure each picker.
       -- See ':h telescope.setup()'
-      telescope.setup {}
+      telescope.setup {
+        defaults = {
+          path_displays = 'smart',
+          layout_strategy = 'horizontal',
+          layout_config = {
+            height = 100,
+            width = 400,
+            prompt_position = 'bottom',
+            preview_cutoff = 40,
+          },
+        }
+      }
 
       -- Enable Telescope extensions if they are installed
       pcall(telescope.load_extension, 'fzf')
@@ -90,6 +101,15 @@ return {
 
       -- Must-have for quick navigation
       nmap('<leader>f', builtin.find_files, 'Search and jump to Files')
+      -- Must-have for quick navigation
+      nmap('<leader>a', function()
+        builtin.find_files({
+          hidden = true,
+          no_ignore = true,
+          no_ignore_parent = true,
+        })
+      end, 'Search and jump to All files')
+
       nmap('<leader>g', builtin.live_grep,  'Search by Grep and jump to result')
       nmap('<leader>b', builtin.buffers,    'Search and jump to open Buffers')
       nmap('<leader>m', builtin.marks,      'Search and jump to Marks')
@@ -104,6 +124,7 @@ return {
       nmap('<leader>st', builtin.treesitter,  'Search Treesitter symbols')
       nmap('<leader>sd', builtin.diagnostics, 'Search Diagnostics')
       nmap('<leader>sh', builtin.help_tags,   'Search Help')
+      nmap('<leader>sm', builtin.man_pages,   'Search Man pages')
       nmap('<leader>s:', builtin.commands,    'Search and run Commands')
       nmap('<leader>sk', builtin.keymaps,     'Search Keymaps')
       nmap('<leader>so', builtin.oldfiles,    'Search Old files')
@@ -117,15 +138,15 @@ return {
           winblend = 10,
           previewer = false,
         })
-      end, 'Fuzzily search in current buffer')
+      end, 'Search current buffer')
 
       -- Fuzzy find lines in all opened buffers
       nmap('<leader>s/', function()
         builtin.live_grep(themes.get_dropdown {
           grep_open_files = true,
-          prompt_title = 'Live Grep in Open Files',
+          prompt_title = 'Live Grep in open Files',
         })
-      end, 'Search / in Open Files')
+      end, 'Search in Open Files')
 
       -- Shortcut for searching Neovim configuration files
       nmap('<leader>sc', function()
@@ -134,11 +155,14 @@ return {
 
       -- Shortcut for searching in my notes
       nmap('<leader>sn', function()
-        builtin.find_files {
+        builtin.find_files(themes.get_dropdown {
+          winblend = 10,
+          previewer = false,
           cwd = '~/Notes',
           find_command = { 'fd', '-tf', '-E', '*.pdf' },
-        }
-      end, 'Search Config files')
+          prompt_title = 'Search notes',
+        })
+      end, 'Search Notes')
     end,
   }, -- telescope
 } -- return

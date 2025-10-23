@@ -29,6 +29,7 @@ vim.o.termguicolors = true   -- Use 24 bit colors in the terminal
 vim.o.lazyredraw    = true   -- Don't update screen while executing macros
 vim.o.colorcolumn   = '80'   -- Show ruler at column 80
 vim.o.cursorline    = true   -- Show current line
+vim.o.conceallevel  = 1      -- 1 show whitespace, 2 hides it, 0 disables it
 vim.o.list          = true   -- Show whitespaces
 vim.opt.listchars = {
   tab   = '> ', -- Tabs rendered as '>' when they start
